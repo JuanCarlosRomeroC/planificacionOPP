@@ -1,0 +1,135 @@
+body{
+	width:100%;
+     margin: 0px;
+}
+@page { margin: 0px; }
+td,p,h2,h3,#firmas1 h6,#firmas1 h3,#firmas1 p{
+	font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+}
+table {
+	width: 100%;
+	text-align: center;
+}
+img{
+	left: 20px;
+	top: 20px;
+	width: 47px;
+	position: absolute;
+	height: 100%;
+	display: block;
+}
+h4{
+	text-align: right;
+	margin: 0px;
+}
+small{
+	font-size: 1.3em;
+}
+#detalles{
+	border: 0.01em solid #cbcbcb;
+}
+#detalles>thead{
+	background: #f0f0f0;
+}
+#detalles td{
+	font-size: .5em;
+	color: #7c7c7c;
+}
+#detalles th{
+	padding: 4px;
+	font-size: .5em;
+	font-family: sans-serif;
+	font-weight: 300;
+	color: #7c7c7c;
+}
+#firmas p{
+	font-size:  .5em;
+	text-align: center;
+	margin: 4px;
+	padding: 0;
+	color: #7c7c7c;
+}
+ #firmas1{
+	margin: 2px;
+}
+#firmas1 p{
+	color: #7c7c7c;
+	text-align: center;
+	font-size: 1em;
+	margin: 0;padding: 0;
+}
+#firmas1 td{
+	border: .03em solid #7c7c7c;
+}
+#detalles,#firmas,#infotable{
+	border-collapse: separate;
+    border-spacing: 0px 0px;
+}
+
+/*FACTURACION*/
+#infotable2{
+	font-size: .6em;
+	width: 100%;
+}
+#first{
+	width: 80%;
+}
+#second{
+	border-top: .03em solid #b6b6b6;
+	width: 80%;
+}
+
+#first p{
+	color: #7c7c7c;
+	text-align: center;
+	margin-left: 30px;
+	margin-top: 0;
+	margin-bottom: 0;
+	padding: 0;
+
+}
+#first h2{
+	color: #3B5997;
+}
+h3{
+	color: #7c7c7c;
+}
+#second p{
+	color: #7c7c7c;
+	text-align: center;
+	margin-left: 5px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	padding: 0;
+}
+#second1 p{
+	color: #7c7c7c;
+	text-align: center;
+	margin-left: 5px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	padding: 0;
+}
+#second p small{
+	font-size:  .9em;
+
+}
+#fechafactura p{
+	margin-top: 0px;
+	margin-bottom: 15px;
+	color: #3B5997;
+	font-style: italic;
+}
+#fechafactura small{
+	padding-left: 20px;
+	padding-right: 20px;
+	border: 1px solid #3B5997;
+	background: #EAF0FC;
+}
+#qrcode {
+	position: static;
+ 	 width:110px;
+  	height:110px;
+  	margin:0;
+	padding: 0
+}

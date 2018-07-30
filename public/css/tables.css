@@ -1,0 +1,151 @@
+table{
+	border: 1px solid #d9d9d9;
+     border-collapse: collapse;
+}
+table thead tr{
+	background: #313131;
+}
+table>thead>tr>th{
+	text-align: center;
+	text-transform:uppercase;
+	border: 1px solid #d4d0d0;
+	color:#fff;
+	font-size: 1.5em;
+	font-weight: 400;
+}
+table tr td{
+	border: 1px solid #cdcdcd;
+	text-align: center;
+	padding:0;
+	margin:0;
+}
+
+#ingresodetalle{
+	width: 60%;
+	margin:0 auto;
+	border: 1px solid #bbbbbb;
+}
+#ingresodetalle th{
+	padding-top: 3px;
+	padding-bottom: 3px;
+	background: #15d4e5;
+	color: #fff;
+	font-size: 1.5em;
+	font-weight: 200;
+	text-align: center;
+	text-transform:uppercase;
+}
+#ingresodetalle td{
+	padding-top: 1px;
+	padding-bottom: 1px;
+	border: 1px solid #a3a3a3;
+}
+#detallesalida{
+	width: 100%;
+	margin:0 auto;
+	border: 1px solid #a3a3a3;
+}
+#detallesalida th{
+	padding-top: 3px;
+	padding-bottom: 3px;
+	background: #029ec0;
+	color: #fff;
+	font-size: 1.5em;
+	font-weight: 200;
+	text-align: center;
+	text-transform:uppercase;
+}
+#detallesalida td{
+	padding-top: 1px;
+	padding-bottom: 1px;
+	border: 1px solid #a3a3a3;
+}
+
+.hovereffect {
+  width: 100%;
+  height: 100%;
+  float: left;
+  overflow: hidden;
+  position: relative;
+  text-align: center;
+  background: -webkit-linear-gradient(45deg, #24B543 0%, #087946 100%);
+  background: linear-gradient(45deg, #74FF02 0%,#087946 100%);
+
+}
+
+.hovereffect .overlay {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  padding: 3em;
+  text-align: left;
+  background: rgba(255,255,255, .0);
+}
+
+.hovereffect img {
+  display: block;
+  position: relative;
+  max-width: none;
+  width: calc(100% + 60px);
+  height: 250px;
+  object-fit: cover;
+  overflow: hidden;
+  -webkit-transition: opacity 0.35s, -webkit-transform 0.45s;
+  -webkit-transform: translate3d(-40px,0,0);
+  transform: translate3d(-40px,0,0);
+}
+
+.hovereffect h2 {
+  text-transform: uppercase;
+  color: #fff;
+  position: relative;
+  font-size: 17px;
+  background-color: transparent;
+  padding: 15% 0 10px 0;
+  text-align: left;
+  font-weight: 600;
+}
+
+.hovereffect .overlay:before {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  bottom: 20px;
+  left: 20px;
+  border: 1px solid #fff;
+  content: '';
+  opacity: 0;
+  filter: alpha(opacity=0);
+  -webkit-transform 0.45s;
+  transition: opacity 0.35s, transform 0.45s;
+  transform: translate3d(-20px,0,0);
+
+}
+
+.hovereffect:hover img {
+  opacity: 0.6;
+  transform: translate3d(0,0,0);
+
+}
+
+.hovereffect:hover .overlay:before {
+  opacity: 1;
+  -webkit-transform: translate3d(0,0,0);
+  transform: translate3d(0,0,0);
+  text-decoration: none;
+}
+#contenedor{
+	background: url(public/images/ventas.jpg);
+   background-position: center center;
+   background-repeat: no-repeat;
+   background-attachment: fixed;
+   background-size: cover;
+}
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
