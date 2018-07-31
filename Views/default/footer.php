@@ -36,11 +36,7 @@
                          if (obj=="false") {
                               $('#alert_error').show();
                          }else{
-                              var data=JSON.parse(obj);
-                              if (data.id!="") {
-                                   //document.location.href = '/Principal';
-                                   window.location.href = "/planificationsoft/Principal";
-                              }
+                              window.location.href = "/planificationsoft/Principal";
                          }
      			}
      		});

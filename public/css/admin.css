@@ -14,6 +14,8 @@
         font-weight: 400;
         margin-bottom: 20px;
     }
+     .mostar{display:block;}
+     .ocultar{display:none;}
     #updatepersonaModal center>small{
         color: #dceff8;
         font-style: italic;
@@ -37,9 +39,19 @@ table>thead>tr>th{
 	font-size: 1.5em;
 	font-weight: 200;
 }
-table tr td{
+table tbody>tr>td{
 	border: 1px solid #cdcdcd;
-    text-align: center;
+     text-align: center;
+     vertical-align: inherit;
 	padding:0;
 	margin:0;
+}
+table tbody>tr>td>h5{
+     margin-top:3px;margin-bottom:0
+}
+table tbody > tr > td > a > button{
+     margin:2px;padding:2px;
+}
+.table-condensed > tbody > tr > td{
+     padding:2px;
 }

@@ -1,10 +1,9 @@
 <?php
-include_once("/../Models/UsuarioModel.php");
 class Usuario extends Controllers{
      private $usuario;
      function __construct(){
-          $this->usuario=new UsuarioModel();
           parent::__construct();
+          $this->usuario=parent::loadClassmodels("UsuarioModel");
      }
      public function index(){
          $resultado=$this->usuario->listar();
@@ -15,26 +14,30 @@ class Usuario extends Controllers{
          $data=$this->usuario->ver();
          echo json_encode($data);
      }
-     public function crear ($ci,$nombre,$apellido,$jefatura,$unidad,$tipo,$cargo,$estado,$direccion,$telefono,$clave){
-         $this->usuario->set("ci",$ci);
-         $this->usuario->set("nombre",$nombre);
-         $this->usuario->set("apellido",$apellido);
-         $this->usuario->set("jefatura",$jefatura);
-         $this->usuario->set("unidad",$unidad);
-         $this->usuario->set("tipo",$tipo);
-         $this->usuario->set("cargo",$cargo);
-         $this->usuario->set("estado",$estado);
-         $this->usuario->set("direccion",$direccion);
-         $this->usuario->set("telefono",$telefono);
-         $this->usuario->set("clave",$clave);
-
-         $resultado=$this->usuario->crear();
-         return $resultado;
+     public function crear(){
+          $this->usuario->set("nombre",$_POST['nombre']);
+          $this->usuario->set("apellido",$_POST['apellido']);
+          $this->usuario->set("ci",$_POST['ci']);
+          $this->usuario->set("password", password_hash($_POST['password'], PASSWORD_BCRYPT));
+          $this->usuario->set("id_cargo",$_POST['id_cargo']);
+          $this->usuario->set("id_unidad",$_POST['id_unidad']);
+          $this->usuario->set("telefono",$_POST['telefono']);
+          $resultado=$this->usuario->crear();
+          echo $resultado;
      }
      public function editar($id){
          $this->usuario->set("id",$id);
-         $this->usuario->ver();
-         $this->usuario->editar();
+         $this->usuario->set("status",$_POST['status']);
+         $this->usuario->set("status_p",$_POST['status_p']);
+         $this->usuario->set("nombre",$_POST['nombre']);
+         $this->usuario->set("apellido",$_POST['apellido']);
+         $this->usuario->set("ci",$_POST['ci']);
+         $this->usuario->set("password", $_POST['password']);
+         $this->usuario->set("id_cargo",$_POST['id_cargo']);
+         $this->usuario->set("id_unidad",$_POST['id_unidad']);
+         $this->usuario->set("telefono",$_POST['telefono']);
+         $resultado=$this->usuario->editar();
+         echo $resultado;
      }
      public function eliminar($id){
          $this->usuario->set('id',$id);

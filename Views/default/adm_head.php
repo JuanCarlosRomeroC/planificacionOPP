@@ -8,21 +8,20 @@
 		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
 		<link rel="stylesheet" href="<?php echo $_URL;?>public/css/bootstrap.min.css">
-		<link rel="stylesheet" href="<?php echo $_URL; ?>public/css/bootstrap-select.min.css">
 		<link rel="stylesheet" href="<?php echo $_URL; ?>public/css/font-awesome.css">
 		<link rel="stylesheet" href="<?php echo $_URL; ?>public/css/_all-skins.min.css">
 		<link rel="stylesheet" href="<?php echo $_URL; ?>public/css/AdminLTE.min.css">
 		<link rel="stylesheet" href="<?php echo $_URL; ?>public/css/sweetalert.css">
 		<link rel="stylesheet" href="<?php echo $_URL; ?>public/css/bootstrap-datetimepicker.css">
-		<link rel="stylesheet" href="<?php echo $_URL; ?>public/css/bootstrap-toggle.min.css">
+		<link rel="stylesheet" href="<?php echo $_URL; ?>public/css/bootstrap-select.min.css">
 		<link rel="stylesheet" href="<?php echo $_URL; ?>public/css/admin.css">
 
 		<script src="<?php echo $_URL;?>public/js/jQuery-2.1.4.min.js"></script>
-		<script src="<?php echo $_URL;?>public/js/bootstrap-select.min.js"></script>
-		<script src="<?php echo $_URL;?>public/js/bootstrap-toggle.min.js"></script>
+
 		<script src="<?php echo $_URL;?>public/js/moment.min.js"></script>
 		<script src="<?php echo $_URL;?>public/js/app.min.js"></script>
 		<script src="<?php echo $_URL;?>public/js/bootstrap-datetimepicker.js"></script>
+		<script src="<?php echo $_URL;?>public/js/bootstrap-select.min.js"></script>
 		<script src="<?php echo $_URL;?>public/js/es.js"></script>
 		<script src="<?php echo $_URL;?>public/js/sweetalert.min.js"></script>
 		<script src="<?php echo $_URL;?>public/js/Chart.bundle.min.js"></script>

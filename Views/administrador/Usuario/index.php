@@ -13,37 +13,33 @@
 <div class="row" style="margin:10px"> <!-- SECTION TABLE USERS -->
 	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 		<div class="table-responsive">
-			<table class="table table-striped table-condensed table-hover">
+			<table id="tableusers" class="table table-striped table-condensed table-hover">
 				<thead>
-					<th width="4%">N°</th>
-					<th width="15%">Nombres</th>
-					<th width="15%">apellidos</th>
+					<th width="9%">ci</th>
+					<th width="25%">apellidos y nombres</th>
 					<th width="25%">cargo</th>
 					<th width="35%">unidad</th>
 					<th width="6%">Opciones</th>
 				</thead>
-				<?php $aux=1; ?>
-				<?php while($row=mysql_fetch_array($resultado["usuarios"])): ?>
-					<tr>
-						<td style="vertical-align: inherit"><h5 style="margin-top:3px;margin-bottom:0"><?php echo $aux; ?></h5></td>
-						<td style="vertical-align: inherit"><h5 style="margin-top:3px;margin-bottom:0;text-align:left"><?php echo ucwords(strtolower($row['nombre'])); ?></h5></td>
-						<td style="vertical-align: inherit"><h5 style="margin-top:3px;margin-bottom:0;text-align:left"><?php echo ucwords(strtolower($row['apellido'])); ?></h5></td>
-
-						<td style="vertical-align: inherit"><h5 style="margin-top:3px;margin-bottom:0"><?php echo ucwords(strtolower($row['cargo'])); ?></h5></td>
-						<td style="vertical-align: inherit"><h5 style="margin-top:3px;margin-bottom:0"><?php echo ucwords(strtolower($row['unidad'])); ?></h5></td>
-						<td style="padding:0;margin:0;vertical-align: inherit">
-							<a data-target="#updateusuarioModal" data-toggle="modal" onclick="updateAjax(<?php echo $row['id'];?>)"><button style="margin:2px;padding:2px" title="editar usuario" type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button></a>
-							<a data-target="#modal-delete-{{$per->idusuario}}" data-toggle="modal"><button title="dar de baja usuario" style="margin:2px;padding:2px" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></a>
-							<a href="/reporte/usuario/{{$per->idusuario}}"><button title="Ver usuario" style="margin:2px;padding:2px" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></button></a>
-						</td>
-					</tr>
-					<?php $aux++; ?>
-				<?php endwhile; ?>
+				<tbody>
+					<?php while($row=mysql_fetch_array($resultado["usuarios"])): ?>
+						<tr>
+							<td><h5><?php echo $row['ci'];?></h5></td>
+							<td style="text-align:left;padding-left:9px"><h5><?php echo ucwords(strtolower($row['apellido']))." ".ucwords(strtolower($row['nombre'])); ?></h5></td>
+							<td><h5><?php echo ucwords(strtolower($row['cargo'])); ?></h5></td>
+							<td><h5><?php echo ucwords(strtolower($row['unidad'])); ?></h5></td>
+							<td>
+								<a data-target="#updateusuarioModal" data-toggle="modal" onclick="updateAjax(<?php echo $row['id'];?>)"><button title="editar usuario" type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button></a>
+								<a  onclick="bajaAjax(<?php echo $row['id'];?>)"><button title="dar de baja usuario" type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></a>
+							</td>
+						</tr>
+					<?php endwhile; ?>
+				</tbody>
 			</table>
 		</div>
 	</div>
 </div>
-<div class="row"> <!-- SECTION EMPTY TABLE -->
+<div class="row" id="alert_empty"> <!-- SECTION EMPTY TABLE -->
 	<?php if(mysql_num_rows($resultado["usuarios"])<1):?>
 		<div class="col-md-12">
 			<div class="alert alert-error alert-dismissible" role="alert">
@@ -56,105 +52,113 @@
 <?php 	include 'modalnewusuario.php';
 		include 'modalupdateusuario.php';?>
 <script>
-   	var seccionid=0,aseguradoid;
+   	var id_unidad_u,id_cargo_u,id_user_u,psw_u;
     $(document).ready(function(){
-		if($('#alertaSweet').attr('value') != undefined){
-			swal("Mensaje de Alerta!", $('#alertaSweet').attr('value') +"..", "success");$('#alertaSweet').attr('value','');
-		}
-		$('#datetimepickerabout').datetimepicker({locale: 'es',format: 'YYYY-MM-DD',ignoreReadonly: true,viewMode: 'years'});
 
-		$('#resettbtn').click(function(){
-			$('#newusuarioModal input').val('');
- 			$('.fila1,.fila2').removeClass('has-success').addClass('has-error');
-          	$('.fila1 span,.fila2 span').removeClass('glyphicon-ok').addClass('glyphicon-remove');$("#btnregistrar").attr('disabled', true);
-		});
-
-		function yes_number(e){var keyCode = (e.keyCode ? e.keyCode : e.which);if(keyCode > 47 && keyCode < 58){return true;}else{e.preventDefault();}}
-		function not_number(e){var keyCode = (e.keyCode ? e.keyCode : e.which);if(keyCode > 96 && keyCode < 123 || keyCode == 241 || keyCode == 32){return true;}else{e.preventDefault();}}
-
-		function small_error(e,t){if(t){$(e).removeClass('has-error').addClass('has-success');$(e+" span").removeClass('glyphicon-remove').addClass('glyphicon-ok');}else{$(e).removeClass('has-success').addClass('has-error');$(e+" span").removeClass('glyphicon-ok').addClass('glyphicon-remove');}}
+		$('#inputsearch').keyup(function(){var data=$(this).val().toLowerCase().trim();SEARCH_DATA(data,"tableusers","No se encontraron USUARIOS registrados.");});
 
 		$('#inputnombre,#inputnombre_u').keypress(function(e){not_number(e);}).keyup(function(){if($(this).val().trim().length>2){small_error($(this).attr('toggle'),true);}else{small_error($(this).attr('toggle'),false);}function_validate($(this).attr('validate'));});
 		$('#inputapellido,#inputapellido_u').keypress(function(e){not_number(e);}).keyup(function(){if($(this).val().trim().length>6){small_error($(this).attr('toggle'),true);}else{small_error($(this).attr('toggle'),false);}function_validate($(this).attr('validate'));});
 		$('#inputci,#inputci_u').keypress(function(e){yes_number(e);}).keyup(function(){if($(this).val().trim().length>6){small_error($(this).attr('toggle'),true);}else{small_error($(this).attr('toggle'),false);}function_validate($(this).attr('validate'));});
-		$('#inputtelefono,#inputtelefono_u').keypress(function(e){yes_number(e);});
+		$('#inputpassword,#inputpassword_u').keyup(function(){if($(this).val().trim().length>4){small_error($(this).attr('toggle'),true);}else{small_error($(this).attr('toggle'),false);}function_validate($(this).attr('validate'));});
+		$('#inputtelefono,#inputtelefono_u').keypress(function(e){yes_number(e);}).keyup(function(){function_validate($(this).attr('validate'));});
 
-        function function_validate(validate){
-			console.log(validate);
-			if(validate){
-				//console.log($('#selectcargo option').length);
-				if(
-					($('.fila1').hasClass('has-success'))&&
-					($('.fila2').hasClass('has-success'))&&
-					($('.fila3').hasClass('has-success'))&&
-					($('#selectcargo option').length>0)&&
-					($('#selectunidad option').length>0)
-				){$("#btnregistrar").attr('disabled', false);}else{$("#btnregistrar").attr('disabled', true);}
+		$('#btnregistrar').click(function(){
+			var nombre=$('#inputnombre').val(),apellido=$('#inputapellido').val(),ci=$('#inputci').val(),id_cargo=$('#selectcargo option:selected').val(),
+			id_unidad=$('#selectunidad option:selected').val();
+			$.ajax({
+				url: 'http://localhost/planificationSoft/Usuario/crear',
+				type: 'post',
+				data:{nombre:nombre,apellido:apellido,ci:ci,password:$('#inputpassword').val(),id_cargo:id_cargo,id_unidad:id_unidad,telefono:$('#inputtelefono').val(),},
+					success:function(obj){if (obj=="false") {$('#error_registro').show();}else{swal("Mensaje de Alerta!", obj , "success");setInterval(function(){ location.reload(); }, 2000);}}});});
+
+		function function_validate(validate){
+			if(validate!="false"){
+				if(($('.fila1').hasClass('has-success'))&&($('.fila2').hasClass('has-success'))&&($('.fila3').hasClass('has-success'))&&($('.fila4').hasClass('has-success'))&&($('#selectcargo option').length>0)&&($('#selectunidad option').length>0)){
+						$("#btnregistrar").attr('disabled', false);}else{$("#btnregistrar").attr('disabled', true);}
 			}else{
-				if(
-					($('.fila1_u').hasClass('has-success'))&&
-					($('.fila2_u').hasClass('has-success'))&&
-					($('.fila3_u').hasClass('has-success'))&&
-					($('#selectcargo_u option').length>0)&&
-					($('#selectunidad_u option').length>0)
-				){
-					if(($('#inputnombre_u').attr('placeholder')!=$('#inputnombre_u').val().trim().toUpperCase()) ||
-						($('#inputapellido_').attr('placeholder')!=$('#inputedad1').val().trim()) ||
-						($('#inputci_u').attr('placeholder')!=$('#inputedad1').val()) ||
-	                  	($('#inputtelefono').attr('placeholder')!=$('#inputedad1').val()) ||
-	                  	($('#selectcargo_u option:selected').attr('value')!=seccionid) ||
-						($('#selectunidad_u option:selected').attr('value')!=aseguradoid)
-					){
-						$("#buttonupdate").attr('disabled', false);
+				if($('.fila1_u').hasClass('has-success') && $('.fila2_u').hasClass('has-success') && $('.fila3_u').hasClass('has-success')){
+					if (($('#inputpassword_u').val().trim()=="") || ($('.fila4_u').hasClass('has-success'))) {
+						if(($('#inputnombre_u').attr('placeholder')!=$('#inputnombre_u').val().trim().toLowerCase()) ||
+							($('#inputapellido_u').attr('placeholder')!=$('#inputapellido_u').val().toLowerCase()) ||
+							($('#inputci_u').attr('placeholder')!=$('#inputci_u').val()) ||
+		                  		($('#inputtelefono_u').attr('placeholder')!=$('#inputtelefono_u').val()) ||
+		                  		($('#selectcargo_u option:selected').attr('value')!=id_cargo_u) ||
+							($('#selectunidad_u option:selected').attr('value')!=id_unidad_u) ||
+							($('#inputpassword_u').val()!="")
+						){
+							$("#buttonupdate").attr('disabled', false);
+						}else{
+							$("#buttonupdate").attr('disabled', true);
+						}
 					}else{
 						$("#buttonupdate").attr('disabled', true);
 					}
-					$("#buttonupdate").attr('disabled', false);}else{$("#buttonupdate").attr('disabled', true);
-				}}
+				}else{$("#buttonupdate").attr('disabled', true);}
 			}
-
+		}
 		//UPDATE usuario
-		$('#submitbtn1').click(function(){
-		    if($('#inputnombre1').attr('placeholder')!=$('#inputnombre1').val().toUpperCase()){
-			    $("#inputnombre1").val(function(i,val){
-				    return val.toUpperCase();
-			    });
-		    }else{$('#inputnombre1').val('');}});
-         $('#selectcargo_u, #selectunidad_u').change(function(){function_validate(false);});
-
+		$('#buttonupdate').click(function(){
+			if($('#inputci_u').attr('placeholder')!=$('#inputci_u').val()){var ci_update=$('#inputci_u').val();}else{var ci_update="";}
+			console.log(psw_u);
+			$.ajax({
+				url: 'http://localhost/planificationSoft/Usuario/editar/'+id_user_u,
+				type: 'post',
+				data:{
+					status:$('#inputci_u').val(),nombre:$('#inputnombre_u').val(),apellido:$('#inputapellido_u').val(),ci:ci_update,
+					status_p:psw_u,password:$('#inputpassword').val(),id_cargo:$('#selectcargo_u option:selected').val(),
+					id_unidad:$('#selectunidad_u option:selected').val(),telefono:$('#inputtelefono_u').val(),
+				},
+				success:function(obj){
+					if (obj=="false") {
+						$('#error_update').show();
+					}else{
+						swal("Mensaje de Alerta!", obj , "success");
+						setInterval(function(){ location.reload(); }, 1000);
+					}
+				}
+			});
+		});
+         $('#selectcargo_u, #selectunidad_u').change(function(){function_validate("false");});
 	});
 	function updateAjax(val){
 		$.ajax({
-			url: 'http://localhost/planificationsoft/Usuario/ver/'+val,
+			url: 'http://localhost/planificationSoft/Usuario/ver/'+val,
 			type: 'get',
 			success:function(obj){
-				console.log(obj);
 				var data = JSON.parse(obj);
-				$('#inputnombre_u').val(data.nombre);$('#inputnombre_u').attr('placeholder',data.nombre);
-				$('#inputapellido_u').val(data.apellido);$('#inputapellido_u').attr('placeholder',data.apellido);
+				$('#inputnombre_u').val(data.nombre.toLowerCase());$('#inputnombre_u').attr('placeholder',data.nombre.toLowerCase());
+				$('#inputapellido_u').val(data.apellido.toLowerCase());$('#inputapellido_u').attr('placeholder',data.apellido.toLowerCase());
 				$('#inputci_u').val(data.ci);$('#inputci_u').attr('placeholder',data.ci);
+				$('#inputpassword_u').val("");
 				$('#inputtelefono_u').val(data.telefono);$('#inputtelefono_u').attr('placeholder',data.telefono);
 				$('#selectunidad_u option[value='+data.id_unidad+']').attr('selected','selected');
 				$('#selectcargo_u option[value='+data.id_cargo+']').attr('selected','selected');
-				// seccionid=data.seccion;
-				$("#selectunidad_u,selectcargo_u").selectpicker('refresh');
-				// $('#selectusuario2 option[value="'+data.tipo+'"]').attr('selected','selected');
-				// aseguradoid=data.tipo;
-				console.log(obj);
+				$("#selectunidad_u,#selectcargo_u").selectpicker('refresh');
+				id_unidad_u=data.id_unidad;id_cargo_u=data.id_cargo;id_user_u=data.id;psw_u=data.password;
 			}
 		});
-
-		// $.ajax({url: "/hospital/usuario/"+val+"/edit",
-		// 	type: "get",success: function(data){
-		// 		$('#updateusuarioModal form').attr('action','/hospital/usuario/'+data.idusuario+'');
-		// 		$('#inputnombre1').val(data.nombre);$('#inputnombre1').attr('placeholder',data.nombre);
-		// 		$('#inputedad1').val(data.fecha.substring(0,10));$('#inputedad1').attr('placeholder',data.fecha.substring(0,10));
-		// 		$('#selectseccion1 option[value='+data.seccion+']').attr('selected','selected');
-		// 		seccionid=data.seccion;
-		// 		$("#selectseccion1").selectpicker('refresh');
-		// 		$('#selectusuario2 option[value="'+data.tipo+'"]').attr('selected','selected');
-		// 		aseguradoid=data.tipo;
-		// 	}
-		// });
+	}
+	function bajaAjax(val){
+		swal({
+			title: "¿Estás seguro?",
+			text: "Esta Seguro que quiere dar de baja al Usuario?",
+			type: "warning",
+			showCancelButton: true,confirmButtonColor: "#d93333",
+			confirmButtonText: "Dar de Baja!",
+			closeOnConfirm: false
+		},function(){
+			$.ajax({
+				url: 'http://localhost/planificationSoft/Usuario/eliminar/'+val,
+				type: 'get',
+				success:function(obj){
+					if (obj=="false") {
+					}else{
+						swal("Mensaje de Alerta!", obj , "success");
+						setInterval(function(){ location.reload(); }, 1000);
+					}
+				}
+			});
+		});
 	}
 </script>
