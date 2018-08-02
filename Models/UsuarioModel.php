@@ -12,11 +12,19 @@
           }
           public function login(){
               //$sql="SELECT *FROM usuario WHERE estado = 1" ;
-               $auth="SELECT id,ci,nombre,apellido,id_cargo FROM usuario
-                    WHERE ci = '{$this->ci}' and password='{$this->password}' and estado=b'1'";
+               $auth="SELECT id,ci,nombre,apellido,id_cargo,password FROM usuario
+                    WHERE ci = '{$this->ci}' and estado=b'1'";
                $result= parent::consultaRetorno($auth);
-               return mysql_fetch_array($result);
-
+               if(mysql_num_rows($result)==1){
+                    $rows= mysql_fetch_array($result);
+                    if (password_verify($this->password, $rows['password'])){
+                         return $rows;
+                    }else{
+                         return "false";
+                    }
+               }else{
+                    return "false";
+               }
           }
           public function listar(){
                $user="SELECT p.id,p.ci,p.nombre,p.apellido,u.nombre as unidad,j.nombre as jefatura,c.nombre as cargo FROM usuario as p
@@ -35,20 +43,28 @@
                return $result;
           }
           public function ver(){
-               $sql="SELECT * FROM usuario WHERE id = '{$this->id}' LIMIT 1";
+               $sql="SELECT u.id,u.ci,u.nombre,u.apellido,u.id_unidad,u.id_cargo,u.telefono,u.password,n.nombre as unidad,j.nombre as jefatura,c.nombre as cargo FROM usuario as u
+                    JOIN cargo as c ON c.id = u.id_cargo
+                    JOIN unidad as n ON n.id = u.id_unidad
+                    JOIN jefatura as j ON j.id = n.id_jefatura
+                    WHERE u.id = '{$this->id}' LIMIT 1";
                $resultado = parent::consultaRetorno($sql);
                $row=mysql_fetch_array($resultado);
                $this->id=$row['id'];
                $this->ci=$row['ci'];
                $this->nombre=$row['nombre'];
                $this->apellido=$row['apellido'];
-               $this->unidad=$row['id_unidad'];
-               $this->cargo=$row['id_cargo'];
+               $this->id_unidad=$row['id_unidad'];
+               $this->id_cargo=$row['id_cargo'];
                $this->telefono=$row['telefono'];
+               $this->cargo=$row['cargo'];
+               $this->jefatura=$row['jefatura'];
+               $this->unidad=$row['unidad'];
+               $this->password=$row['password'];
                return $row;
           }
           public function crear(){
-               $ver_ci=ver_ci();
+               $ver_ci=$this->ver_ci();
                if($ver_ci != 0){
                     return "false";
                }else{
@@ -59,32 +75,20 @@
                }
           }
           public function editar(){
-               if($this->ci==""){
-                    if($this->password==""){
-                         $sql=("UPDATE usuario SET
-                              ci='{$this->status}',
-                              nombre='{$this->nombre}',
-                              apellido='{$this->apellido}',
-                              id_unidad='{$this->id_unidad}',
-                              id_cargo='{$this->id_cargo}',
-                              telefono='{$this->telefono}',
-                              password='{$this->status_p}' WHERE id='{$this->id}'");
-                    }else{
-                         $pass=password_hash($this->password, PASSWORD_BCRYPT);
-                         $sql=("UPDATE usuario SET ci='{$this->status}',nombre='{$this->nombre}', apellido='{$this->apellido}',id_unidad='{$this->id_unidad}',id_cargo='{$this->id_cargo}',telefono='{$this->telefono}',password='{$pass}' WHERE id='{$this->id}'");
-                    }
+               if($this->estado_password != ""){$password_insert=password_hash($this->estado_password, PASSWORD_BCRYPT);
+               }else{$password_insert=$this->password;}
+
+               if($this->estado_ci==$this->ci){
+                    $sql=("UPDATE usuario SET ci='{$this->ci}',nombre='{$this->nombre}',
+                         apellido='{$this->apellido}',id_unidad='{$this->id_unidad}',
+                         id_cargo='{$this->id_cargo}',telefono='{$this->telefono}',
+                         password='{$password_insert}' WHERE id='{$this->id}'");
                }else{
                     $ver_ci=$this->ver_ci();
                     if($ver_ci != 0){
                          return "false";
                     }else{
-                         echo "verdadero ci";
-                         if($this->password==""){
-                              $sql=("UPDATE usuario SET ci='{$this->ci}',nombre='{$this->nombre}', apellido='{$this->apellido}',id_unidad='{$this->id_unidad}',id_cargo='{$this->id_cargo}',telefono='{$this->telefono}',password='{$this->status_p}' WHERE id='{$this->id}'");
-                         }else{
-                              $pass=password_hash($this->password, PASSWORD_BCRYPT);
-                              $sql=("UPDATE usuario SET ci='{$this->ci}',nombre='{$this->nombre}', apellido='{$this->apellido}',id_unidad='{$this->id_unidad}',id_cargo='{$this->id_cargo}',telefono='{$this->telefono}',password='{$pass}' WHERE id='{$this->id}'");
-                         }
+                         $sql=("UPDATE usuario SET ci='{$this->estado_ci}',nombre='{$this->nombre}', apellido='{$this->apellido}',id_unidad='{$this->id_unidad}',id_cargo='{$this->id_cargo}',telefono='{$this->telefono}',password='{$password_insert}' WHERE id='{$this->id}'");
                     }
                }
                parent::consultaSimple($sql);
@@ -97,8 +101,8 @@
                return "Usuario dado de Baja Satisfactoriamente";
           }
           public function ver_ci(){
-               $sql2="SELECT * FROM usuario WHERE ci='{$this->ci}'";
-               $resultado=parent::consultaRetorno($sql2);
+               $sql="SELECT * FROM usuario WHERE ci='{$this->ci}'";
+               $resultado=parent::consultaRetorno($sql);
                return mysql_num_rows($resultado);
           }
      }

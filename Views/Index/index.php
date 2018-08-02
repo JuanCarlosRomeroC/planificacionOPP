@@ -18,7 +18,6 @@
       </div>
 </div>
 <div class="col-md-5 col-lg-5 col-sm-12 col-xs-12"  style="background:#FFF;height:100vh">
-
      <div class="" style="margin:80px">
           <h3 style="font-weight:700">Login</h3>
           <h4 style="margin-bottom:50px;color:#aeaeae;font-weight:200" class="hidden-xs">En caso de no contar usuario y contraseña consulte con el administrador..</h4>
@@ -26,14 +25,14 @@
                <button type="button" class="close" data-dismiss="alert" style="margin-top:5px" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                <strong>Alerta!</strong> Los datos son incorrectos.
           </div>
-          <form class="form-horizontal" role="form">
+          <form class="form-horizontal" autocomplete="false" autocorrect="off">
                <div class="form-group">
                     <label style="text-align:left;font-weight:400;font-size:1.2em;color:#cabdd5">NUMERO DE CARNET</label>
-                    <input id="inputci" placeholder="Ejemplo: 5570310" type="number" class="form-control input-lg" name="user_name" value="">
+                    <input id="inputci" placeholder="Ejemplo: 5570310" autocomplete="false" autocorrect="off" type="number" class="form-control input-lg" name="user_name" value="">
                </div>
                <div class="form-group">
                     <label style="text-align:left;font-weight:400;font-size:1.2em;color:#cabdd5;margin-top:20px">CONTRASEÑA</label>
-                    <input id="inputpassword" placeholder="Minimo 6 caracteres.." type="password" class="form-control input-lg" name="password">
+                    <input id="inputpassword" placeholder="Minimo 6 caracteres.." autocomplete="false" autocorrect="off" type="password" class="form-control input-lg" name="password">
                </div>
                <button class="btn btn-link-1 scroll-link" style="margin-top:30px" id="btnlogin" type="button" disabled>INICIAR SESION <i class="fa fa-btn fa-sign-in"></i></button>
           </form>

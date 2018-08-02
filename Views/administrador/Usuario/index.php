@@ -1,9 +1,4 @@
 <?php
-	if(isset($_GET['user'])){
-		$res=$controlador->ver($_GET['user']);
-		echo json_encode($res);
-		return true;
-	}
 	$users=['Administrador','Director','Planificador','Jefe de Jefatura','Jefe de Unidad','Otros'];
 ?>
 <div class="fab" data-target="#newusuarioModal" data-toggle="modal"> + </div>
@@ -64,16 +59,17 @@
 		$('#inputtelefono,#inputtelefono_u').keypress(function(e){yes_number(e);}).keyup(function(){function_validate($(this).attr('validate'));});
 
 		$('#btnregistrar').click(function(){
-			var nombre=$('#inputnombre').val(),apellido=$('#inputapellido').val(),ci=$('#inputci').val(),id_cargo=$('#selectcargo option:selected').val(),
-			id_unidad=$('#selectunidad option:selected').val();
 			$.ajax({
 				url: 'http://localhost/planificationSoft/Usuario/crear',
 				type: 'post',
-				data:{nombre:nombre,apellido:apellido,ci:ci,password:$('#inputpassword').val(),id_cargo:id_cargo,id_unidad:id_unidad,telefono:$('#inputtelefono').val(),},
-					success:function(obj){if (obj=="false") {$('#error_registro').show();}else{swal("Mensaje de Alerta!", obj , "success");setInterval(function(){ location.reload(); }, 2000);}}});});
+				data:{nombre:$('#inputnombre').val(),apellido:$('#inputapellido').val(),ci:$('#inputci').val(),password:$('#inputpassword').val(),id_cargo:$('#selectcargo option:selected').val(),id_unidad:$('#selectunidad option:selected').val(),telefono:$('#inputtelefono').val(),},
+					success:function(obj){if (obj=="false") {$('#error_registro').show();}else{
+						swal("Mensaje de Alerta!", obj , "success");
+					setInterval(function(){ window.location.href = "/planificationSoft/Usuario"; }, 2000);
+				}}});});
 
 		function function_validate(validate){
-			if(validate!="false"){
+			if(validate!="false"&&validate=="true"){
 				if(($('.fila1').hasClass('has-success'))&&($('.fila2').hasClass('has-success'))&&($('.fila3').hasClass('has-success'))&&($('.fila4').hasClass('has-success'))&&($('#selectcargo option').length>0)&&($('#selectunidad option').length>0)){
 						$("#btnregistrar").attr('disabled', false);}else{$("#btnregistrar").attr('disabled', true);}
 			}else{
@@ -100,21 +96,22 @@
 		//UPDATE usuario
 		$('#buttonupdate').click(function(){
 			if($('#inputci_u').attr('placeholder')!=$('#inputci_u').val()){var ci_update=$('#inputci_u').val();}else{var ci_update="";}
-			console.log(psw_u);
 			$.ajax({
 				url: 'http://localhost/planificationSoft/Usuario/editar/'+id_user_u,
 				type: 'post',
 				data:{
-					status:$('#inputci_u').val(),nombre:$('#inputnombre_u').val(),apellido:$('#inputapellido_u').val(),ci:ci_update,
-					status_p:psw_u,password:$('#inputpassword').val(),id_cargo:$('#selectcargo_u option:selected').val(),
-					id_unidad:$('#selectunidad_u option:selected').val(),telefono:$('#inputtelefono_u').val(),
+					nombre:$('#inputnombre_u').val(),apellido:$('#inputapellido_u').val(),
+					estado_ci:$('#inputci_u').val(),ci:$('#inputci_u').attr('placeholder'),
+					id_cargo:$('#selectcargo_u option:selected').val(),id_unidad:$('#selectunidad_u option:selected').val(),
+					telefono:$('#inputtelefono_u').val(),
+					estado_password:$('#inputpassword').val(),password:psw_u
 				},
 				success:function(obj){
 					if (obj=="false") {
 						$('#error_update').show();
 					}else{
 						swal("Mensaje de Alerta!", obj , "success");
-						setInterval(function(){ location.reload(); }, 1000);
+						setInterval(function(){ window.location.href = "/planificationSoft/Usuario"; }, 1500);
 					}
 				}
 			});
@@ -127,14 +124,16 @@
 			type: 'get',
 			success:function(obj){
 				var data = JSON.parse(obj);
+				$('.unombre h5').html(data.nombre+"<br>"+data.apellido);$('.unombre p').text(data.ci);$('.utelefono').text("(+591) "+data.telefono);$('.ucargo').text(data.cargo);$('.uunidad').text(data.unidad);$('.ujefatura').text(data.jefatura);
 				$('#inputnombre_u').val(data.nombre.toLowerCase());$('#inputnombre_u').attr('placeholder',data.nombre.toLowerCase());
 				$('#inputapellido_u').val(data.apellido.toLowerCase());$('#inputapellido_u').attr('placeholder',data.apellido.toLowerCase());
 				$('#inputci_u').val(data.ci);$('#inputci_u').attr('placeholder',data.ci);
-				$('#inputpassword_u').val("");
+				$('#inputpassword_u').val("");$('#inputpassword_u').removeClass('has-success').addClass('has-error');
 				$('#inputtelefono_u').val(data.telefono);$('#inputtelefono_u').attr('placeholder',data.telefono);
 				$('#selectunidad_u option[value='+data.id_unidad+']').attr('selected','selected');
 				$('#selectcargo_u option[value='+data.id_cargo+']').attr('selected','selected');
 				$("#selectunidad_u,#selectcargo_u").selectpicker('refresh');
+
 				id_unidad_u=data.id_unidad;id_cargo_u=data.id_cargo;id_user_u=data.id;psw_u=data.password;
 			}
 		});
@@ -155,7 +154,7 @@
 					if (obj=="false") {
 					}else{
 						swal("Mensaje de Alerta!", obj , "success");
-						setInterval(function(){ location.reload(); }, 1000);
+						setInterval(function(){ window.location.href = "/planificationSoft/Usuario"; }, 1000);
 					}
 				}
 			});
