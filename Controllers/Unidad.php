@@ -22,6 +22,7 @@ class Unidad extends Controllers{
      }
      public function editar($id){
          $this->unidad->set("id",$id);
+         $this->unidad->set("nombre_original",$_POST['nombre_original']);
          $this->unidad->set("nombre",$_POST['nombre']);
          $this->unidad->set("id_jefatura",$_POST['id_jefatura']);
          $resultado=$this->unidad->editar();

@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<?php $_URL="http://localhost/PlanificationSoft/" ?>
 <html>
 	<head>
 		<meta charset="utf-8">
@@ -7,26 +6,26 @@
 		<title>SEDES | www.sedes.com</title>
 		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
-		<link rel="stylesheet" href="<?php echo $_URL;?>public/css/bootstrap.min.css">
-		<link rel="stylesheet" href="<?php echo $_URL; ?>public/css/font-awesome.css">
-		<link rel="stylesheet" href="<?php echo $_URL; ?>public/css/_all-skins.min.css">
-		<link rel="stylesheet" href="<?php echo $_URL; ?>public/css/AdminLTE.min.css">
-		<link rel="stylesheet" href="<?php echo $_URL; ?>public/css/sweetalert.css">
-		<link rel="stylesheet" href="<?php echo $_URL; ?>public/css/bootstrap-datetimepicker.css">
-		<link rel="stylesheet" href="<?php echo $_URL; ?>public/css/bootstrap-select.min.css">
-		<link rel="stylesheet" href="<?php echo $_URL; ?>public/css/admin.css">
+		<link rel="stylesheet" href="<?php echo URL;?>public/css/bootstrap.min.css">
+		<link rel="stylesheet" href="<?php echo URL; ?>public/css/font-awesome.css">
+		<link rel="stylesheet" href="<?php echo URL; ?>public/css/_all-skins.min.css">
+		<link rel="stylesheet" href="<?php echo URL; ?>public/css/AdminLTE.min.css">
+		<link rel="stylesheet" href="<?php echo URL; ?>public/css/sweetalert.css">
+		<link rel="stylesheet" href="<?php echo URL; ?>public/css/bootstrap-datetimepicker.css">
+		<link rel="stylesheet" href="<?php echo URL; ?>public/css/bootstrap-select.min.css">
+		<link rel="stylesheet" href="<?php echo URL; ?>public/css/admin.css">
 
-		<script src="<?php echo $_URL;?>public/js/jQuery-2.1.4.min.js"></script>
+		<script src="<?php echo URL;?>public/js/jQuery-2.1.4.min.js"></script>
 
-		<script src="<?php echo $_URL;?>public/js/moment.min.js"></script>
-		<script src="<?php echo $_URL;?>public/js/app.min.js"></script>
-		<script src="<?php echo $_URL;?>public/js/bootstrap-datetimepicker.js"></script>
-		<script src="<?php echo $_URL;?>public/js/bootstrap-select.min.js"></script>
-		<script src="<?php echo $_URL;?>public/js/es.js"></script>
-		<script src="<?php echo $_URL;?>public/js/sweetalert.min.js"></script>
-		<script src="<?php echo $_URL;?>public/js/Chart.bundle.min.js"></script>
-		<script src="<?php echo $_URL;?>public/js/bootstrap.min.js"></script>
-		<script src="<?php echo $_URL;?>public/js/admin.js"></script>
+		<script src="<?php echo URL;?>public/js/moment.min.js"></script>
+		<script src="<?php echo URL;?>public/js/app.min.js"></script>
+		<script src="<?php echo URL;?>public/js/bootstrap-datetimepicker.js"></script>
+		<script src="<?php echo URL;?>public/js/bootstrap-select.min.js"></script>
+		<script src="<?php echo URL;?>public/js/es.js"></script>
+		<script src="<?php echo URL;?>public/js/sweetalert.min.js"></script>
+		<script src="<?php echo URL;?>public/js/Chart.bundle.min.js"></script>
+		<script src="<?php echo URL;?>public/js/bootstrap.min.js"></script>
+		<script src="<?php echo URL;?>public/js/admin.js"></script>
 	</head>
 	<body class="hold-transition skin-blue sidebar-mini">
 		<div class="wrapper">
@@ -35,13 +34,13 @@
 				<a href="" class="logo" style="background-color: #9d92af;">
 					<!-- mini logo for sidebar mini 50x50 pixels -->
 					<span class="logo-mini">
-						<img src="<?php echo $_URL;?>/public/images/icons/32/005-man.png" alt="">
+						<img src="<?php echo URL;?>public/images/icons/32/005-man.png" alt="">
 
 					</span>
 					<!-- logo for regular state and mobile devices -->
 					<span class="logo-lg">
 						<div class="col-md-2" style="padding:0">
-							<img src="<?php echo $_URL;?>/public/images/icons/32/005-man.png" alt="">
+							<img src="<?php echo URL;?>public/images/icons/32/005-man.png" alt="">
 						</div>
 						<div class="col-md-10" style="padding-left:5px;paddding-right:0px">
 							<h6 style="margin-top:12px;margin-bottom:0;color:#cab9d4">Limbert Arando Benavides</h6>

@@ -36,7 +36,7 @@
                          if (obj=="false") {
                               $('#alert_error').show();
                          }else{
-                              window.location.href = "/planificationsoft/Principal";
+                              window.location.href = "/<?php echo FOLDER;?>/Principal";
                          }
      			}
      		});

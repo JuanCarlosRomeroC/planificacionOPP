@@ -97,14 +97,14 @@
 		$('#buttonupdate').click(function(){
 			if($('#inputci_u').attr('placeholder')!=$('#inputci_u').val()){var ci_update=$('#inputci_u').val();}else{var ci_update="";}
 			$.ajax({
-				url: 'http://localhost/planificationSoft/Usuario/editar/'+id_user_u,
+				url: '<?php echo URL;?>Usuario/editar/'+id_user_u,
 				type: 'post',
 				data:{
 					nombre:$('#inputnombre_u').val(),apellido:$('#inputapellido_u').val(),
-					estado_ci:$('#inputci_u').val(),ci:$('#inputci_u').attr('placeholder'),
+					ci_original:$('#inputci_u').val(),ci:$('#inputci_u').attr('placeholder'),
 					id_cargo:$('#selectcargo_u option:selected').val(),id_unidad:$('#selectunidad_u option:selected').val(),
 					telefono:$('#inputtelefono_u').val(),
-					estado_password:$('#inputpassword').val(),password:psw_u
+					password:$('#inputpassword').val(),password_original:psw_u
 				},
 				success:function(obj){
 					if (obj=="false") {
@@ -120,7 +120,7 @@
 	});
 	function updateAjax(val){
 		$.ajax({
-			url: 'http://localhost/planificationSoft/Usuario/ver/'+val,
+			url: '<?php echo URL;?>Usuario/ver/'+val,
 			type: 'get',
 			success:function(obj){
 				var data = JSON.parse(obj);
@@ -148,7 +148,7 @@
 			closeOnConfirm: false
 		},function(){
 			$.ajax({
-				url: 'http://localhost/planificationSoft/Usuario/eliminar/'+val,
+				url: '<?php echo URL;?>Usuario/eliminar/'+val,
 				type: 'get',
 				success:function(obj){
 					if (obj=="false") {

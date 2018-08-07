@@ -26,4 +26,14 @@ $(function() {
                     input.attr("type", "password");
           }
      });
+     $('#buttoncancel_update').click(function(){
+          $('#buttoneditar_update').attr('disabled', false);
+          $( "#editbox_update" ).toggle( "slide" );
+          $( "#listuserbox_update" ).toggle( "slide" );
+     });
+     $('#buttoneditar_update').click(function(){
+          $('#buttoneditar_update').attr('disabled', true);
+          $( "#editbox_update" ).toggle( "slide" );
+          $( "#listuserbox_update" ).toggle( "slide" );
+     });
 })

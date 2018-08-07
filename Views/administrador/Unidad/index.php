@@ -17,8 +17,8 @@
 					<?php while($row=mysql_fetch_array($resultado["unidades"])): ?>
 						<tr>
 							<td><h5><?php echo $aux;?></h5></td>
-							<td style="text-align:left;padding-left:9px"><h5><?php echo ucwords(strtolower($row['jefatura'])); ?></h5></td>
-							<td><h5><?php echo ucwords(strtolower($row['nombre'])); ?></h5></td>
+							<td style="text-align:left;padding-left:9px"><h5 class="rowtable_jefatura<?php echo $row['id'];?>"><?php echo ucwords(strtolower($row['jefatura'])); ?></h5></td>
+							<td><h5 class="rowtable_nombre<?php echo $row['id'];?>"><?php echo ucwords(strtolower($row['nombre'])); ?></h5></td>
 							<td>
 								<a data-target="#updateunidadModal" data-toggle="modal" onclick="updateAjax(<?php echo $row['id'];?>)"><button title="editar unidad" type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button></a>
 								<a  onclick="bajaAjax(<?php echo $row['id'];?>)"><button title="dar de baja unidad" type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></a>
@@ -44,7 +44,7 @@
 <?php 	include 'modalnewunidad.php';
 		include 'modalupdateunidad.php';?>
 <script>
-   	var id_jefatura_u,id_cargo_u,id_unidad_u,psw_u;
+   	var id_jefatura_u,id_unidad_u,row_updatetable,nombre_jefaturatext;
     $(document).ready(function(){
 
 		$('#inputsearch').keyup(function(){var data=$(this).val().toLowerCase().trim();SEARCH_DATA(data,"tableunidades","No se encontraron UNIDADES registradas.");});
@@ -53,7 +53,7 @@
 
 		$('#btnregistrar').click(function(){
 			$.ajax({
-				url: 'http://localhost/planificationSoft/Unidad/crear',
+				url: '<?php echo URL;?>Unidad/crear',
 				type: 'post',
 				data:{nombre:$('#inputnombre').val(),id_jefatura:$('#selectjefatura option:selected').val()},
 					success:function(obj){if (obj=="false") {$('#error_registro').show();}else{
@@ -62,13 +62,10 @@
 				}}});});
 
 		function function_validate(validate){
-			console.log(validate);
 			if(validate!="false"&&validate=="true"){
-				console.log(validate,"1");
 				if($('.fila1').hasClass('has-success')){
 						$("#btnregistrar").attr('disabled', false);}else{$("#btnregistrar").attr('disabled', true);}
 			}else{
-				console.log(validate,"2");
 				if($('.fila1_u').hasClass('has-success')){
 					if(($('#inputnombre_u').attr('placeholder')!=$('#inputnombre_u').val().trim().toLowerCase()) ||
 						($('#selectjefatura_u option:selected').attr('value')!=id_jefatura_u)
@@ -81,20 +78,30 @@
 			}
 		}
 		//UPDATE unidad
+
 		$('#buttonupdate').click(function(){
+			nombre_jefaturatext=$('#selectjefatura_u option:selected').text();
 			$.ajax({
-				url: 'http://localhost/planificationSoft/Unidad/editar/'+id_unidad_u,
+				url: '<?php echo URL;?>Unidad/editar/'+id_unidad_u,
 				type: 'post',
 				data:{
-					status:$('#inputnombre_u').val().trim(),nombre:$('#inputnombre_u').attr('placeholder'),
+					nombre:$('#inputnombre_u').val().trim(),nombre_original:$('#inputnombre_u').attr('placeholder'),
 					id_jefatura:$('#selectjefatura_u option:selected').val()
 				},
 				success:function(obj){
+					$("#buttonupdate").attr('disabled', true);
 					if (obj=="false") {
 						$('#error_update').show();
 					}else{
-						swal("Mensaje de Alerta!", obj , "success");
-						setInterval(function(){ location.reload(); }, 1000);
+						$('#error_update').hide();
+						$('#buttoneditar_update').attr('disabled', false);
+						$( "#editbox_update" ).toggle( "slide" );
+						$( "#listuserbox_update" ).toggle( "slide" );
+						$('.unombre').text($('#inputnombre_u').val().trim());
+						$('#inputnombre_u').attr('placeholder',$('#inputnombre_u').val().trim().toLowerCase());
+
+						$('.rowtable_nombre'+row_updatetable).text($('#inputnombre_u').val());
+						$('.rowtable_jefatura'+row_updatetable).text(nombre_jefaturatext);
 					}
 				}
 			});
@@ -102,15 +109,23 @@
          $('#selectjefatura_u').change(function(){function_validate("false");});
 	});
 	function updateAjax(val){
+		row_updatetable=val;$("#buttonupdate").attr('disabled', true);
 		$.ajax({
-			url: 'http://localhost/planificationSoft/Unidad/ver/'+val,
+			url: '<?php echo URL;?>Unidad/ver/'+val,
 			type: 'get',
 			success:function(obj){
 				var data = JSON.parse(obj);
+				small_error(".fila1_u",true);
+				$('#editbox_update').hide();$('#listuserbox_update').show();$('#buttoneditar_update').attr('disabled', false);
 				$('.unombre').text(data.unidad.nombre);
+				$('#inputnombre_u').val(data.unidad.nombre.toLowerCase());
+				$('#inputnombre_u').attr('placeholder',data.unidad.nombre.toLowerCase());
 				$('.uusuarios').text(data.usuarios.length);
 				$('.uestado').text(data.unidad.estado=="1" ? ("Activo") : ("Inactivo"));
 
+				$('#selectjefatura_u option[value='+data.unidad.id_jefatura+']').attr('selected','selected');
+				$("#selectjefatura_u").selectpicker('refresh');
+				id_jefatura_u=data.unidad.id_jefatura;id_unidad_u=data.unidad.id;
 				$("#tableunidad").empty();$("#alert_empty_usuario").hide();
 				if (data.usuarios.length>0) {
 					for (var i = 0; i < data.usuarios.length; i++) {
@@ -132,7 +147,7 @@
 			closeOnConfirm: false
 		},function(){
 			$.ajax({
-				url: 'http://localhost/planificationSoft/Unidad/eliminar/'+val,
+				url: '<?php echo URL;?>Unidad/eliminar/'+val,
 				type: 'get',
 				success:function(obj){
 					if (obj=="false") {

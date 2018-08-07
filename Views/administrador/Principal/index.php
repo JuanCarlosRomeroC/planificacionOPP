@@ -2,9 +2,8 @@
     <div class="col-md-12" style="background:#17c1e7;padding:0">
         <div class="col-md-12">
             <img src="<?php echo $_URL; ?>public/images/icons/user_circle.png" alt="profile" class="center-block" width="110px" style="padding:10px;margin-top:0">
-
         </div>
-        <h4 class="text-center" style="color:#fff;font-weight:600;margin-bottom:2px">Limbert Arando Benavides</h4>
+        <h4 class="text-center" style="color:#fff;font-weight:600;margin-bottom:2px"><?php echo $_SESSION['User']['nombre']." ".$_SESSION['User']['apellido'] ?></h4>
         <div class="col-md-12">
             <p class="col-md-6 col-lg-6 col-sm-6 col-xs-6" style="text-align:right;color:#2289b6;padding-left:0"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> 54 años</p>
             <p class="col-md-6 col-lg-6 col-sm-6 col-xs-6" style="text-align:left;color:#2289b6;padding-right:0"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> Seccion</p>
@@ -36,5 +35,13 @@
 
 </div>
 <section>
+     <?php
+          if (isset($_SESSION['User'])) {
+               echo $_SESSION['User']['nombre'];
+               foreach ($_SESSION['User'] as $key => $value) {
+                    echo $key ."=>".$value."<br>";
+               }
 
+          }
+     ?>
 </section>

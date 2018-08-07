@@ -21,6 +21,7 @@ class Jefatura extends Controllers{
      }
      public function editar($id){
          $this->jefatura->set("id",$id);
+         $this->jefatura->set("nombre_original",$_POST['nombre_original']);
          $this->jefatura->set("nombre",$_POST['nombre']);
          $resultado=$this->jefatura->editar();
          echo $resultado;

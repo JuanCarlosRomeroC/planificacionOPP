@@ -37,7 +37,18 @@
                }
           }
           public function editar(){
-               $sql=("UPDATE jefatura SET nombre='{$this->nombre}', WHERE id='{$this->id}'");
+               if($this->nombre_original==$this->nombre){
+                    $sql=("UPDATE jefatura SET
+                         nombre='{$this->nombre_original}' WHERE id='{$this->id}' ");
+               }else{
+                    $ver_jefatura=$this->ver_jefatura();
+                    if($ver_jefatura != 0){
+                         return "false";
+                    }else{
+                         $sql=("UPDATE jefatura SET
+                              nombre='{$this->nombre}' WHERE id='{$this->id}' ");
+                    }
+               }
                parent::consultaSimple($sql);
                return "La Jefatura se Modifico Satisfactoriamente";
           }

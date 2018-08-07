@@ -43,30 +43,18 @@
                }
           }
           public function editar(){
-               if($this->ci==""){
-                    if($this->password==""){
-                         $sql=("UPDATE unidad SET
-                              nombre='{$this->nombre}',
-                              id_jefatura='{$this->id_jefatura}',
-                              id_cargo='{$this->id_cargo}',
-                              telefono='{$this->telefono}',
-                              password='{$this->status_p}' WHERE id='{$this->id}'");
-                    }else{
-                         $pass=password_hash($this->password, PASSWORD_BCRYPT);
-                         $sql=("UPDATE unidad SET ci='{$this->status}',nombre='{$this->nombre}', apellido='{$this->apellido}',id_jefatura='{$this->id_jefatura}',id_cargo='{$this->id_cargo}',telefono='{$this->telefono}',password='{$pass}' WHERE id='{$this->id}'");
-                    }
+               if($this->nombre_original==$this->nombre){
+                    $sql=("UPDATE unidad SET
+                         nombre='{$this->nombre_original}',
+                         id_jefatura='{$this->id_jefatura}' WHERE id='{$this->id}' ");
                }else{
                     $ver_unidad=$this->ver_unidad();
                     if($ver_unidad != 0){
                          return "false";
                     }else{
-                         echo "verdadero ci";
-                         if($this->password==""){
-                              $sql=("UPDATE unidad SET ci='{$this->ci}',nombre='{$this->nombre}', apellido='{$this->apellido}',id_jefatura='{$this->id_jefatura}',id_cargo='{$this->id_cargo}',telefono='{$this->telefono}',password='{$this->status_p}' WHERE id='{$this->id}'");
-                         }else{
-                              $pass=password_hash($this->password, PASSWORD_BCRYPT);
-                              $sql=("UPDATE unidad SET ci='{$this->ci}',nombre='{$this->nombre}', apellido='{$this->apellido}',id_jefatura='{$this->id_jefatura}',id_cargo='{$this->id_cargo}',telefono='{$this->telefono}',password='{$pass}' WHERE id='{$this->id}'");
-                         }
+                         $sql=("UPDATE unidad SET
+                              nombre='{$this->nombre}',
+                              id_jefatura='{$this->id_jefatura}' WHERE id='{$this->id}' ");
                     }
                }
                parent::consultaSimple($sql);

@@ -8,6 +8,19 @@
 			<div class="modal-body" style="margin:0;padding:0">
 				<form  class="form-horizontal" autocomplete="off">
 					<div class="row"  style="margin-left:40px;margin-right:40px;margin-top:25px;margin-bottom:25px">
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Tipo</label>
+							<div class="col-sm-10">
+								<select id="selecttipo" class="form-control">
+									<option value="0">Administrador</option>
+									<option value="1">Director</option>
+									<option value="2">Planificador</option>
+									<option value="3">Jefe de Jefatura</option>
+									<option value="4">Jefe de Unidad</option>
+									<option value="5">Usuario</option>
+								</select>
+							</div>
+						</div>
 						<div class="form-group  has-feedback has-error fila1">
 							<label class="col-sm-2 control-label">Nombres</label>
 							<div class="col-sm-10">

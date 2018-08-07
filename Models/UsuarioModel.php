@@ -16,7 +16,7 @@
                     WHERE ci = '{$this->ci}' and estado=b'1'";
                $result= parent::consultaRetorno($auth);
                if(mysql_num_rows($result)==1){
-                    $rows= mysql_fetch_array($result);
+                    $rows= mysql_fetch_assoc($result);
                     if (password_verify($this->password, $rows['password'])){
                          return $rows;
                     }else{
@@ -75,11 +75,10 @@
                }
           }
           public function editar(){
-               if($this->estado_password != ""){$password_insert=password_hash($this->estado_password, PASSWORD_BCRYPT);
-               }else{$password_insert=$this->password;}
+               if($this->password == ""){$password_insert=$this->password_original;}else{$password_insert=password_hash($this->password, PASSWORD_BCRYPT);}
 
-               if($this->estado_ci==$this->ci){
-                    $sql=("UPDATE usuario SET ci='{$this->ci}',nombre='{$this->nombre}',
+               if($this->ci_original==$this->ci){
+                    $sql=("UPDATE usuario SET ci='{$this->ci_original}',nombre='{$this->nombre}',
                          apellido='{$this->apellido}',id_unidad='{$this->id_unidad}',
                          id_cargo='{$this->id_cargo}',telefono='{$this->telefono}',
                          password='{$password_insert}' WHERE id='{$this->id}'");

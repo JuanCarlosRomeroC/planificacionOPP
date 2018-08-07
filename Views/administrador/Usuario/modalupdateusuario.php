@@ -5,25 +5,25 @@
 				<div class="row">
 	                   	<button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top:8px;margin-right:8px;z-index:100"><span aria-hidden="true">&times;</span></button>
 	                   	<div class="col-md-4" height="100%" style="margin:0px;background:#0c2544;padding-top:40px;padding-left: 0;padding-right: 2px;z-index:-50;height: 590px;">
-	                       	<img src="<?php echo $_URL;?>public/images/icons/64/man.png" alt="profile" class="center-block" width="110px" style="padding:10px;margin-top:0px">
+	                       	<img src="<?php echo URL;?>public/images/icons/64/man.png" alt="profile" class="center-block" width="110px" style="padding:10px;margin-top:0px">
 	                       	<center class="unombre">
 	                           	<h5  style="color: #f2fafd;margin-top:0;margin-bottom:0px;text-transform:uppercase;z-index:900">Limbert <br> Arando Benavides</h5>
 						  	<p style="margin-bottom:15px;color:#f7e70e;font-weight: 700;" value="45365" text="435434"></p>
 						</center>
 	                       	<center>
-	                           	<img src="<?php echo $_URL;?>public/images/icons/32/briefcase.png"  style="padding:15px 0 5px 0;margin-top:0px">
+	                           	<img src="<?php echo URL;?>public/images/icons/32/briefcase.png"  style="padding:15px 0 5px 0;margin-top:0px">
 	                           	<br><p class="ucargo" style="line-height: .95em !important;text-transform: lowercase;color:#cde9e5"></p>
 	                       	</center>
 						<center>
-	                           	<img src="<?php echo $_URL;?>public/images/icons/32/hotel.png"  style="padding:15px 0 5px 0;margin-top:0px">
+	                           	<img src="<?php echo URL;?>public/images/icons/32/hotel.png"  style="padding:15px 0 5px 0;margin-top:0px">
 		                         <br><p class="ujefatura" style="line-height: .95em !important;text-transform: lowercase;color:#cde9e5"></p>
 	                       	</center>
 						<center>
-	                           	<img src="<?php echo $_URL;?>public/images/icons/32/home.png"  style="padding:15px 0 5px 0;margin-top:0px">
+	                           	<img src="<?php echo URL;?>public/images/icons/32/home.png"  style="padding:15px 0 5px 0;margin-top:0px">
 	                           	<br><p class="uunidad" style="line-height: .95em !important;text-transform: lowercase;color:#cde9e5"></p>
 	                       	</center>
 						<center>
-	                           	<img src="<?php echo $_URL;?>public/images/icons/32/call.png"  style="padding:15px 0 5px 0;margin-top:0px">
+	                           	<img src="<?php echo URL;?>public/images/icons/32/call.png"  style="padding:15px 0 5px 0;margin-top:0px">
 	                           	<br><p class="utelefono" style="line-height: .95em !important;text-transform: lowercase;color:#cde9e5"></p>
 	                       	</center>
 	                   	</div>

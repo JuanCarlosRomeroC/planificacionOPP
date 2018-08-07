@@ -27,8 +27,8 @@ class Usuario extends Controllers{
      }
      public function editar($id){
          $this->usuario->set("id",$id);
-         $this->usuario->set("estado_ci",$_POST['estado_ci']);
-         $this->usuario->set("estado_password",$_POST['estado_password']);
+         $this->usuario->set("ci_original",$_POST['ci_original']);
+         $this->usuario->set("password_original",$_POST['password_original']);
          $this->usuario->set("nombre",$_POST['nombre']);
          $this->usuario->set("apellido",$_POST['apellido']);
          $this->usuario->set("ci",$_POST['ci']);
@@ -50,7 +50,7 @@ class Usuario extends Controllers{
                $this->usuario->set("password",$_POST['password']);
                $data=$this->usuario->login();
                if ($data!="false") {
-                    $this->createSession($data['nombre']);
+                    $this->createSession($data);
                     $rows= json_encode($data);
                     echo $rows;
                }else{echo false;}

@@ -14,9 +14,10 @@
 					<?php while($row=mysql_fetch_array($resultado)): ?>
 						<tr>
 							<td><h5><?php echo $aux;?></h5></td>
-							<td style="text-align:left;padding-left:9px"><h5><?php echo ucwords(strtolower($row['nombre'])); ?></h5></td>
+							<td style="text-align:left;padding-left:9px"><h5 class="rowtable_nombre<?php echo $row['id'];?>"><?php echo ucwords(strtolower($row['nombre'])); ?></h5></td>
 							<td>
-								<a data-target="#updatejefaturaModal" data-toggle="modal" onclick="updateAjax(<?php echo $row['id'];?>)"><button title="ver jefatura" type="button" class="btn btn-xs"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></button></a>
+								<a data-target="#updatejefaturaModal" data-toggle="modal" onclick="updateAjax(<?php echo $row['id'];?>)"><button title="ver jefatura" type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></button></a>
+								<a  onclick="bajaAjax(<?php echo $row['id'];?>)"><button title="dar de baja jefatura" type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></a>
 							</td>
 							<?php $aux++; ?>
 						</tr>
@@ -39,14 +40,14 @@
 <?php 	include 'modalnewjefatura.php';
 		include 'modalupdatejefatura.php';?>
 <script>
-   	var id_jefatura_u;
+	var id_jefatura_u,row_updatetable;
     $(document).ready(function(){
 		$('#inputsearch').keyup(function(){var data=$(this).val().toLowerCase().trim();SEARCH_DATA(data,"tablejefaturas","No se encontraron JEFATURAS registradas.");});
 		$('#inputnombre,#inputnombre_u').keypress(function(e){not_number(e);}).keyup(function(){if($(this).val().trim().length>5){small_error($(this).attr('toggle'),true);}else{small_error($(this).attr('toggle'),false);}function_validate($(this).attr('validate'));});
 
 		$('#btnregistrar').click(function(){
 			$.ajax({
-				url: 'http://localhost/planificationSoft/Jefatura/crear',
+				url: '<?php echo URL;?>Jefatura/crear',
 				type: 'post',
 				data:{nombre:$('#inputnombre').val()},
 					success:function(obj){if (obj=="false") {$('#error_registro').show();}else{
@@ -55,9 +56,7 @@
 				}}});});
 
 		function function_validate(validate){
-			console.log(validate);
 			if(validate!="false"&&validate=="true"){
-				console.log(validate,"1");
 				if($('.fila1').hasClass('has-success')){
 						$("#btnregistrar").attr('disabled', false);}else{$("#btnregistrar").attr('disabled', true);}
 			}else{
@@ -69,33 +68,45 @@
 		//UPDATE jefatura
 		$('#buttonupdate').click(function(){
 			$.ajax({
-				url: 'http://localhost/planificationSoft/Jefatura/editar/'+id_jefatura_u,
+				url: '<?php echo URL;?>Jefatura/editar/'+id_jefatura_u,
 				type: 'post',
 				data:{
-					status:$('#inputnombre_u').val().trim(),nombre:$('#inputnombre_u').attr('placeholder')
+					nombre:$('#inputnombre_u').val().trim(),nombre_original:$('#inputnombre_u').attr('placeholder')
 				},
 				success:function(obj){
+					$("#buttonupdate").attr('disabled', true);
 					if (obj=="false") {
 						$('#error_update').show();
 					}else{
-						swal("Mensaje de Alerta!", obj , "success");
-						setInterval(function(){ location.reload(); }, 1000);
+						$('#error_update').hide();
+						$('#buttoneditar_update').attr('disabled', false);
+						$( "#editbox_update" ).toggle( "slide" );
+						$( "#listuserbox_update" ).toggle( "slide" );
+						$('.unombre').text($('#inputnombre_u').val().trim());
+						$('#inputnombre_u').attr('placeholder',$('#inputnombre_u').val().trim().toLowerCase());
+
+						$('.rowtable_nombre'+row_updatetable).text($('#inputnombre_u').val());
 					}
 				}
 			});
 		});
 	});
 	function updateAjax(val){
+		row_updatetable=val;
 		$.ajax({
-			url: 'http://localhost/planificationSoft/Jefatura/ver/'+val,
+			url: '<?php echo URL;?>Jefatura/ver/'+val,
 			type: 'get',
 			success:function(obj){
-				var data = JSON.parse(obj);
+				var data = JSON.parse(obj);$("#buttonupdate").attr('disabled', true);
+				small_error(".fila1_u",true);$('#editbox_update').hide();$('#listuserbox_update').show();$('#buttoneditar_update').attr('disabled', false);
 				$('.unombre').text(data.jefatura.nombre);
 				$('.uunidad').text(data.unidades.length);
 				$('.uestado').text(data.jefatura.estado=="1" ? ("Activo") : ("Inactivo"));
-
 				$("#tablejefatura").empty();$("#alert_empty_unidad").hide();
+				$('#inputnombre_u').val(data.jefatura.nombre.toLowerCase());
+				$('#inputnombre_u').attr('placeholder',data.jefatura.nombre.toLowerCase());
+				id_jefatura_u=data.jefatura.id;
+
 				if (data.unidades.length>0) {
 					for (var i = 0; i < data.unidades.length; i++) {
 						$('#tablejefatura').append('<tr><td style="text-align:left;padding-left:10px">'+parseInt(i+1)+'. '+data.unidades[i].nombre+'</td></tr>');
@@ -104,6 +115,28 @@
 					$("#alert_empty_unidad").show();
 				}
 			}
+		});
+	}
+	function bajaAjax(val){
+		swal({
+			title: "¿Estás seguro?",
+			text: "Esta Seguro que quiere dar de baja a la Jefatura?",
+			type: "warning",
+			showCancelButton: true,confirmButtonColor: "#d93333",
+			confirmButtonText: "Dar de Baja!",
+			closeOnConfirm: false
+		},function(){
+			$.ajax({
+				url: '<?php echo URL;?>Jefatura/eliminar/'+val,
+				type: 'get',
+				success:function(obj){
+					if (obj=="false") {
+					}else{
+						swal("Mensaje de Alerta!", obj , "success");
+						setInterval(function(){ window.location.href = "/planificationSoft/Jefatura"; }, 1500);
+					}
+				}
+			});
 		});
 	}
 </script>
