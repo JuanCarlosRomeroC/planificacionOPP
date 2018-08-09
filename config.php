@@ -8,4 +8,4 @@
      define('RQ','Resources');
      define('FOLDER',$url_p[1]); //  nombreproyecto
      define('URL',$URL_Raiz); // URL = variable global para direccionar archivos
- ?>
+?>

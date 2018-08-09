@@ -4,7 +4,6 @@
     <div class="col-md-12" style="background:#17c1e7;padding:0">
         <div class="col-md-12">
             <img src="../../public/images/icons/user_circle.png" alt="profile" class="center-block" width="110px" style="padding:10px;margin-top:0">
-
         </div>
         <h4 class="text-center" style="color:#fff;font-weight:600;margin-bottom:2px">Limbert Arando Benavides</h4>
         <div class="col-md-12">

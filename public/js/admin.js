@@ -1,5 +1,4 @@
 function SEARCH_DATA(DATA,TABLE,MESSAGE){
-     console.log(DATA,TABLE,MESSAGE);
      var tabla_tr = document.getElementById(TABLE).getElementsByTagName("tbody")[0].rows;
      for(var i=0; i<tabla_tr.length; i++){
           var tr = tabla_tr[i];
@@ -14,7 +13,8 @@ function SEARCH_DATA(DATA,TABLE,MESSAGE){
 function yes_number(e){var keyCode = (e.keyCode ? e.keyCode : e.which);if((keyCode > 47 && keyCode < 58) || keyCode == 8){return true;}else{e.preventDefault();}}
 function not_number(e){var keyCode = (e.keyCode ? e.keyCode : e.which);if((keyCode > 96 && keyCode < 123) || keyCode == 241 || keyCode == 32 || keyCode == 8){return true;}else{e.preventDefault();}}
 function small_error(e,t){if(t){$(e).removeClass('has-error').addClass('has-success');$(e+" span").removeClass('glyphicon-remove').addClass('glyphicon-ok');}else{$(e).removeClass('has-success').addClass('has-error');$(e+" span").removeClass('glyphicon-ok').addClass('glyphicon-remove');}}
-
+// funcion para ocultar y mostrar unidades y jefaturas cuando cambia tipo
+function accion_tipo(tipo,row1,row2){if(($(tipo+' option:selected').val()==4)||($(tipo+' option:selected').val()==5)){$(row1).show();$(row2).hide();}else{if($(tipo+' option:selected').val()==3){$(row2).show();$(row1).hide();}else {$(row1+","+row2).hide();}}}
 $(function() {
     //FUNCTION SHOW AND HIDE PASSWORD
      $("#togglepassword,#togglepassword_u").click(function() {

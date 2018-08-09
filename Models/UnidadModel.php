@@ -21,7 +21,7 @@
           }
           public function ver(){
                $unidad="SELECT * FROM unidad WHERE id = '{$this->id}' LIMIT 1";
-               $usuarios="SELECT * FROM usuario WHERE id_unidad = '{$this->id}'";
+               $usuarios="SELECT * FROM usuario WHERE id_lugar = '{$this->id}'";
                $all = array();$query=parent::consultaRetorno($usuarios);
                while($row = mysql_fetch_assoc($query)){
                   $all[] = $row;

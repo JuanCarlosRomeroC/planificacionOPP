@@ -20,8 +20,9 @@ class Usuario extends Controllers{
           $this->usuario->set("ci",$_POST['ci']);
           $this->usuario->set("password", password_hash($_POST['password'], PASSWORD_BCRYPT));
           $this->usuario->set("id_cargo",$_POST['id_cargo']);
-          $this->usuario->set("id_unidad",$_POST['id_unidad']);
+          $this->usuario->set("id_lugar",$_POST['id_lugar']);
           $this->usuario->set("telefono",$_POST['telefono']);
+          $this->usuario->set("tipo",$_POST['tipo']);
           $resultado=$this->usuario->crear();
           echo $resultado;
      }
@@ -34,8 +35,9 @@ class Usuario extends Controllers{
          $this->usuario->set("ci",$_POST['ci']);
          $this->usuario->set("password",$_POST['password']);
          $this->usuario->set("id_cargo",$_POST['id_cargo']);
-         $this->usuario->set("id_unidad",$_POST['id_unidad']);
+         $this->usuario->set("id_lugar",$_POST['id_lugar']);
          $this->usuario->set("telefono",$_POST['telefono']);
+         $this->usuario->set("tipo",$_POST['tipo']);
          $resultado=$this->usuario->editar();
          echo $resultado;
      }
@@ -43,7 +45,10 @@ class Usuario extends Controllers{
          $this->usuario->set('id',$id);
          $this->usuario->eliminar();
      }
-
+     public function alta($id){
+         $this->usuario->set('id',$id);
+         $this->usuario->alta();
+     }
      public function userLogin(){
           if (isset($_POST['ci']) && isset($_POST['password'])) {
                $this->usuario->set("ci",$_POST['ci']);
