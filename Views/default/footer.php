@@ -22,6 +22,9 @@
 <script type="text/javascript">
      var aux=false,aux_pass=false;
      $(function(){
+          var urlString = 'url(<?php echo URL;?>public/images/background.jpg)';
+          document.getElementById("bannerleft").style.backgroundImage =  urlString;
+
           function yes_number(e){var keyCode = (e.keyCode ? e.keyCode : e.which);if((keyCode > 47 && keyCode < 58)||keyCode==8){return true;}else{e.preventDefault();}}
           $('#inputci').keypress(function(e){yes_number(e);}).keyup(function(){if($(this).val().trim().length>6){aux=true;}else{aux=false;}validate();});
           $('#inputpassword').keyup(function(){if($(this).val().length>4){aux_pass=true;}else{aux_pass=false;}validate();});

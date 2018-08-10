@@ -93,7 +93,7 @@
 						</li>
 						<li>
 							<a href="/PlanificationSoft/Usuario" style="cursor:pointer">
-								<i class="fa fa-medkit"></i> <span>Usuarios</span>
+								<i class="fa fa-group"></i> <span>Usuarios</span>
 								<small class="pull-right glyphicon glyphicon-ok" style="color:#5ac65b"></small>
 							</a>
 						</li>
@@ -110,24 +110,13 @@
 						</li>
 						<li class="treeview">
 							<a href="#">
-								<i class="fa fa-h-square"></i>
+								<i class="fa fa-institution"></i>
 								<span>Lugares</span>
 								<i class="fa fa-angle-left pull-right"></i>
 							</a>
 							<ul class="treeview-menu">
 								<li><a href="/PlanificationSoft/Jefatura"><i class="fa fa-circle-o"></i>Jefaturas</a></li>
 								<li><a href="/PlanificationSoft/Unidad"><i class="fa fa-circle-o"></i>Unidades</a></li>
-							</ul>
-						<li class="treeview">
-							<a href="#">
-								<i class="fa fa-ambulance"></i>
-								<span>Vehiculos</span>
-								<i class="fa fa-angle-left pull-right"></i>
-							</a>
-							<ul class="treeview-menu">
-								<li><a href=""><i class="fa fa-circle-o"></i>Jefaturas</a></li>
-								<li><a href=""><i class="fa fa-circle-o"></i>Unidades</a></li>
-								<li><a href=""><i class="fa fa-circle-o"></i> Usuarios</a></li>
 							</ul>
 						</li>
 						<li class="treeview">
@@ -157,6 +146,11 @@
 							<a href="#" style="cursor:pointer">
 								<i class="fa fa-bell"></i> <span>Notificaciones</span>
 								<small class="label pull-right bg-red" style="display:none" id="cantobject"></small>
+							</a>
+						</li>
+						<li>
+							<a href="/<?php echo FOLDER;?>" style="cursor:pointer">
+								<i class="fa fa-sign-out"></i> <span>Salir</span>
 							</a>
 						</li>
 					</ul>
