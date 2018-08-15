@@ -32,7 +32,7 @@
           $("#btnlogin").click(function(){
                ci=$('#inputci').val();pass=$('#inputpassword').val();
                $.ajax({
-     			url: 'Usuario/userLogin',
+     			url: 'Index/userLogin',
      			type: 'post',
      			data: {'ci':ci,'password':pass},
      			success:function(obj){

@@ -7,7 +7,7 @@ class Unidad extends Controllers{
      }
      public function index(){
          $resultado=$this->unidad->listar();
-         $this->view->render($this,"index","administrador","adm_",$resultado);
+         $this->view->render($this,"index",$resultado);
      }
      public function ver($id){
          $this->unidad->set('id',$id);

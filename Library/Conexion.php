@@ -10,7 +10,7 @@
             $this->host="localhost";
             $this->user="root";
             $this->pass="";
-            $this->db="calendar";
+            $this->db="planificador";
 
             $con=@mysql_connect($this->host,$this->user,$this->pass,$this->db);
             if($con){

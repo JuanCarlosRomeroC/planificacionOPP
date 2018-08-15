@@ -7,7 +7,7 @@ class Jefatura extends Controllers{
      }
      public function index(){
          $resultado=$this->jefatura->listar();
-         $this->view->render($this,"index","administrador","adm_",$resultado);
+         $this->view->render($this,"index",$resultado);
      }
      public function ver($id){
          $this->jefatura->set('id',$id);

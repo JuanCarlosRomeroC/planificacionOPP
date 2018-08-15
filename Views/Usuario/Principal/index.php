@@ -3,7 +3,7 @@
         <div class="col-md-12">
             <img src="<?php echo URL; ?>public/images/icons/user_circle.png" alt="profile" class="center-block" width="110px" style="padding:10px;margin-top:0">
         </div>
-        <h4 class="text-center" style="color:#fff;font-weight:600;margin-bottom:2px">Leo Mamani</h4>
+        <h4 class="text-center" style="color:#fff;font-weight:600;margin-bottom:2px">Leo Mamani Usuario</h4>
         <div class="col-md-12">
             <p class="col-md-6 col-lg-6 col-sm-6 col-xs-6" style="text-align:right;color:#2289b6;padding-left:0"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> 54 años</p>
             <p class="col-md-6 col-lg-6 col-sm-6 col-xs-6" style="text-align:left;color:#2289b6;padding-right:0"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> Seccion</p>
@@ -40,7 +40,6 @@
                foreach ($_SESSION['User'] as $key => $value) {
                     echo $key ."=>".$value."<br>";
                }
-
           }
      ?>
 </section>

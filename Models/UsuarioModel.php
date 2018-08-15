@@ -12,7 +12,7 @@
           }
           public function login(){
               //$sql="SELECT *FROM usuario WHERE estado = 1" ;
-               $auth="SELECT id,ci,nombre,apellido,id_cargo,password FROM usuario
+               $auth="SELECT id,tipo,password FROM usuario
                     WHERE ci = '{$this->ci}' and estado=b'1'";
                $result= parent::consultaRetorno($auth);
                if(mysql_num_rows($result)==1){

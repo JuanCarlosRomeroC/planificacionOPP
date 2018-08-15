@@ -2,7 +2,6 @@
      class Controllers{
           public $data;
           public function __construct(){
-               Session::start();
                $this->view=new Views();
           }
           public function loadClassmodels($model){

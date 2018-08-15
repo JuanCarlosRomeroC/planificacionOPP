@@ -9,7 +9,7 @@ class Actividad extends Controllers{
 
      public function index(){
          $resultado=$this->actividad->listar();
-         $this->view->render($this,"index","administrador","adm_",$resultado);
+         $this->view->render($this,"index",$resultado);
      }
      public function ver($id){
          $this->actividad->set('id',$id);

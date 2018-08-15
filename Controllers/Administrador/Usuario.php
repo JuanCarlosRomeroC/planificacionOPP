@@ -7,7 +7,7 @@ class Usuario extends Controllers{
      }
      public function index(){
          $resultado=$this->usuario->listar();
-         $this->view->render($this,"index","administrador","adm_",$resultado);
+         $this->view->render($this,"index",$resultado);
      }
      public function ver($id){
          $this->usuario->set('id',$id);
@@ -49,24 +49,10 @@ class Usuario extends Controllers{
          $this->usuario->set('id',$id);
          $this->usuario->alta();
      }
-     public function userLogin(){
-          if (isset($_POST['ci']) && isset($_POST['password'])) {
-               $this->usuario->set("ci",$_POST['ci']);
-               $this->usuario->set("password",$_POST['password']);
-               $data=$this->usuario->login();
-               if ($data!="false") {
-                    $this->createSession($data);
-                    $rows= json_encode($data);
-                    echo $rows;
-               }else{echo false;}
-         }
-     }
-     function createSession($user){
-          Session::setSession('User',$user);
-     }
-     function destroySession(){
+     public function destroySession(){
           Session::destroy();
-          header('Location:'.URL);
+          header('Location: '.URL);
+          exit();
      }
 }
  ?>

@@ -43,8 +43,8 @@
 							<img src="<?php echo URL;?>public/images/icons/32/005-man.png" alt="">
 						</div>
 						<div class="col-md-10" style="padding-left:5px;paddding-right:0px">
-							<h6 style="margin-top:12px;margin-bottom:0;color:#cab9d4">Leo Mamani</h6>
-							<h5 style="margin-top:0px;font-weight:700">ADMINISTRADOR</h5>
+							<h6 style="margin-top:12px;margin-bottom:0;color:#cab9d4">Leo Mamani Usuario</h6>
+							<h5 style="margin-top:0px;font-weight:700">USUARIO</h5>
 						</div>
 					</span>
 				</a>
@@ -92,21 +92,9 @@
 							</a>
 						</li>
 						<li>
-							<a href="/<?php echo FOLDER;?>/Usuario" style="cursor:pointer">
-								<i class="fa fa-group"></i> <span>Usuarios</span>
-								<small class="pull-right glyphicon glyphicon-ok" style="color:#5ac65b"></small>
+							<a href="/<?php echo FOLDER;?>/Actividades">
+								<i class="fa fa-book"></i><span>Actividades</span>
 							</a>
-						</li>
-						<li class="treeview">
-							<a href="#">
-								<i class="fa fa-user-md"></i>
-								<span>Actividades</span>
-								<i class="fa fa-angle-left pull-right"></i>
-							</a>
-							<ul class="treeview-menu">
-								<li><a href=""><i class="fa fa-circle-o"></i>Especialidades</a></li>
-								<li><a href=""><i class="fa fa-circle-o"></i>Servicios</a></li>
-							</ul>
 						</li>
 						<li class="treeview">
 							<a href="#">
@@ -129,17 +117,6 @@
 								<li><a href=""><i class="fa fa-circle-o"></i>Jefatura</a></li>
 								<li><a href=""><i class="fa fa-circle-o"></i>Unidad</a></li>
 								<li><a href=""><i class="fa fa-circle-o"></i>Usuario</a></li>
-							</ul>
-						</li>
-						<li class="treeview">
-							<a href="#">
-								<i class="fa fa-wrench"></i>
-								<span>Configuraciones</span>
-								<i class="fa fa-angle-left pull-right"></i>
-							</a>
-							<ul class="treeview-menu">
-								<li><a href="#"><i class="fa fa-circle-o"></i>Usuarios</a></li>
-								<li><a href="#"><i class="fa fa-circle-o"></i>Vehiculos</a></li>
 							</ul>
 						</li>
 						<li>
