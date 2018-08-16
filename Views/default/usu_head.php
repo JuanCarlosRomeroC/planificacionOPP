@@ -92,8 +92,8 @@
 							</a>
 						</li>
 						<li>
-							<a href="/<?php echo FOLDER;?>/Actividades">
-								<i class="fa fa-book"></i><span>Actividades</span>
+							<a href="/<?php echo FOLDER;?>/Planificacion">
+								<i class="fa fa-book"></i><span>Planificaciones</span>
 							</a>
 						</li>
 						<li class="treeview">
