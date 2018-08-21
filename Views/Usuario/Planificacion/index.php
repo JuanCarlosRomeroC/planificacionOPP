@@ -8,7 +8,44 @@
 <div class="row" style="margin:10px"> <!-- SECTION TABLE USERS -->
 	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 		<div class="col-md-12 tab-content" style="margin:0px">
-
+			<table id="tablejefaturas" class="table  table-responsive table-hover">
+				<thead>
+					<th width="6%">nro</th>
+					<th width="54%">nombre actividad</th>
+					<th width="10%">mes</th>
+					<th width="10%">elaborado</th>
+				    <th width="10%">estado</th>
+					<th width="10%">Opciones</th>
+				</thead>
+				<?php $aux=1; ?>
+				<tbody>
+					<?php while($row=mysql_fetch_array($resultado['planificacion'])):?>
+						<tr>
+							<td><h5><?php echo $aux;?></h5></td>
+							<td><h5><?php echo $row['actividad'];?></h5></td>
+							<td><h5><?php
+                              $meses= array('inu','ENERO','FEBRERO','MARZO','ABRIL','MAYO','JUNIO','JULIO','AGOSTO','SEPTIEMBRE','OCTUBRE','NOVIEMBRE','DICIEMBRE');
+                              $fecha = $row['fecha_elaboracion'];
+                              $mes = substr($fecha, 5, 2);
+                              echo $meses[(int)$mes];
+							?></h5></td>
+							<td style="text-align:left;padding-left:9px"><h5 style="text-align:left" class="rowtable_nombre<?php echo $row['id'];?>"><?php echo ucwords(strtolower($row['fecha_elaboracion'])); ?></h5></td>
+							<td style="text-align:left;padding-left:9px"><h5 style="text-align:left"> <?php echo $row['estado']==0 ? "No Completado" : "Completado"?></h5></td>
+							<td>
+								<a data-target="#updateplanificacionModal" data-toggle="modal" onclick="updateAjax(<?php echo $row['id'];?>)"><button title="editar planificacion" type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button></a>
+								<a data-target="#updateactividadModalr" data-toggle="modal"><button title="ver nombreES" type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></button></a>
+								<a  onclick="bajaAjax(<?php echo $row['id'];?>)">
+						    <?php $estado = $row['estado'];
+                                 	if($estado==0){
+                                 	 	echo '<buttontitle="eliminar planificacion" type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>';
+                                 	}?>
+							</a>
+							</td>
+							<?php $aux++;?>
+						</tr>
+					<?php endwhile; ?>
+				</tbody>
+			</table>
 		</div>
 	</div>
 </div>
@@ -16,196 +53,185 @@
 <?php 	include 'modalnewplanificacion.php';
 		include 'modalupdateplanificacion.php';?>
 <script>
-   	var id_lugar_u,id_cargo_u,id_user_u,psw_u,id_tipo_u;
-	var users_array=['Administrador','Director','Planificador','Jefe de Jefatura','Jefe de Unidad','Normal'];
+   	var id_actividad_u,id_planificacion_u,auxi=0,auxi2=0,rowobj=0,rowesp=0,validarbag=false;
     $(document).ready(function(){
 	    $('#inputsearch').keyup(function(){$('#myTabs a[href="#todos"]').tab('show');
 		    var data=$(this).val().toLowerCase().trim();SEARCH_DATA(data,"tableusers","No se encontraron PLANIFICACIONES registrados.");});
 
-	    	$('#datetimepicker,#datetimepicker2').datetimepicker({locale: 'es',format: 'YYYY-MM-DD',ignoreReadonly: true,viewMode: 'days'});
-	    	$('#datetimepicker_u').datetimepicker({locale: 'es',format: 'YYYY-MM-DD',ignoreReadonly: true,viewMode: 'years'}).on('dp.change', function(e){ function_validate("false");});
+	    	$('#datetimepicker1,#datetimepicker2').datetimepicker({locale: 'es',format: 'YYYY-MM-DD',ignoreReadonly: true,viewMode: 'days'}).on('dp.change', function(e){ validate_fecha("","true");});
+	    	$('#datetimepicker1_u,#datetimepicker2_u').datetimepicker({locale: 'es',format: 'YYYY-MM-DD',ignoreReadonly: true,viewMode: 'days'}).on('dp.change', function(e){ validate_fecha("_u","false");});
 		$('#inputobjetivo,#inputobjetivo_u').keypress(function(e){not_number(e);}).keyup(function(){if($(this).val().trim().length>8){small_error($(this).attr('toggle'),true);}else{small_error($(this).attr('toggle'),false);}function_validate($(this).attr('validate'));});
 
-		//[objetivo:"inputobjetivo",
-		//actividad:[actividad1,actividad2,actividadn],
-		//fecha_de:fecha,
-		//fecha_hasta:fecha,
-		//resultados:resultado1|resultado2|resultadon,
-		//]
-		var aux=0;
-		$('#buttonagregar').click(function(){
-			if ($('#inputresultado').val().trim()!="") {
-				$('#resultado_caja').append('<li class="list-group-item resultado_row'+aux+'" style="padding: 5px 15px 5px 15px;"><span class="badge glyphicon glyphicon-remove badge_click"  row="'+aux+'" aria-hidden="true" style="background:#ca3030;cursor:pointer"> </span>'+$('#inputresultado').val()+'</li>');
-				aux++;$('#inputresultado').val("");
+		function validate_fecha(data,estado){
+			var year=parseInt(<?php echo date('Y');?>);
+			var month=parseInt(<?php echo date('m');?>);
+			var day=parseInt(<?php echo date('d');?>);
+			var fechade = 	$('#datetimepicker1'+data+' input').val().split("-");
+			var fechahasta = 	$('#datetimepicker2'+data+' input').val().split("-");
+			if ((parseInt(fechade[0])==year)&&(parseInt(fechade[1])==month || parseInt(fechade[1])==month+1)&&(parseInt(fechade[2])>=day)) {
+				validate_sinsmall(".fila1"+data,true);$('#error_fechade'+data).hide();
+				if ((parseInt(fechahasta[0])==year)&&(parseInt(fechade[1])==parseInt(fechahasta[1]))&&(parseInt(fechahasta[2])>=parseInt(fechade[2]))){
+					validate_sinsmall(".fila2"+data,true);
+					$('#error_fechahasta'+data).hide();
+				}else{
+					validate_sinsmall(".fila2"+data,false);
+					$('#error_fechahasta'+data).show();
+				}
+			}else {
+				$('#error_fechade'+data+',#error_fechahasta'+data).show();
+				validate_sinsmall(".fila1"+data,false);
+				validate_sinsmall(".fila2"+data,false);
 			}
-			$('.badge_click').click(function(){
-				$('.resultado_row'+$(this).attr('row')).remove();
+			function_validate(estado);
+		}
+		$('#buttonadd_objetivo,#buttonadd_objetivo_u').click(function(){
+			var type=$(this).attr("info"),estado=$(this).attr("validate");
+			if (type=="_u") {
+				validarbag=true;
+			}
+			if ($('#input_objetivo'+type).val().trim()!="") {
+				$('#objetivo_caja'+type).append('<li class="list-group-item rows_objetivos'+type+' row_objetivo'+type+auxi2+'" style="padding: 5px 15px 5px 15px;"><span class="badge glyphicon glyphicon-remove badge_objetivo'+type+'"  row="'+auxi2+'" aria-hidden="true" style="background:#ca3030;cursor:pointer"> </span>'+$('#input_objetivo'+type).val()+'</li>');
+				auxi2=auxi2+1;$('#input_objetivo'+type).val("");
+				function_validate(estado);
+			}
+			$('.badge_objetivo'+type).click(function(){
+				$('.row_objetivo'+type+$(this).attr('row')).remove();
+				function_validate(estado);
 			});
 		});
-		$('#inputapellido,#inputapellido_u').keypress(function(e){not_number(e);}).keyup(function(){if($(this).val().trim().length>6){small_error($(this).attr('toggle'),true);}else{small_error($(this).attr('toggle'),false);}function_validate($(this).attr('validate'));});
-
-	    	$('#selecttipo').change(function(){
-			accion_tipo("#selecttipo",".inputrow1",".inputrow2");
-	    	});
-		$('#selecttipo_u').change(function(){
-			accion_tipo("#selecttipo_u",".inputrow1_u",".inputrow2_u");
-	    	});
-
-
-
-		$('#inputapellido,#inputapellido_u').keypress(function(e){not_number(e);}).keyup(function(){if($(this).val().trim().length>6){small_error($(this).attr('toggle'),true);}else{small_error($(this).attr('toggle'),false);}function_validate($(this).attr('validate'));});
-		$('#inputci,#inputci_u').keypress(function(e){yes_number(e);}).keyup(function(){if($(this).val().trim().length>6){small_error($(this).attr('toggle'),true);}else{small_error($(this).attr('toggle'),false);}function_validate($(this).attr('validate'));});
-		$('#inputpassword,#inputpassword_u').keyup(function(){if($(this).val().trim().length>4){small_error($(this).attr('toggle'),true);}else{small_error($(this).attr('toggle'),false);}function_validate($(this).attr('validate'));});
-		$('#inputtelefono,#inputtelefono_u').keypress(function(e){yes_number(e);}).keyup(function(){function_validate($(this).attr('validate'));});
-
-		$('#btnregistrar').click(function(){
-			var id_lugar=0;
-			if ($('#selecttipo option:selected').val()==3) {
-				id_lugar=$('#selectjefatura option:selected').val();
-			}else{
-				if (($('#selecttipo option:selected').val()==4)||($('#selecttipo option:selected').val()==5)){
-					id_lugar=$('#selectunidad option:selected').val();
-				}
+		$('#buttonadd_resultado,#buttonadd_resultado_u').click(function(){
+			var type=$(this).attr("info"),estado=$(this).attr("validate");
+			if (type=="_u") {
+				validarbag=true;
 			}
-			$.ajax({
-				url: '<?php echo URL;?>Usuario/crear',
-				type: 'post',
-				data:{nombre:$('#inputnombre').val(),apellido:$('#inputapellido').val(),ci:$('#inputci').val(),password:$('#inputpassword').val(),id_cargo:$('#selectcargo option:selected').val(),tipo:$('#selecttipo option:selected').val(),id_lugar:id_lugar,telefono:$('#inputtelefono').val(),},
-					success:function(obj){if (obj=="false") {$('#error_registro').show();}else{
-						swal("Mensaje de Alerta!", obj , "success");
-					setInterval(function(){ window.location.href = "/<?php echo FOLDER; ?>/Usuario"; }, 2000);
-				}}});
+			if ($('#input_resultado'+type).val().trim()!="") {
+				$('#resultado_caja'+type).append('<li class="list-group-item rows_resultados'+type+' row_resultado'+type+auxi2+'" style="padding: 5px 15px 5px 15px;"><span class="badge glyphicon glyphicon-remove badge_resultado'+type+'"  row="'+auxi2+'" aria-hidden="true" style="background:#ca3030;cursor:pointer"> </span>'+$('#input_resultado'+type).val()+'</li>');
+				auxi2=auxi2+1;$('#input_resultado'+type).val("");
+				function_validate(estado);
+			}
+			$('.badge_resultado'+type).click(function(){
+				$('.row_resultado'+type+$(this).attr('row')).remove();
+				function_validate(estado);
+			});
 		});
+		$('#btnregistrar').click(function(){
+			array=[];$('.rows_resultados').each(function(){array.push($(this).text().trim());});
+			var total = "";for (var i = 0; i < array.length; i++) {total=total+array[i]+"|";}
 
-		function function_validate(validate){
-			if(validate!="false"&&validate=="true"){
-				if(($('.fila1').hasClass('has-success'))&&($('.fila2').hasClass('has-success'))&&($('.fila3').hasClass('has-success'))&&($('.fila4').hasClass('has-success'))&&($('#selectcargo option').length>0)&&($('#selectunidad option').length>0)){
-						$("#btnregistrar").attr('disabled', false);}else{$("#btnregistrar").attr('disabled', true);}
-			}else{
-				if($('.fila1_u').hasClass('has-success') && $('.fila2_u').hasClass('has-success') && $('.fila3_u').hasClass('has-success')){
-					if (($('#inputpassword_u').val().trim()=="") || ($('.fila4_u').hasClass('has-success'))) {
-						if($('#selecttipo_u option:selected').attr('value')==id_tipo_u){
-							if(($('#inputnombre_u').attr('placeholder')!=$('#inputnombre_u').val().trim().toLowerCase()) ||
-								($('#inputapellido_u').attr('placeholder')!=$('#inputapellido_u').val().toLowerCase()) ||
-								($('#inputci_u').attr('placeholder')!=$('#inputci_u').val()) ||
-			                  		($('#inputtelefono_u').attr('placeholder')!=$('#inputtelefono_u').val()) ||
-			                  		($('#selectcargo_u option:selected').attr('value')!=id_cargo_u) ||
-								($('#selectunidad_u option:selected').attr('value')!=id_lugar_u)
-							){
-								$("#buttonupdate").attr('disabled', false);
-							}else{
-								if(($('#selecttipo_u option:selected').val()==4)||($('#selecttipo_u option:selected').val()==5)){
-									if($('#selectunidad_u option:selected').attr('value')!=id_lugar_u) {
-										$("#buttonupdate").attr('disabled', false);
-									}else{$("#buttonupdate").attr('disabled', true);}
-								}else{
-									if($('#selecttipo_u option:selected').val()==3){
-										if ($('#selectjefatura_u option:selected').attr('value')!=id_lugar_u) {
-											$("#buttonupdate").attr('disabled', false);
-										}else{$("#buttonupdate").attr('disabled', true);}
-									}
-								}
-							}
-						}else{$("#buttonupdate").attr('disabled', false);}
-					}else{$("#buttonupdate").attr('disabled', true);}
-				}else{$("#buttonupdate").attr('disabled', true);}
-			}
-		}
-		//UPDATE planificacion
-		$('#buttonupdate').click(function(){
-			var lugar_update=0;
-			if(($('#selecttipo_u option:selected').val()==4)||($('#selecttipo_u option:selected').val()==5)){
-				lugar_update=$('#selectunidad_u option:selected').val();
-			}else{
-				if($('#selecttipo_u option:selected').val()==3){
-					lugar_update=$('#selectjefatura_u option:selected').val();
-				}
-			}
+			arrayobj=[];$('.rows_objetivos').each(function(){arrayobj.push($(this).text().trim());});
+			var totalobj = "";for (var i = 0; i < arrayobj.length; i++) {totalobj=totalobj+arrayobj[i]+"|";}
 			$.ajax({
-				url: '<?php echo URL;?>Usuario/editar/'+id_user_u,
+				url: '<?php echo URL;?>Planificacion/crear',
 				type: 'post',
 				data:{
-					nombre:$('#inputnombre_u').val(),apellido:$('#inputapellido_u').val(),
-					ci_original:$('#inputci_u').val(),ci:$('#inputci_u').attr('placeholder'),
-					id_cargo:$('#selectcargo_u option:selected').val(),id_lugar:lugar_update,
-					telefono:$('#inputtelefono_u').val(),tipo:$('#selecttipo_u option:selected').val(),
-					password:$('#inputpassword').val(),password_original:psw_u
+					id_actividad:$('#selectactividad option:selected').val(),
+					fecha_de:$('#datetimepicker1 input').val(),
+					fecha_hasta:$('#datetimepicker2 input').val(),
+					objetivo:totalobj,
+					esperado:total
 				},
 				success:function(obj){
-					if (obj=="false") {
-						$('#error_update').show();
-					}else{
-						swal("Mensaje de Alerta!", obj , "success");
-						setInterval(function(){ window.location.href = "/planificationSoft/Usuario"; }, 1500);
-					}
+					swal("Mensaje de Alerta!", obj , "success");
+					setInterval(function(){ window.location.href = "/<?php echo FOLDER; ?>/Planificacion"; }, 1500);
 				}
 			});
 		});
-         $('#selectcargo_u, #selectunidad_u, #selectjefatura_u, #selecttipo_u').change(function(){function_validate("false");});
+
+		//UPDATE planificacion
+		$('#buttonupdate').click(function(){
+			array=[];$('.rows_resultados_u').each(function(){array.push($(this).text().trim());});
+			var total = "";for (var i = 0; i < array.length; i++) {total=total+array[i]+"|";}
+			arrayobj=[];$('.rows_objetivos_u').each(function(){arrayobj.push($(this).text().trim());});
+			var totalobj = "";for (var i = 0; i < arrayobj.length; i++) {totalobj=totalobj+arrayobj[i]+"|";}
+			$.ajax({
+				url: '<?php echo URL;?>Planificacion/editar/'+id_planificacion_u,
+				type: 'post',
+				data:{
+					id_actividad:$('#selectactividad_u option:selected').val(),
+					fecha_de:$('#datetimepicker1_u input').val(),
+					fecha_hasta:$('#datetimepicker2_u input').val(),
+					objetivo:totalobj,
+					esperado:total
+				},
+				success:function(obj){
+					swal("Mensaje de Alerta!", obj , "success");
+					setInterval(function(){ window.location.href = "/<?php echo FOLDER;?>/Planificacion"; }, 1500);
+				}
+			});
+		});
+         	$('#selectactividad_u').change(function(){function_validate("false");});
 	});
 	function updateAjax(val){
 		$.ajax({
-			url: '<?php echo URL;?>Usuario/ver/'+val,
+			url: '<?php echo URL;?>Planificacion/ver/'+val,
 			type: 'get',
 			success:function(obj){
 				var data = JSON.parse(obj);
-				$('.unombre h5').html(data.nombre+"<br>"+data.apellido);$('.unombre p').text(data.ci);$('.unombre em').text(users_array[data.tipo]);$('.utelefono').text("(+591) "+data.telefono);$('.ucargo').text(data.cargo);$('.uunidad').text(data.unidad==null ? ("No Asignado"):(data.unidad));$('.ujefatura').text(data.jefatura==null ? ("No Asignado"):(data.jefatura));
-				$('#inputnombre_u').val(data.nombre.toLowerCase());$('#inputnombre_u').attr('placeholder',data.nombre.toLowerCase());
-				$('#inputapellido_u').val(data.apellido.toLowerCase());$('#inputapellido_u').attr('placeholder',data.apellido.toLowerCase());
-				$('#inputci_u').val(data.ci);$('#inputci_u').attr('placeholder',data.ci);
-				$('#inputpassword_u').val("");$('#inputpassword_u').removeClass('has-success').addClass('has-error');
-				$('#inputtelefono_u').val(data.telefono);$('#inputtelefono_u').attr('placeholder',data.telefono);
-				$('#selectunidad_u option[value='+data.id_lugar+']').attr('selected','selected');
-				$('#selectcargo_u option[value='+data.id_cargo+']').attr('selected','selected');
-				$('#selecttipo_u option[value='+data.tipo+']').attr('selected','selected');
-				$("#selectunidad_u,#selectcargo_u,#selecttipo_u").selectpicker('refresh');
-				accion_tipo("#selecttipo_u",".inputrow1_u",".inputrow2_u");
-				id_lugar_u=data.id_lugar;id_cargo_u=data.id_cargo;id_user_u=data.id;id_tipo_u=data.tipo;psw_u=data.password;
+				$('.unombre').text(data.actividad);$('.ufechade').text("de: "+data.fecha_de);$('.ufechahasta').text("hasta: "+data.fecha_hasta);$('.uelaborado').text("elaborado: "+data.fecha_elaboracion);
+				$('#datetimepicker1_u input').val(data.fecha_de);$('#datetimepicker1_u input').attr('placeholder',data.fecha_de);
+				$('#datetimepicker2_u input').val(data.fecha_hasta);$('#datetimepicker2_u input').attr('placeholder',data.fecha_hasta);
+				$('#selectactividad_u option[value='+data.id_actividad+']').attr('selected','selected');
+				$("#selectactividad_u").selectpicker('refresh');
+				id_planificacion_u=data.id;id_actividad_u=data.id_actividad;
+				var objetivos=data.objetivo.split('|');
+				var esperados=data.esperado.split('|');
+				$('#objetivo_caja_u,#resultado_caja_u').empty();
+				for (var i = 0; i < objetivos.length-1; i++) {
+					$('#objetivo_caja_u').append('<li class="list-group-item rows_objetivos_u row_objetivou'+rowobj+'" style="padding: 5px 15px 5px 15px;"><span class="badge glyphicon glyphicon-remove badge_objetivou"  row="'+rowobj+'" aria-hidden="true" style="background:#ca3030;cursor:pointer"> </span>'+objetivos[i]+'</li>');
+					rowobj++;
+				}
+				for (var i = 0; i < esperados.length-1; i++) {
+					$('#resultado_caja_u').append('<li class="list-group-item rows_resultados_u row_resultadou'+rowesp+'" style="padding: 5px 15px 5px 15px;"><span class="badge glyphicon glyphicon-remove badge_resultadou"  row="'+rowesp+'" aria-hidden="true" style="background:#ca3030;cursor:pointer"> </span>'+esperados[i]+'</li>');
+					rowesp++;
+				}
+				$('.badge_resultadou').click(function(){
+					$('.row_resultadou'+$(this).attr('row')).remove();
+					validarbag=true;
+					function_validate("false");
+				});
+				$('.badge_objetivou').click(function(){
+					$('.row_objetivou'+$(this).attr('row')).remove();
+					validarbag=true;
+					function_validate("false");
+				});
 			}
 		});
 	}
 	function bajaAjax(val){
 		swal({
 			title: "¿Estás seguro?",
-			text: "Esta Seguro que quiere dar de baja al Usuario?",
+			text: "Esta Seguro que quiere Eliminar la Planificacion?",
 			type: "warning",
 			showCancelButton: true,confirmButtonColor: "#d93333",
 			confirmButtonText: "Dar de Baja!",
 			closeOnConfirm: false
 		},function(){
 			$.ajax({
-				url: '<?php echo URL;?>Usuario/eliminar/'+val,
+				url: '<?php echo URL;?>Planificacion/eliminar/'+val,
 				type: 'get',
 				success:function(obj){
 					if (obj=="false") {
 					}else{
 						swal("Mensaje de Alerta!", obj , "success");
-						setInterval(function(){ window.location.href = "/<?php echo FOLDER;?>/Usuario"; }, 1000);
+						setInterval(function(){ window.location.href = "/<?php echo FOLDER;?>/Planificacion"; }, 1000);
 					}
 				}
 			});
 		});
 	}
-	function altaAjax(val){
-		swal({
-			title: "¿Estás seguro?",
-			text: "Esta Seguro que quiere dar de alta al Usuario?",
-			type: "warning",
-			showCancelButton: true,confirmButtonColor: "#24be66",
-			confirmButtonText: "Dar de Alta!",
-			closeOnConfirm: false
-		},function(){
-			$.ajax({
-				url: '<?php echo URL;?>Usuario/alta/'+val,
-				type: 'get',
-				success:function(obj){
-					if (obj=="false") {
-					}else{
-						swal("Mensaje de Alerta!", obj , "success");
-						setInterval(function(){ window.location.href = "/<?php echo FOLDER;?>/Usuario"; }, 1000);
-					}
-				}
-			});
-		});
+	function function_validate(validate){
+		if(validate!="false"&&validate=="true"){
+			if(($('.fila1').hasClass('has-success'))&&($('.fila2').hasClass('has-success'))&&($('#selectactividad option').length>0)&&$('#resultado_caja li').length>0&&$('#objetivo_caja li').length>0){
+					$("#btnregistrar").attr('disabled', false);}else{$("#btnregistrar").attr('disabled', true);}
+		}else{
+			if($('.fila1_u').hasClass('has-success') && $('.fila2_u').hasClass('has-success')&&($('#selectactividad_u option').length>0)&&$('#resultado_caja_u li').length>0&&$('#objetivo_caja_u li').length>0){
+				if(($('#datetimepicker1_u input').attr('placeholder')!=$('#datetimepicker1_u input').val()) ||
+					($('#datetimepicker2_u input').attr('placeholder')!=$('#datetimepicker2_u input').val()) ||
+					($('#selectactividad_u option:selected').attr('value')!=id_actividad_u) || validarbag
+				){
+					$("#buttonupdate").attr('disabled', false);
+				}else{$("#buttonupdate").attr('disabled', true);}
+			}else{$("#buttonupdate").attr('disabled', true);}
+		}
 	}
 </script>

@@ -1,8 +1,18 @@
 <?php
      class UsuarioModel extends Conexion{
-          private $con;
+          public $id_user;
+          public $id_lugar_user;
+          public $session;
           function __construct(){
                parent::__construct();
+               $this->session=Session::getSession('User');
+               if (isset($this->session)){
+                    $this->id_user=$this->session['id'];
+                    if ($this->session['tipo']==3 || $this->session['tipo']==4) {
+                         $row="SELECT id_lugar FROM usuario WHERE id='{$this->id_user}' LIMIT 1";
+                         $this->id_lugar_user=mysql_fetch_assoc(parent::consultaRetorno($row))["id_lugar"];
+                    }
+               }
           }
           public function set($atributo,$contenido){
                $this->$atributo=$contenido;
@@ -12,7 +22,7 @@
           }
           public function login(){
               //$sql="SELECT *FROM usuario WHERE estado = 1" ;
-               $auth="SELECT id,tipo,password FROM usuario
+               $auth="SELECT id,tipo,password,nombre,apellido FROM usuario
                     WHERE ci = '{$this->ci}' and estado=b'1'";
                $result= parent::consultaRetorno($auth);
                if(mysql_num_rows($result)==1){
@@ -116,6 +126,22 @@
                $sql="SELECT * FROM usuario WHERE ci='{$this->ci}'";
                $resultado=parent::consultaRetorno($sql);
                return mysql_num_rows($resultado);
+          }
+          public function listar_jefatura(){
+               $user="SELECT p.id,p.ci,p.nombre,p.apellido,p.tipo,c.nombre as cargo,u.nombre as unidad FROM usuario as p
+                    JOIN unidad as u ON u.id = p.id_lugar JOIN cargo as c ON c.id = p.id_cargo  WHERE p.estado = b'1' AND u.id_jefatura='{$this->id_lugar_user}' AND p.tipo=5 OR p.tipo=4";
+
+               // $user="SELECT p.id,p.ci,p.nombre,p.apellido,p.tipo,c.nombre as cargo j.nombre as jefatura FROM jefatura as j
+               //      JOIN unidad as u ON u.id_jefatura = j.id JOIN usuario as p ON u.id = p.id_lugar JOIN cargo as c ON c.id = p.id_cargo  WHERE p.estado = b'1' AND p.tipo=5 AND p.tipo=4 AND j.id='{$this->id_lugar_user}'";
+
+               // $user="SELECT p.id,p.ci,p.nombre,p.apellido,p.tipo,c.nombre as cargo j.nombre as jefatura FROM usuario as p
+               //      JOIN cargo as c ON c.id = p.id_cargo JOIN unidad as u ON u.id = u.id_lugar JOIN jefatura as j ON j.id = u.id_jefatura WHERE p.estado = b'1' AND p.tipo=5 AND p.tipo=4 AND j.id='{$this->id_lugar_user}'";
+               $bajas="SELECT p.id,p.ci,p.nombre,p.apellido,p.tipo,c.nombre as cargo FROM usuario as p
+                    JOIN cargo as c ON c.id = p.id_cargo WHERE p.estado = b'0' AND tipo=5 AND tipo=4 AND id_lugar='{$this->id_lugar_user}'";
+               $result=["usuarios"=> parent::consultaRetorno($user),
+                         "bajas"=> parent::consultaRetorno($bajas)
+               ];
+               return $result;
           }
      }
  ?>

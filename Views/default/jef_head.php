@@ -45,7 +45,7 @@
 						<?php $session=Session::getSession('User');?>
 						<div class="col-md-10" style="padding-left:5px;paddding-right:0px">
 							<h6 style="margin-top:12px;margin-bottom:0;color:#cab9d4"><?php echo $session['nombre']." ".$session['apellido'];?></h6>
-							<h5 style="margin-top:0px;font-weight:700">ADMINISTRADOR</h5>
+							<h5 style="margin-top:0px;font-weight:700">PLANIFICADOR</h5>
 						</div>
 					</span>
 				</a>
@@ -105,15 +105,10 @@
 							</a>
 						</li>
 						<li class="treeview">
-							<a href="#">
+							<a href="/<?php echo FOLDER;?>/Unidad">
 								<i class="fa fa-institution"></i>
-								<span>Lugares</span>
-								<i class="fa fa-angle-left pull-right"></i>
+								<span>Unidades</span>
 							</a>
-							<ul class="treeview-menu">
-								<li><a href="/<?php echo FOLDER;?>/Jefatura"><i class="fa fa-circle-o"></i>Jefaturas</a></li>
-								<li><a href="/<?php echo FOLDER;?>/Unidad"><i class="fa fa-circle-o"></i>Unidades</a></li>
-							</ul>
 						</li>
 						<li class="treeview">
 							<a href="#">

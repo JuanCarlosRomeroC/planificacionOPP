@@ -7,13 +7,13 @@
 		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
 		<link rel="stylesheet" href="<?php echo URL;?>public/css/bootstrap.min.css">
-		<link rel="stylesheet" href="<?php echo URL; ?>public/css/font-awesome.css">
-		<link rel="stylesheet" href="<?php echo URL; ?>public/css/_all-skins.min.css">
-		<link rel="stylesheet" href="<?php echo URL; ?>public/css/AdminLTE.min.css">
-		<link rel="stylesheet" href="<?php echo URL; ?>public/css/sweetalert.css">
-		<link rel="stylesheet" href="<?php echo URL; ?>public/css/bootstrap-datetimepicker.css">
-		<link rel="stylesheet" href="<?php echo URL; ?>public/css/bootstrap-select.min.css">
-		<link rel="stylesheet" href="<?php echo URL; ?>public/css/admin.css">
+		<link rel="stylesheet" href="<?php echo URL;?>public/css/font-awesome.css">
+		<link rel="stylesheet" href="<?php echo URL;?>public/css/_all-skins.min.css">
+		<link rel="stylesheet" href="<?php echo URL;?>public/css/AdminLTE.min.css">
+		<link rel="stylesheet" href="<?php echo URL;?>public/css/sweetalert.css">
+		<link rel="stylesheet" href="<?php echo URL;?>public/css/bootstrap-datetimepicker.css">
+		<link rel="stylesheet" href="<?php echo URL;?>public/css/bootstrap-select.min.css">
+		<link rel="stylesheet" href="<?php echo URL;?>public/css/admin.css">
 
 		<script src="<?php echo URL;?>public/js/jQuery-2.1.4.min.js"></script>
 
@@ -42,8 +42,9 @@
 						<div class="col-md-2" style="padding:0">
 							<img src="<?php echo URL;?>public/images/icons/32/005-man.png" alt="">
 						</div>
+						<?php $session=Session::getSession('User');?>
 						<div class="col-md-10" style="padding-left:5px;paddding-right:0px">
-							<h6 style="margin-top:12px;margin-bottom:0;color:#cab9d4">Leo Mamani Usuario</h6>
+							<h6 style="margin-top:12px;margin-bottom:0;color:#cab9d4"><?php echo $session['nombre']." ".$session['apellido'];?></h6>
 							<h5 style="margin-top:0px;font-weight:700">USUARIO</h5>
 						</div>
 					</span>

@@ -8,6 +8,7 @@
      define('RQ','Resources');
      define('FOLDER',$url_p[1]); //  nombreproyecto
      define('URL',$URL_Raiz); // URL = variable global para direccionar archivos
+     define('COLOR',"#9162cf");
 
      define('URI',$_SERVER['REQUEST_URI']);
 ?>

@@ -45,7 +45,7 @@
 						<?php $session=Session::getSession('User');?>
 						<div class="col-md-10" style="padding-left:5px;paddding-right:0px">
 							<h6 style="margin-top:12px;margin-bottom:0;color:#cab9d4"><?php echo $session['nombre']." ".$session['apellido'];?></h6>
-							<h5 style="margin-top:0px;font-weight:700">ADMINISTRADOR</h5>
+							<h5 style="margin-top:0px;font-weight:700">PLANIFICADOR</h5>
 						</div>
 					</span>
 				</a>
