@@ -13,6 +13,7 @@
 		<link rel="stylesheet" href="<?php echo URL;?>public/css/sweetalert.css">
 		<link rel="stylesheet" href="<?php echo URL;?>public/css/bootstrap-datetimepicker.css">
 		<link rel="stylesheet" href="<?php echo URL;?>public/css/bootstrap-select.min.css">
+		<link rel="stylesheet" href="<?php echo URL;?>public/css/bootstrap-toggle.min.css">
 		<link rel="stylesheet" href="<?php echo URL;?>public/css/admin.css">
 
 		<script src="<?php echo URL;?>public/js/jQuery-2.1.4.min.js"></script>
@@ -21,6 +22,7 @@
 		<script src="<?php echo URL;?>public/js/app.min.js"></script>
 		<script src="<?php echo URL;?>public/js/bootstrap-datetimepicker.js"></script>
 		<script src="<?php echo URL;?>public/js/bootstrap-select.min.js"></script>
+		<script src="<?php echo URL;?>public/js/bootstrap-toggle.min.js"></script>
 		<script src="<?php echo URL;?>public/js/es.js"></script>
 		<script src="<?php echo URL;?>public/js/sweetalert.min.js"></script>
 		<script src="<?php echo URL;?>public/js/Chart.bundle.min.js"></script>
@@ -93,9 +95,14 @@
 							</a>
 						</li>
 						<li>
-							<a href="/<?php echo FOLDER;?>/Planificacion">
-								<i class="fa fa-book"></i><span>Planificaciones</span>
+							<a href="#">
+								<i class="fa fa-book"></i><span>Planificacion</span>
+								<i class="fa fa-angle-left pull-right"></i>
 							</a>
+							<ul class="treeview-menu">
+								<li><a href="/<?php echo FOLDER;?>/Planificacion"><i class="fa fa-circle-o"></i>Actividades</a></li>
+								<li><a href="/<?php echo FOLDER;?>/Otro"><i class="fa fa-circle-o"></i>Otros</a></li>
+							</ul>
 						</li>
 						<li class="treeview">
 							<a href="#">

@@ -21,7 +21,6 @@
                return $this->$atributo;
           }
           public function login(){
-              //$sql="SELECT *FROM usuario WHERE estado = 1" ;
                $auth="SELECT id,tipo,password,nombre,apellido FROM usuario
                     WHERE ci = '{$this->ci}' and estado=b'1'";
                $result= parent::consultaRetorno($auth);

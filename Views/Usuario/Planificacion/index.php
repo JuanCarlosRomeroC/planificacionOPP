@@ -33,7 +33,7 @@
 							<td style="text-align:left;padding-left:9px"><h5 style="text-align:left"> <?php echo $row['estado']==0 ? "No Completado" : "Completado"?></h5></td>
 							<td>
 								<a data-target="#updateplanificacionModal" data-toggle="modal" onclick="updateAjax(<?php echo $row['id'];?>)"><button title="editar planificacion" type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button></a>
-								<a data-target="#updateactividadModalr" data-toggle="modal"><button title="ver nombreES" type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></button></a>
+								<a data-target="#verplanificacionModal" data-toggle="modal" onclick="verAjax(<?php echo $row['id'];?>)"><button title="ver planificación" type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></button></a>
 								<a  onclick="bajaAjax(<?php echo $row['id'];?>)">
 						    <?php $estado = $row['estado'];
                                  	if($estado==0){
@@ -51,7 +51,8 @@
 </div>
 
 <?php 	include 'modalnewplanificacion.php';
-		include 'modalupdateplanificacion.php';?>
+		include 'modalupdateplanificacion.php';
+		include 'modallistplanificacion.php';?>
 <script>
    	var id_actividad_u,id_planificacion_u,auxi=0,auxi2=0,rowobj=0,rowesp=0,validarbag=false;
     $(document).ready(function(){
@@ -233,5 +234,61 @@
 				}else{$("#buttonupdate").attr('disabled', true);}
 			}else{$("#buttonupdate").attr('disabled', true);}
 		}
+	}
+	function verAjax(val){
+		console.log(val);
+		//$("#buttonupdate").attr('disabled', true);small_error(".fila1_u",true);
+		$.ajax({
+			url: '<?php echo URL;?>Planificacion/ver/'+val,
+			type: 'get',
+			success:function(obj){
+				var data = JSON.parse(obj);
+				console.log(data);
+				var alcanzado = data.alcanzado;
+				var arrayalcan = alcanzado==null ? ([]):(alcanzado.split("|"));
+
+				var objetivos = data.objetivo;
+				var arrayaobje = objetivos.split("|");
+
+				var esperados = data.esperado;
+				var arrayesperado = esperados.split("|");
+
+			     $('#tabledeli,#tableobjetivos,#tableesperados').empty();
+				for (var i = 0; i < arrayalcan.length; i++) {
+						$('#tabledeli').append('<tr><td>'+(i+1)+'</td><td>'+arrayalcan[i]+'</td> </tr>');
+
+				}
+
+
+				for (var i = 0; i < arrayaobje.length; i++) {
+						$('#tableobjetivos').append('<tr><td>'+(i+1)+'</td><td>'+arrayaobje[i]+'</td> </tr>');
+
+					}
+
+				for (var i = 0; i < arrayesperado.length; i++) {
+						$('#tableesperados').append('<tr><td>'+(i+1)+'</td><td>'+arrayesperado[i]+'</td> </tr>');
+
+					}
+
+
+					$('#idcontesperados').text(arrayesperado.length);
+
+				 	$('#idcontobtenidos').text(arrayalcan.lengtn);
+				 	$('#idcontobjetivos').text(arrayaobje.length);
+
+
+			    var aux = ["no visto" , "visto"];
+
+				 $('#fechapre').text(data.fecha_de.toLowerCase());
+				 $('#fechafin').text(data.fecha_hasta.toLowerCase());
+				 $('#vistaplani').text(aux[data.vista_planificador].toLowerCase());
+				 $('#vistaunidad').text(aux[data.vista_unidad].toLowerCase());
+				 $('#vistajefatura').text(aux[data.vista_jefatura].toLowerCase());
+				 $('#observacion').text(data.observacion.toLowerCase());
+                 $('#fechaela').text(data.fecha_elaboracion.toLowerCase());
+				 $('#fechapresen').text(data.fecha_presentacion.toLowerCase());
+
+			}
+		});
 	}
 </script>
