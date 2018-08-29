@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <?php ob_start();$months=["Enero","Febrero","Marzo", "Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
-
+$mes=$months[intval($resultado['month']) - 1];
 ?>
 <html>
      <head>
           <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-          <title>Planificacion N°</title>
+          <title>Planificacion Mes de <?php echo $mes ?></title>
           <style>
           html, body {
                height: 100%;
@@ -37,6 +37,7 @@
              line-height: 1.3em;
              padding: 0;
              margin: 0;
+             text-align: center;
           }
           tr{
                padding: 0;
@@ -44,28 +45,32 @@
           }
           small{
                font-weight: 200;
-               color: #313131;
+               color: #757575;
                font-size: .98em;
           }
           h5{
-               margin:3px;padding:0
+               margin:3px;padding:0;
+               font-weight:200;font-size: .7em;
+          }
+          h3{
+               margin: 0;padding: 0;
           }
           </style>
      </head>
      <body >
           <img src="<?php echo URL;?>public/images/logos/logo.png" width="140px" style="position: absolute;top:-25px;z-index:10">
-          <center><h4>INFORME MENSUAL <small> Agosto 2018</small></h4></center>
-          <h5 style="z-index:10;margin-top:25px">NOMBRE Y APELLIDO <small>nombre</small> </h5>
-          <h5>CARGO <small>nombre</small> </h5>
-          <h5>UNIDAD <small>nombre</small> </h5>
-          <table width="100%" style="margin-top:15px"  width="100%" cellspacing="0" cellpadding="0">
+          <center><h3>INFORME MENSUAL <br> <small> <?php echo $mes." ".$resultado['year']; ?></small></h3></center>
+          <h5 style="z-index:10;margin-top:7px">NOMBRE Y APELLIDO: <small><?php echo $resultado['usuario']['nombre']." ".$resultado['usuario']['apellido']; ?></small> </h5>
+          <h5>CARGO: <small><?php echo strtolower($resultado['usuario']['cargo'])?></small> </h5>
+          <h5>UNIDAD: <small><?php echo strtolower($resultado['usuario']['unidad'])?></small> </h5>
+          <table width="100%" style="margin-top:10px"  width="100%" cellspacing="0" cellpadding="0">
                <thead style="background:#bdbdbd;text-align:center">
                     <tr>
                          <td width="11%" rowspan="2">ACTIVIDAD</td>
-                         <td width="10%" rowspan="2">VIAJE</td>
+                         <td width="9%" rowspan="2">VIAJE</td>
                          <td width="10%" rowspan="2">CIUDAD</td>
                          <td width="35%" rowspan="2">ESTABLECIMIENTO</td>
-                         <td width="24%" rowspan="2">LUGAR</td>
+                         <td width="25%" rowspan="2">LUGAR</td>
                          <td width="10%" colspan="2">FECHA</td>
                     </tr>
                     <tr>
@@ -78,7 +83,7 @@
                          <tr>
                               <td><h5><?php echo $resultado['todos'][$i]['actividad']; ?></h5></td>
                               <td><h5><?php echo $resultado['todos'][$i]['tipo_lugar']=="" ? "no se viajo" :$resultado['todos'][$i]['tipo_lugar']; ?></h5></td>
-                              <td style="text-align:left;padding-left:9px"><h5><?php echo $resultado['todos'][$i]['ciudad']=="" ?  "potosí" : $resultado['todos'][$i]['ciudad']?></h5></td>
+                              <td><h5><?php echo $resultado['todos'][$i]['ciudad']=="" ?  "potosí" : $resultado['todos'][$i]['ciudad']?></h5></td>
                               <td style="text-align:left;padding-left:9px"><h5><?php echo $resultado['todos'][$i]['establecimiento']=="" ?  "sin establecimiento" : $resultado['todos'][$i]['establecimiento']; ?> <small><?php echo $resultado['todos'][$i]['municipio'];?></small></h5></td>
                               <td><h5><?php echo $resultado['todos'][$i]['lugar']; ?></h5></td>
                               <td><h5><?php echo $resultado['todos'][$i]['fecha_de']; ?></h5></td>

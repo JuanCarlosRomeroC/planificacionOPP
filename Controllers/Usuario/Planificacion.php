@@ -6,6 +6,10 @@ class Planificacion extends Controllers{
           $this->planificacion=parent::loadClassmodels("PlanificacionModel");
      }
      public function index(){
+          $year=isset($_GET['year']) ? $_GET['year'] :date('Y');
+          $month=isset($_GET['month']) ? $_GET['month'] :date('m');
+          $this->planificacion->set('year',$year);
+          $this->planificacion->set('month',$month);
          $resultado=$this->planificacion->listar();
          $this->view->render($this,"index",$resultado);
      }

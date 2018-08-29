@@ -20,10 +20,11 @@
                $actividad="SELECT pa.year,a.nombre,a.id FROM planificacion_anual as pa
                JOIN actividad as a ON a.id=pa.id_actividad WHERE pa.id_usuario='{$this->user_id}' AND pa.year='{$year}'";
                $planificacion="SELECT p.*,a.nombre as actividad FROM planificacion as p
-               JOIN actividad as a ON a.id=p.id_actividad where p.id_usuario='{$this->user_id}'";
+               JOIN actividad as a ON a.id=p.id_actividad where p.id_usuario='{$this->user_id}' AND YEAR(p.fecha_de) = '{$this->year}' AND MONTH(p.fecha_de) = '{$this->month}'";
                $result=[
                          "actividades"=> parent::consultaRetorno($actividad),
-                         "planificacion"=>parent::consultaRetorno($planificacion)
+                         "planificacion"=>parent::consultaRetorno($planificacion),
+                         "month"=>$this->month,"year"=>$this->year
                ];
                return $result;
           }

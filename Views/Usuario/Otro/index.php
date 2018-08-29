@@ -1,7 +1,19 @@
 <div class="fab" data-target="#newotraplanificacionModal" data-toggle="modal"> + </div>
-<div class="row">
-	<h2 class="text-center" style="margin:20px 0 1px 0;font-weight:300">LISTA DE OTRAS PLANIFICACIONES</h2>
+
+<div class="col-md-12">
+	<div class="col-md-10">
+		<h2 class="text-center" style="margin:5px 0 1px 0;font-weight:300">LISTA DE OTRAS PLANIFICACIONES</h2>
+	</div>
+	<div class="col-md-2">
+	   <div class='input-group date' id='datetimepickermes'>
+		   <input  readonly type='text' value="<?php echo $resultado['year']."-".$resultado['month'] ?>" class="form-control" placeholder=" <?php echo $resultado['year']."-".$resultado['month'] ?>"/>
+		 <span class="input-group-addon">
+		    <span class="glyphicon glyphicon-calendar"></span>
+		 </span>
+	   </div>
+	</div>
 </div>
+
 <div class="row" style="margin:10px"> <!-- SECTION TABLE PLANIFICACION -->
 	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 		<div class="col-md-12">
@@ -156,8 +168,7 @@
 		</div>
 	</div>
 	<center>
-		<button type="button" class="btn btn-default">IMPRIMIR PLANIFICACIÓN</button>
-		<button type="button" class="btn btn-success">IMPRIMIR REPORTE</button>
+		<a href="/<?php echo FOLDER;?>/Otro/printpdf/<?php echo $resultado['year'].$resultado['month']?>" target="_blank"><button type="button" class="btn btn-success">IMPRIMIR REPORTE</button></a>
 	</center>
 </div>
 <?php 	include 'modalnewotraplanificacion.php';
@@ -195,6 +206,13 @@
 	    	$('#datetimepicker1,#datetimepicker2').datetimepicker({locale: 'es',format: 'YYYY-MM-DD',ignoreReadonly: true,viewMode: 'days'}).on('dp.change', function(e){ validate_fecha("","true");});
 	    	$('#datetimepicker1_u,#datetimepicker2_u').datetimepicker({locale: 'es',format: 'YYYY-MM-DD',ignoreReadonly: true,viewMode: 'days'}).on('dp.change', function(e){ validate_fecha("_u","false");});
 		$('#inputlugar,#inputlugar_u').keypress(function(e){not_number(e);}).keyup(function(){if($(this).val().trim().length>5){small_error($(this).attr('toggle'),true);}else{small_error($(this).attr('toggle'),false);}function_validate($(this).attr('validate'));});
+		$('#datetimepickermes').datetimepicker({locale: 'es',format: 'YYYY-MM',ignoreReadonly: true,viewMode: 'months'}).on('dp.change', function(e){
+			var placeholder=$('#datetimepickermes input').attr('placeholder'),input=$('#datetimepickermes input').val(),entero=parseInt(e.date._d.getMonth())+1,au= entero < 10 ? ("0" + entero) : (entero);
+			if (placeholder.toString()!=input.toString()) {
+				window.location.href = "/<?php echo FOLDER;?>/Otro?year="+e.date._d.getFullYear()+"&month="+au;
+			}
+		});
+
 
 		$('#checkviaje').change(function () {if($(this).is(':checked')){$('#collapse5').show();}else{$('#collapse5').hide();}function_validate($(this).attr('validate'));});
 		$('.checklugar').change(function () {

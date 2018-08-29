@@ -53,6 +53,8 @@ class Router{
           return $this->uri;
      }
      public function getController(){
+          $aux=explode('?', $this->controller)==null ? [] : explode('?', $this->controller);
+          $this->controller= $aux==[] ?  $this->controller : $aux[0] ;
           return $this->controller;
      }
      public function getMethod(){

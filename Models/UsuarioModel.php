@@ -72,10 +72,9 @@
                          JOIN jefatura as j ON u.id_lugar = j.id
                          WHERE u.id = '{$this->id}' LIMIT 1";
                }else{
-                    $sql="SELECT u.*,n.nombre as unidad,j.nombre as jefatura,c.nombre as cargo FROM usuario as u
+                    $sql="SELECT u.*,n.nombre as unidad,c.nombre as cargo FROM usuario as u
                          JOIN cargo as c ON c.id = u.id_cargo
                          LEFT JOIN unidad as n ON u.id_lugar = n.id
-                         LEFT JOIN jefatura as j ON n.id_jefatura =j.id
                          WHERE u.id = '{$this->id}' LIMIT 1";
                }
                return mysql_fetch_assoc(parent::consultaRetorno($sql));

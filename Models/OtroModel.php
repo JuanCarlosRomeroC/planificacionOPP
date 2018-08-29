@@ -16,15 +16,14 @@
                return $this->$atributo;
           }
           public function listar(){
-               $year=date('Y');
                $todos="SELECT p.*,a.nombre as actividad FROM otra_planificacion as p
-               JOIN otra_actividad as a ON a.id=p.id_otra_actividad where p.id_usuario='{$this->user_id}' ";
+               JOIN otra_actividad as a ON a.id=p.id_otra_actividad where p.id_usuario='{$this->user_id}' AND YEAR(p.fecha_de) = '{$this->year}' AND MONTH(p.fecha_de) = '{$this->month}'";
                $viajes="SELECT p.*,a.nombre as actividad,e.nombre as establecimiento,m.nombre as municipio FROM otra_planificacion as p
                     JOIN otra_actividad as a ON a.id=p.id_otra_actividad
                     LEFT JOIN establecimiento as e ON e.id=p.id_establecimiento
-                    LEFT JOIN municipio as m ON m.id=e.id_municipio where p.id_usuario='{$this->user_id}' AND p.tipo_actividad='viaje' ";
+                    LEFT JOIN municipio as m ON m.id=e.id_municipio where p.id_usuario='{$this->user_id}' AND p.tipo_actividad='viaje'  AND YEAR(p.fecha_de) = '{$this->year}' AND MONTH(p.fecha_de) = '{$this->month}'";
                $locales="SELECT p.*,a.nombre as actividad FROM otra_planificacion as p
-               JOIN otra_actividad as a ON a.id=p.id_otra_actividad where p.id_usuario='{$this->user_id}' AND p.tipo_actividad='local' ";
+               JOIN otra_actividad as a ON a.id=p.id_otra_actividad where p.id_usuario='{$this->user_id}' AND p.tipo_actividad='local'  AND YEAR(p.fecha_de) = '{$this->year}' AND MONTH(p.fecha_de) = '{$this->month}'";
                $redsalud="SELECT * FROM redsalud";
                $municipio="SELECT m.*,r.nombre as redsalud FROM municipio as m JOIN redsalud as r ON r.id=m.id_redsalud";
                $establecimiento="SELECT e.*,m.nombre as municipio FROM establecimiento as e JOIN municipio as m ON m.id=e.id_municipio";
@@ -36,6 +35,7 @@
                          "municipios"=>parent::consultaRetorno($municipio),
                          "establecimientos"=>parent::consultaRetorno($establecimiento),
                          "otraactividad"=>parent::consultaRetorno($otraactividad),
+                         "month"=>$this->month,"year"=>$this->year
                ];
                return $result;
           }
@@ -47,12 +47,17 @@
                $planificacion="SELECT p.*,a.nombre as actividad,e.nombre as establecimiento,m.nombre as municipio FROM otra_planificacion as p
                     JOIN otra_actividad as a ON a.id=p.id_otra_actividad
                     LEFT JOIN establecimiento as e ON e.id=p.id_establecimiento
-                    LEFT JOIN municipio as m ON m.id=e.id_municipio where p.id_usuario='{$this->user_id}' ";
+                    LEFT JOIN municipio as m ON m.id=e.id_municipio where p.id_usuario='{$this->user_id}'  AND YEAR(p.fecha_de) = '{$this->year}' AND MONTH(p.fecha_de) = '{$this->month}'";
                $all = array();$query=parent::consultaRetorno($planificacion);
                while($row = mysql_fetch_assoc($query)){
                   $all[] = $row;
                }
-               $result=["todos"=> $all];
+               $user="SELECT u.*,n.nombre as unidad,j.nombre as jefatura,c.nombre as cargo FROM usuario as u
+                    JOIN cargo as c ON c.id = u.id_cargo
+                    LEFT JOIN unidad as n ON u.id_lugar = n.id
+                    LEFT JOIN jefatura as j ON n.id_jefatura =j.id
+                    WHERE u.id = '{$this->user_id}' LIMIT 1";
+               $result=["todos"=> $all,"month"=>$this->month,"year"=>$this->year,"usuario"=>mysql_fetch_assoc(parent::consultaRetorno($user))];
                return $result;
           }
           public function crear(){
