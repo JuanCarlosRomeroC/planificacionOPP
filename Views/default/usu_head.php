@@ -91,50 +91,23 @@
 						<li>
 							<a href="/<?php echo FOLDER;?>/Principal">
 								<i class="fa fa-home"></i> <span>Inicio</span>
-								<small class="label pull-right bg-yellow">Informacion</small>
 							</a>
-						</li>
-						<li>
-							<a href="#">
-								<i class="fa fa-book"></i><span>Planificacion</span>
-								<i class="fa fa-angle-left pull-right"></i>
-							</a>
-							<ul class="treeview-menu">
-								<li><a href="/<?php echo FOLDER;?>/Planificacion"><i class="fa fa-circle-o"></i>Actividades</a></li>
-								<li><a href="/<?php echo FOLDER;?>/Otro"><i class="fa fa-circle-o"></i>Otros</a></li>
-							</ul>
 						</li>
 						<li class="treeview">
-							<a href="#">
-								<i class="fa fa-institution"></i>
-								<span>Lugares</span>
-								<i class="fa fa-angle-left pull-right"></i>
-							</a>
-							<ul class="treeview-menu">
-								<li><a href="/<?php echo FOLDER;?>/Jefatura"><i class="fa fa-circle-o"></i>Jefaturas</a></li>
-								<li><a href="/<?php echo FOLDER;?>/Unidad"><i class="fa fa-circle-o"></i>Unidades</a></li>
-							</ul>
+							<a href="/<?php echo FOLDER;?>/Actividad"><i class="fa fa-plus-square"></i><span style="color:#b7ab1f">MIS ACTIVIDADES</span></a>
 						</li>
 						<li class="treeview">
-							<a href="#">
-								<i class="fa fa-file"></i>
-								<span>Reportes</span>
-								<i class="fa fa-angle-left pull-right"></i>
+							<a href="/<?php echo FOLDER;?>/Planificacion">
+								<i class="fa fa-file-text-o"></i><span>Planificar Actividades</span>
 							</a>
-							<ul class="treeview-menu">
-								<li><a href=""><i class="fa fa-circle-o"></i>Jefatura</a></li>
-								<li><a href=""><i class="fa fa-circle-o"></i>Unidad</a></li>
-								<li><a href=""><i class="fa fa-circle-o"></i>Usuario</a></li>
-							</ul>
 						</li>
-						<li>
-							<a href="#" style="cursor:pointer">
-								<i class="fa fa-bell"></i> <span>Notificaciones</span>
-								<small class="label pull-right bg-red" style="display:none" id="cantobject"></small>
+						<li class="treeview">
+							<a href="/<?php echo FOLDER;?>/Otro">
+								<i class="fa fa-file"></i><span>Otra Planificación</span>
 							</a>
 						</li>
 						<li>
-							<a href="/<?php echo FOLDER;?>/Usuario/destroySession" style="cursor:pointer">
+							<a href="/<?php echo FOLDER;?>/Usuario/destroySession">
 								<i class="fa fa-sign-out"></i> <span>Salir</span>
 							</a>
 						</li>

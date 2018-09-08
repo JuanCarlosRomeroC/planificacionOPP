@@ -18,6 +18,25 @@ class Planificacion extends Controllers{
          $data=$this->planificacion->ver();
          echo json_encode($data);
      }
+     public function printpdf($id){
+          $this->planificacion->set('year',substr($id, 0, -2));
+          $this->planificacion->set('month',substr($id, -2));
+          $data=$this->planificacion->imprimir();
+          $this->pdf->loadPDF($this,'print','landscape',$data);
+     }
+     public function print1pdf($id){
+          $this->planificacion->set('year',substr($id, 0, -2));
+          $this->planificacion->set('month',substr($id, -2));
+          $data=$this->planificacion->imprimir();
+          $this->pdf->loadPDF($this,'print1','landscape',$data);
+     }
+     public function validar($id){
+         $this->planificacion->set('id',$id);
+         $this->planificacion->set("month",$_GET['month']);
+         $this->planificacion->set("year",$_GET['year']);
+         $data=$this->planificacion->validar();
+         echo json_encode($data);
+     }
      public function crear(){
           $this->planificacion->set("id_actividad",$_POST['id_actividad']);
           $this->planificacion->set("fecha_de",$_POST['fecha_de']);
@@ -37,10 +56,11 @@ class Planificacion extends Controllers{
          $resultado=$this->planificacion->editar();
          echo $resultado;
      }
-     public function destroySession(){
-          Session::destroy();
-          header('Location: '.URL);
-          exit();
+     public function completarinforme($id){
+          $this->planificacion->set("id",$id);
+          $this->planificacion->set("observacion",$_POST['observacion']);
+          $resultado=$this->planificacion->completarinforme();
+          echo $resultado;
      }
 }
  ?>

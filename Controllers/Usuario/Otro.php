@@ -22,7 +22,7 @@ class Otro extends Controllers{
           $this->otro->set('year',substr($id, 0, -2));
           $this->otro->set('month',substr($id, -2));
           $data=$this->otro->imprimir();
-          $this->pdf->loadPDF($this, $data);
+          $this->pdf->loadPDF($this,'print','landscape',$data);
      }
      public function crear(){
           $this->otro->set("id_establecimiento",$_POST['id_establecimiento']);

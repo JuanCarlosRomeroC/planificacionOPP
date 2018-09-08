@@ -58,9 +58,13 @@ class Router{
           return $this->controller;
      }
      public function getMethod(){
+          $aux=explode('?', $this->method)==null ? [] : explode('?', $this->method);
+          $this->method= $aux==[] ?  $this->method : $aux[0] ;
           return $this->method;
      }
      public function getParam(){
+          $aux=explode('?', $this->param)==null ? [] : explode('?', $this->param);
+          $this->param= $aux==[] ?  $this->param : $aux[0] ;
           return $this->param;
      }
 }

@@ -59,10 +59,10 @@
 							<button type="button" id="buttonadd_resultado" class="btn btn-warning" info="" validate="true">AGREGAR <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
 						</div>
 						<div class="col-sm-10 col-xs-12">
-							<input type="text" id="input_resultado" class="form-control" placeholder="Ejemplo: Información Centralizada">
+							<input type="text" id="input_obtenido" class="form-control" placeholder="Ejemplo: Información Centralizada">
 						</div>
 					</div>
-					<ul class="list-group"  id="resultado_caja" >
+					<ul class="list-group"  id="obtenido_caja" >
 					</ul>
 				</form>
 			</div>

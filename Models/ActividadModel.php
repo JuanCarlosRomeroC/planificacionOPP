@@ -1,7 +1,15 @@
 <?php
      class ActividadModel extends Conexion{
+          public $user_id;
+          public $user_lugar;
+          public $session;
           function __construct(){
                parent::__construct();
+               $this->session=Session::getSession('User');
+               if (isset($this->session)){
+                    $this->user_id=$this->session['id'];
+                    $this->user_lugar=$this->session['id_lugar'];
+               }
           }
           public function set($atributo,$contenido){
                $this->$atributo=$contenido;
@@ -55,16 +63,49 @@
                parent::consultaSimple($sql);
                return "La Actividad se Modifico Satisfactoriamente";
           }
-          public function eliminar(){
-               $sql="UPDATE actividad SET estado='0'
+          public function terminaractividad(){
+               $sql="UPDATE planificacion_anual SET estado='1'
                     WHERE id='{$this->id}'";
                parent::consultaSimple($sql);
-               return "Actividad dada de Baja Satisfactoriamente";
+               return "La Actividad Se Termino Satisfactoriamente";
           }
           public function ver_nombre(){
                $sql2="SELECT * FROM actividad WHERE nombre='{$this->nombre}'";
                $resultado=parent::consultaRetorno($sql2);
                return mysql_num_rows($resultado);
+          }
+          public function listarparausuario(){
+               $actividad=parent::consultaRetorno("SELECT p.*,a.nombre as actividad FROM planificacion_anual as p
+               JOIN actividad as a ON a.id = p.id_actividad WHERE p.id_usuario='{$this->user_id}' AND p.year='{$this->year}' ");
+               $all = array();
+               while ($rows =  mysql_fetch_assoc($actividad)) {
+                    $all[] = $rows;
+               }
+               $count=0;
+               while ($count < count($all)) {
+                    $rowactividad=$all[$count]["id_actividad"];
+                    $row=mysql_fetch_assoc(parent::consultaRetorno("SELECT COUNT(*) as total FROM planificacion
+                    WHERE id_usuario='{$this->user_id}' AND id_actividad='{$rowactividad}'  AND YEAR(fecha_de)='{$this->year}' AND estado=1"));
+                    $all[$count]['total']=$row['total'];
+                    $count=$count+1;
+               }
+               $lugar=$this->user_lugar;$asignar=parent::consultaRetorno("SELECT * FROM actividad WHERE id_unidad='{$lugar}'  AND estado=1");
+               $result=["actividades"=>$all,"year"=>$this->year,"sinasignar"=>$asignar];
+               return $result;
+          }
+          public function listarparaunidad(){
+               $actividad=parent::consultaRetorno("SELECT * FROM actividad WHERE id_unidad='{$this->user_lugar}' AND estado=1");
+               $usuario=mysql_fetch_assoc(parent::consultaRetorno("SELECT u.id_jefatura FROM usuario as p JOIN unidad as u ON u.id=p.id_lugar WHERE p.id='{$this->user_id}' LIMIT 1"));
+               $jefatura=$usuario['id_jefatura'];
+               $asignar=parent::consultaRetorno("SELECT * FROM actividad WHERE id_jefatura='{$jefatura}' AND id_unidad=0");
+               $result=["actividades"=>$actividad,"sinasignar"=>$asignar];
+               return $result;
+          }
+
+          public function crear_parausuario(){
+                    $sql=("INSERT INTO planificacion_anual (id_usuario,id_actividad,year) VALUES ('{$this->user_id}','{$this->id_actividad}','{$this->year}' )");
+                    parent::consultaSimple($sql);
+                    return "La Actividad se Registro Satisfactoriamente";
           }
      }
  ?>

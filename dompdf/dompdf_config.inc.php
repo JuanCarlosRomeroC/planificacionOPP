@@ -262,7 +262,7 @@ def("DOMPDF_ENABLE_PHP", true);
  *
  * @var bool
  */
-def("DOMPDF_ENABLE_JAVASCRIPT", false);
+def("DOMPDF_ENABLE_JAVASCRIPT", true);
 
 /**
  * Enable remote file access

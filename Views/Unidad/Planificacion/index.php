@@ -13,7 +13,7 @@
 		   <input  readonly type='text' value="<?php echo $resultado['year']."-".$resultado['month'] ?>" class="form-control" placeholder=" <?php echo $resultado['year']."-".$resultado['month'] ?>"/>
 		 <span class="input-group-addon">
 		    <span class="glyphicon glyphicon-calendar"></span>
-	    </span>
+		 </span>
 	   </div>
 	</div>
 </div>
@@ -135,7 +135,7 @@
 		//agregar objetivos
 		$('#buttonadd_objetivo,#buttonadd_objetivo_u').click(function(){var type=$(this).attr("info"),estado=$(this).attr("validate");if (type=="_u") {validarbag=true;}if ($('#input_objetivo'+type).val().trim()!="") {$('#objetivo_caja'+type).append('<li class="list-group-item rows_objetivos'+type+' row_objetivo'+type+auxi2+'" style="padding: 5px 15px 5px 15px;"><span class="badge glyphicon glyphicon-remove badge_objetivo'+type+'"  row="'+auxi2+'" aria-hidden="true" style="background:#ca3030;cursor:pointer"> </span>'+$('#input_objetivo'+type).val()+'</li>');auxi2=auxi2+1;$('#input_objetivo'+type).val("");function_validate(estado);}$('.badge_objetivo'+type).click(function(){$('.row_objetivo'+type+$(this).attr('row')).remove();function_validate(estado);});});
 		//agregar resultados esperados
-		$('#buttonadd_resultado,#buttonadd_resultado_u').click(function(){var type=$(this).attr("info"),estado=$(this).attr("validate");console.log($('#input_resultado'+type).val()); if (type=="_u") {validarbag=true;}if ($('#input_resultado'+type).val().trim()!="") {$('#resultado_caja'+type).append('<li class="list-group-item rows_resultados'+type+' row_resultado'+type+auxi2+'" style="padding: 5px 15px 5px 15px;"><span class="badge glyphicon glyphicon-remove badge_resultado'+type+'"  row="'+auxi2+'" aria-hidden="true" style="background:#ca3030;cursor:pointer"> </span>'+$('#input_resultado'+type).val()+'</li>');auxi2=auxi2+1;$('#input_resultado'+type).val("");function_validate(estado);}$('.badge_resultado'+type).click(function(){$('.row_resultado'+type+$(this).attr('row')).remove();function_validate(estado);});});
+		$('#buttonadd_resultado,#buttonadd_resultado_u').click(function(){var type=$(this).attr("info"),estado=$(this).attr("validate");if (type=="_u") {validarbag=true;}if ($('#input_resultado'+type).val().trim()!="") {$('#resultado_caja'+type).append('<li class="list-group-item rows_resultados'+type+' row_resultado'+type+auxi2+'" style="padding: 5px 15px 5px 15px;"><span class="badge glyphicon glyphicon-remove badge_resultado'+type+'"  row="'+auxi2+'" aria-hidden="true" style="background:#ca3030;cursor:pointer"> </span>'+$('#input_resultado'+type).val()+'</li>');auxi2=auxi2+1;$('#input_resultado'+type).val("");function_validate(estado);}$('.badge_resultado'+type).click(function(){$('.row_resultado'+type+$(this).attr('row')).remove();function_validate(estado);});});
 
 	//__________________COMPLETAR INFORME DE PLANIFICACION
 		$('#textareaobjetivo').keyup(function(){if($(this).val().trim().length>4){validate_sinsmall($(this).attr('toggle'),true);$("#btninforme").attr('disabled', false);}else{validate_sinsmall($(this).attr('toggle'),false);$("#btninforme").attr('disabled', true);}});
