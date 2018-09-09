@@ -28,6 +28,7 @@
 		<script src="<?php echo URL;?>public/js/Chart.bundle.min.js"></script>
 		<script src="<?php echo URL;?>public/js/bootstrap.min.js"></script>
 		<script src="<?php echo URL;?>public/js/admin.js"></script>
+		<script src="<?php echo URL;?>public/js/notificacion.js"></script>
 	</head>
 	<body class="hold-transition skin-blue sidebar-mini">
 		<div class="wrapper">
@@ -62,7 +63,7 @@
 						</div>
 						<div class="col-md-6 hidden-sm hidden-xs" style="padding:0">
 							<div style="float:left">
-								<h3 style="color:#a68db9;margin-bottom:0;margin-top:13px;margin-left:20px;font-weight:600">SERVÍCIO DEPARTAMENTAL DE SALUD</h3>
+								<h3 style="color:#a68db9;margin-bottom:0;margin-top:13px;margin-left:20px;font-weight:600;text-transform:uppercase;text-align:left"><?php echo isset($resultado['titulo']['nombre']) ? $resultado['titulo']['nombre'].$resultado['titulo']['apellido']:"SERVÍCIO DEPARTAMENTAL DE SALUD";?></h3>
 							</div>
 						</div>
 						<div class="col-md-5 col-sm-10 col-xs-10" style="padding:0" >
@@ -94,16 +95,22 @@
 							</a>
 						</li>
 						<li class="treeview">
-							<a href="/<?php echo FOLDER;?>/Actividad"><i class="fa fa-plus-square"></i><span style="color:#b7ab1f">MIS ACTIVIDADES</span></a>
+							<a href="/<?php echo FOLDER;?>/Actividad"><i class="fa fa-plus-square"></i><span style="color:#b7ab1f">ACTIVIDADES</span></a>
 						</li>
 						<li class="treeview">
-							<a href="/<?php echo FOLDER;?>/Planificacion">
-								<i class="fa fa-file-text-o"></i><span>Planificar Actividades</span>
+							<a href="/<?php echo FOLDER;?>/Usuario">
+								<i class="fa fa-users"></i><span>Personal</span>
 							</a>
 						</li>
 						<li class="treeview">
-							<a href="/<?php echo FOLDER;?>/Otro">
-								<i class="fa fa-file"></i><span>Otra Planificación</span>
+							<a href="/<?php echo FOLDER;?>/Planificacion">
+								<i class="fa fa-file"></i><span>Planificaciones</span>
+							</a>
+						</li>
+						<li>
+							<a href="/<?php echo FOLDER;?>/Notificacion" style="cursor:pointer">
+								<i class="fa fa-bell"></i> <span>Notificaciones</span>
+								<small class="label pull-right bg-red" style="display:none" id="cantobject"></small>
 							</a>
 						</li>
 						<li>

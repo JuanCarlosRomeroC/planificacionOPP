@@ -72,6 +72,11 @@
 <script>
 	var id_jefatura_u,id_actividad_u;
     $(document).ready(function(){
+	     if ($('#selectactividad option').length>0) {
+		    $("#buttonagregaractividad").attr('disabled', false);
+	     }else{
+		    $("#buttonagregaractividad").attr('disabled', true);
+	     }
 	     $('#datetimepickeryear').datetimepicker({locale: 'es',format: 'YYYY',ignoreReadonly: true,viewMode: 'years'}).on('dp.change', function(e){
 		     var placeholder=$('#datetimepickeryear input').attr('placeholder'),input=$('#datetimepickeryear input').val();
 		     if (placeholder.toString()!=input.toString()) {
@@ -93,7 +98,7 @@
 				},
 				success:function(obj){
 					swal("Mensaje de Alerta!", obj , "success");
-					setInterval(function(){ window.location.href = "/<?php echo FOLDER; ?>/Otro"; }, 1500);
+					setInterval(function(){ window.location.href = "/<?php echo FOLDER; ?>/Actividad"; }, 1500);
 				}
 			});
 		});

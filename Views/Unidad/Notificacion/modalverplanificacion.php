@@ -6,10 +6,23 @@
                     <div class="row" style="margin:0px;background:#cd9850;padding:0 10px 0 0;">
                          <div class="col-md-4 col-lg-3 col-sm-6 col-xs-12" style="margin:0px;padding:0 0 15px 0;">
                               <center>
+	                           	<img src="<?php echo URL;?>public/images/icons/32/manager.png"  style="padding:15px 0 5px 0;margin:0">
+                                   <br><p style="line-height: .95em !important;color:#ffc97f;margin:1px">NOMBRES</p>
+	                           	<p class="vnombre" style="line-height: .95em !important;color:#fffcf1;margin:1px"></p>
+	                       	</center>
+                         </div>
+                         <div class="col-md-4 col-lg-3 col-sm-6 col-xs-12" style="margin:0px;padding:0 0 15px 0;">
+                              <center>
+	                           	<img src="<?php echo URL;?>public/images/icons/32/big-id-card.png"  style="padding:15px 0 5px 0;margin-top:0px">
+                                   <br><p style="line-height: .95em !important;color:#ffc97f;margin:1px">IDENTIFICACIÓN</p>
+	                           	<p class="vci" style="line-height: .95em !important;color:#fffcf1;margin:1px"></p>
+	                       	</center>
+                         </div>
+                         <div class="col-md-4 col-lg-3 col-sm-6 col-xs-12" style="margin:0px;padding:0 0 15px 0;">
+                              <center>
 	                           	<img src="<?php echo URL;?>public/images/icons/32/profiles.png"  style="padding:15px 0 5px 0;margin-top:0px;">
                                    <br><p style="line-height: .95em !important;color:#ffc97f;margin:1px">DE</p>
                                    <p class="vfecha_de" style="line-height: .95em !important;text-transform: lowercase;color:#fffcf1;margin:1px"></p>
-
                               </center>
                          </div>
                          <div class="col-md-4 col-lg-3 col-sm-6 col-xs-12" style="margin:0px;padding:0 0 15px 0;">
@@ -31,20 +44,6 @@
 	                           	<img src="<?php echo URL;?>public/images/icons/32/printer.png"  style="padding:15px 0 5px 0;margin-top:0px">
                                    <br><p style="line-height: .95em !important;color:#ffc97f;margin:1px">PRESENTADO</p>
 	                           	<p class="vfecha_presentacion" style="line-height: .95em !important;text-transform: lowercase;color:#fffcf1;margin:1px"></p>
-	                       	</center>
-                         </div>
-                         <div class="col-md-4 col-lg-3 col-sm-6 col-xs-12" style="margin:0px;padding:0 0 15px 0;">
-                              <center>
-	                           	<img src="<?php echo URL;?>public/images/icons/32/checked.png"  style="padding:15px 0 5px 0;margin:0">
-                                   <br><p style="line-height: .95em !important;color:#ffc97f;margin:1px">PLANIFICADOR</p>
-	                           	<p class="vvista_planificador" style="line-height: .95em !important;color:#fffcf1;margin:1px"></p>
-	                       	</center>
-                         </div>
-                         <div class="col-md-4 col-lg-3 col-sm-6 col-xs-12" style="margin:0px;padding:0 0 15px 0;">
-                              <center>
-	                           	<img src="<?php echo URL;?>public/images/icons/32/checked.png"  style="padding:15px 0 5px 0;margin-top:0px">
-                                   <br><p style="line-height: .95em !important;color:#ffc97f;margin:1px">JEFATURA</p>
-	                           	<p class="vvista_jefatura" style="line-height: .95em !important;color:#fffcf1;margin:1px"></p>
 	                       	</center>
                          </div>
                          <div class="col-md-4 col-lg-3 col-sm-6 col-xs-12" style="margin:0px;padding:0 0 15px 0;">
