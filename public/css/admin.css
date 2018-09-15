@@ -39,7 +39,7 @@ table>thead>tr>th{
 	font-size: 1.5em;
 	font-weight: 200;
 }
-table tbody>tr>td{
+td{
 	border: 1px solid #cdcdcd;
      text-align: center;
      vertical-align: inherit;
@@ -54,4 +54,5 @@ table tbody > tr > td > a > button{
 }
 .table-condensed > tbody > tr > td{
      padding:2px;
+     vertical-align: inherit;
 }

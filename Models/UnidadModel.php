@@ -1,7 +1,15 @@
 <?php
      class UnidadModel extends Conexion{
+          public $user_id;
+          public $user_lugar;
+          public $session;
           function __construct(){
                parent::__construct();
+               $this->session=Session::getSession('User');
+               if (isset($this->session)){
+                    $this->user_id=$this->session['id'];
+                    $this->user_lugar=$this->session['id_lugar'];
+               }
           }
           public function set($atributo,$contenido){
                $this->$atributo=$contenido;
@@ -25,6 +33,11 @@
                $all = array();$query=parent::consultaRetorno($usuarios);
                while($row = mysql_fetch_assoc($query)){
                   $all[] = $row;
+               }
+               $count=0;
+               while($count<count($all)){
+                    $all[$count]['id_hash']=base64_encode($all[$count]['id']);
+                  $count++;
                }
                $result=["usuarios"=> $all,
                          "unidad"=> mysql_fetch_assoc(parent::consultaRetorno($unidad))
@@ -70,6 +83,14 @@
                $sql2="SELECT * FROM unidad WHERE nombre='{$this->nombre}'";
                $resultado=parent::consultaRetorno($sql2);
                return mysql_num_rows($resultado);
+          }
+
+          public function listar_jefatura(){
+               $unidad="SELECT u.id,u.nombre,j.nombre as jefatura FROM unidad as u
+                    JOIN jefatura as j ON j.id = u.id_jefatura
+                    WHERE u.estado=b'1' AND u.id_jefatura='{$this->user_lugar}'";
+               $result=["unidades"=> parent::consultaRetorno($unidad)];
+               return $result;
           }
      }
  ?>

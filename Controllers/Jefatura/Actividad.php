@@ -6,32 +6,18 @@ class Actividad extends Controllers{
           parent::__construct();
           $this->actividad=parent::loadClassmodels("ActividadModel");
      }
-
      public function index(){
-         $resultado=$this->actividad->listar();
+         $resultado=$this->actividad->listarparaunidad();
          $this->view->render($this,"index",$resultado);
      }
-     public function ver($id){
-         $this->actividad->set('id',$id);
-         $data=$this->actividad->ver();
-         echo json_encode($data);
-     }
      public function crear(){
-          $this->actividad->set("nombre",$_POST['nombre']);
-          $this->actividad->set("id_jefatura",$_POST['id_jefatura']);
-          $resultado=$this->actividad->crear();
+          $this->actividad->set("id",$_POST['id_actividad']);
+          $resultado=$this->actividad->crear_paraunidad();
           echo $resultado;
-     }
-     public function editar($id){
-         $this->actividad->set("id",$id);
-         $this->actividad->set("nombre",$_POST['nombre']);
-         $this->actividad->set("id_jefatura",$_POST['id_jefatura']);
-         $resultado=$this->actividad->editar();
-         echo $resultado;
      }
      public function eliminar($id){
          $this->actividad->set('id',$id);
-         $this->actividad->eliminar();
+         $this->actividad->eliminar_actividadunidad();
      }
 }
  ?>

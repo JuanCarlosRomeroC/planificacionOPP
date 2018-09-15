@@ -19,6 +19,7 @@ class Actividad extends Controllers{
      public function crear(){
           $this->actividad->set("nombre",$_POST['nombre']);
           $this->actividad->set("id_jefatura",$_POST['id_jefatura']);
+          $this->actividad->set("id_unidad",$_POST['id_unidad']);
           $resultado=$this->actividad->crear();
           echo $resultado;
      }
@@ -26,12 +27,17 @@ class Actividad extends Controllers{
          $this->actividad->set("id",$id);
          $this->actividad->set("nombre",$_POST['nombre']);
          $this->actividad->set("id_jefatura",$_POST['id_jefatura']);
+         $this->actividad->set("id_unidad",$_POST['id_unidad']);
          $resultado=$this->actividad->editar();
          echo $resultado;
      }
      public function eliminar($id){
          $this->actividad->set('id',$id);
          $this->actividad->eliminar();
+     }
+     public function alta($id){
+         $this->actividad->set('id',$id);
+         $this->actividad->alta();
      }
 }
  ?>

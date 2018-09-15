@@ -26,6 +26,17 @@
 							</select>
 						</div>
 					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">Unidad</label>
+						<div class="col-sm-10">
+							<select id="selectunidad" class="form-control selectpicker show-tick" data-live-search="true">
+								<option value="0" jefatura="0">Sin Asignar</option>
+								<?php while($row=mysql_fetch_array($resultado['unidades'])): ?>
+									<option value="<?php echo $row['id'];?>" jefatura="<?php echo $row['id_jefatura'];?>"><?php echo ucwords(strtolower($row['nombre']));?></option>
+								<?php endwhile; ?>
+							</select>
+						</div>
+					</div>
 				</form>
 			</div>
 			<div class="modal-footer">

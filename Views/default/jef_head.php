@@ -7,13 +7,14 @@
 		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
 		<link rel="stylesheet" href="<?php echo URL;?>public/css/bootstrap.min.css">
-		<link rel="stylesheet" href="<?php echo URL; ?>public/css/font-awesome.css">
-		<link rel="stylesheet" href="<?php echo URL; ?>public/css/_all-skins.min.css">
-		<link rel="stylesheet" href="<?php echo URL; ?>public/css/AdminLTE.min.css">
-		<link rel="stylesheet" href="<?php echo URL; ?>public/css/sweetalert.css">
-		<link rel="stylesheet" href="<?php echo URL; ?>public/css/bootstrap-datetimepicker.css">
-		<link rel="stylesheet" href="<?php echo URL; ?>public/css/bootstrap-select.min.css">
-		<link rel="stylesheet" href="<?php echo URL; ?>public/css/admin.css">
+		<link rel="stylesheet" href="<?php echo URL;?>public/css/font-awesome.css">
+		<link rel="stylesheet" href="<?php echo URL;?>public/css/_all-skins.min.css">
+		<link rel="stylesheet" href="<?php echo URL;?>public/css/AdminLTE.min.css">
+		<link rel="stylesheet" href="<?php echo URL;?>public/css/sweetalert.css">
+		<link rel="stylesheet" href="<?php echo URL;?>public/css/bootstrap-datetimepicker.css">
+		<link rel="stylesheet" href="<?php echo URL;?>public/css/bootstrap-select.min.css">
+		<link rel="stylesheet" href="<?php echo URL;?>public/css/bootstrap-toggle.min.css">
+		<link rel="stylesheet" href="<?php echo URL;?>public/css/admin.css">
 
 		<script src="<?php echo URL;?>public/js/jQuery-2.1.4.min.js"></script>
 
@@ -21,17 +22,19 @@
 		<script src="<?php echo URL;?>public/js/app.min.js"></script>
 		<script src="<?php echo URL;?>public/js/bootstrap-datetimepicker.js"></script>
 		<script src="<?php echo URL;?>public/js/bootstrap-select.min.js"></script>
+		<script src="<?php echo URL;?>public/js/bootstrap-toggle.min.js"></script>
 		<script src="<?php echo URL;?>public/js/es.js"></script>
 		<script src="<?php echo URL;?>public/js/sweetalert.min.js"></script>
 		<script src="<?php echo URL;?>public/js/Chart.bundle.min.js"></script>
 		<script src="<?php echo URL;?>public/js/bootstrap.min.js"></script>
 		<script src="<?php echo URL;?>public/js/admin.js"></script>
+		<script src="<?php echo URL;?>public/js/notificacion.js"></script>
 	</head>
 	<body class="hold-transition skin-blue sidebar-mini">
 		<div class="wrapper">
 			<header class="main-header" style="position:fixed;width:100%">
 				<!-- Logo -->
-				<a href="" class="logo" style="background-color: #9d92af;">
+				<a href="" class="logo col-md-12 hidden-xs" style="background-color: #9d92af;">
 					<!-- mini logo for sidebar mini 50x50 pixels -->
 					<span class="logo-mini">
 						<img src="<?php echo URL;?>public/images/icons/32/005-man.png" alt="">
@@ -45,7 +48,7 @@
 						<?php $session=Session::getSession('User');?>
 						<div class="col-md-10" style="padding-left:5px;paddding-right:0px">
 							<h6 style="margin-top:12px;margin-bottom:0;color:#cab9d4"><?php echo $session['nombre']." ".$session['apellido'];?></h6>
-							<h5 style="margin-top:0px;font-weight:700">PLANIFICADOR</h5>
+							<h5 style="margin-top:0px;font-weight:700">JEFATURA</h5>
 						</div>
 					</span>
 				</a>
@@ -60,7 +63,7 @@
 						</div>
 						<div class="col-md-6 hidden-sm hidden-xs" style="padding:0">
 							<div style="float:left">
-								<h3 style="color:#a68db9;margin-bottom:0;margin-top:13px;margin-left:20px;font-weight:600">SERVÍCIO DEPARTAMENTAL DE SALUD</h3>
+								<h3 style="color:#a68db9;margin-bottom:0;margin-top:13px;margin-left:20px;font-weight:600;text-transform:uppercase;text-align:left"><?php echo isset($resultado['titulo']['nombre']) ? $resultado['titulo']['nombre']." ".$resultado['titulo']['apellido']:"SERVÍCIO DEPARTAMENTAL DE SALUD";?></h3>
 							</div>
 						</div>
 						<div class="col-md-5 col-sm-10 col-xs-10" style="padding:0" >
@@ -89,58 +92,29 @@
 						<li>
 							<a href="/<?php echo FOLDER;?>/Principal">
 								<i class="fa fa-home"></i> <span>Inicio</span>
-								<small class="label pull-right bg-yellow">Informacion</small>
+							</a>
+						</li>
+						<li class="treeview">
+							<a href="/<?php echo FOLDER;?>/Unidad"><i class="fa fa-hospital-o"></i><span style="color:#b7ab1f">UNIDADES</span></a>
+						</li>
+						<li class="treeview">
+							<a href="/<?php echo FOLDER;?>/Usuario">
+								<i class="fa fa-users"></i><span>Personal</span>
+							</a>
+						</li>
+						<li class="treeview">
+							<a href="/<?php echo FOLDER;?>/Planificacion">
+								<i class="fa fa-file"></i><span>Planificaciones</span>
 							</a>
 						</li>
 						<li>
-							<a href="/<?php echo FOLDER;?>/Usuario" style="cursor:pointer">
-								<i class="fa fa-group"></i> <span>Usuarios</span>
-								<small class="pull-right glyphicon glyphicon-ok" style="color:#5ac65b"></small>
-							</a>
-						</li>
-						<li class="treeview">
-							<a href="/<?php echo FOLDER;?>/Actividad">
-								<i class="fa fa-list"></i>
-								<span>Actividades</span>
-							</a>
-						</li>
-						<li class="treeview">
-							<a href="/<?php echo FOLDER;?>/Unidad">
-								<i class="fa fa-institution"></i>
-								<span>Unidades</span>
-							</a>
-						</li>
-						<li class="treeview">
-							<a href="#">
-								<i class="fa fa-file"></i>
-								<span>Reportes</span>
-								<i class="fa fa-angle-left pull-right"></i>
-							</a>
-							<ul class="treeview-menu">
-								<li><a href=""><i class="fa fa-circle-o"></i>Jefatura</a></li>
-								<li><a href=""><i class="fa fa-circle-o"></i>Unidad</a></li>
-								<li><a href=""><i class="fa fa-circle-o"></i>Usuario</a></li>
-							</ul>
-						</li>
-						<li class="treeview">
-							<a href="#">
-								<i class="fa fa-wrench"></i>
-								<span>Configuraciones</span>
-								<i class="fa fa-angle-left pull-right"></i>
-							</a>
-							<ul class="treeview-menu">
-								<li><a href="#"><i class="fa fa-circle-o"></i>Usuarios</a></li>
-								<li><a href="#"><i class="fa fa-circle-o"></i>Vehiculos</a></li>
-							</ul>
-						</li>
-						<li>
-							<a href="#" style="cursor:pointer">
+							<a href="/<?php echo FOLDER;?>/Notificacion" style="cursor:pointer">
 								<i class="fa fa-bell"></i> <span>Notificaciones</span>
 								<small class="label pull-right bg-red" style="display:none" id="cantobject"></small>
 							</a>
 						</li>
 						<li>
-							<a href="/<?php echo FOLDER;?>/Usuario/destroySession" style="cursor:pointer">
+							<a href="/<?php echo FOLDER;?>/Usuario/destroySession">
 								<i class="fa fa-sign-out"></i> <span>Salir</span>
 							</a>
 						</li>
@@ -158,4 +132,14 @@
 								<div class="box-body">
 									<div class="row">
 										<div class="col-md-12">
+											<script type="text/javascript">
+											$(document).ready(function(){
+												$.ajax({
+													url: '<?php echo URL?>Notificacion/notificacion',type: "get",success: function(res){
+														if(res>0){
+															$('#cantobject').text(res);
+															$('#cantobject').show();
+														}else{
+															$('#cantobject').css('display','none');}}});})
+											</script>
 											<!--Contenido-->

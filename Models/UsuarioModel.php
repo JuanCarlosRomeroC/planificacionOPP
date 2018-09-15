@@ -1,17 +1,14 @@
 <?php
      class UsuarioModel extends Conexion{
-          public $id_user;
-          public $id_lugar_user;
+          public $user_id;
+          public $user_lugar;
           public $session;
           function __construct(){
                parent::__construct();
                $this->session=Session::getSession('User');
                if (isset($this->session)){
-                    $this->id_user=$this->session['id'];
-                    if ($this->session['tipo']==3 || $this->session['tipo']==4) {
-                         $row="SELECT id_lugar FROM usuario WHERE id='{$this->id_user}' LIMIT 1";
-                         $this->id_lugar_user=mysql_fetch_assoc(parent::consultaRetorno($row))["id_lugar"];
-                    }
+                    $this->user_id=$this->session['id'];
+                    $this->user_lugar=$this->session['id_lugar'];
                }
           }
           public function set($atributo,$contenido){
@@ -69,12 +66,13 @@
                if($tipouser['tipo']==3){
                     $sql="SELECT u.*,j.nombre as jefatura,c.nombre as cargo,null as unidad FROM usuario as u
                          JOIN cargo as c ON c.id = u.id_cargo
-                         JOIN jefatura as j ON u.id_lugar = j.id
+                         LEFT JOIN jefatura as j ON u.id_lugar = j.id
                          WHERE u.id = '{$this->id}' LIMIT 1";
                }else{
-                    $sql="SELECT u.*,n.nombre as unidad,c.nombre as cargo FROM usuario as u
+                    $sql="SELECT u.*,n.nombre as unidad,j.nombre as jefatura,c.nombre as cargo FROM usuario as u
                          JOIN cargo as c ON c.id = u.id_cargo
                          LEFT JOIN unidad as n ON u.id_lugar = n.id
+                         LEFT JOIN jefatura as j ON j.id = n.id_jefatura
                          WHERE u.id = '{$this->id}' LIMIT 1";
                }
                return mysql_fetch_assoc(parent::consultaRetorno($sql));
@@ -127,9 +125,9 @@
           }
           public function listar_unidad(){
                $user="SELECT p.id,p.ci,p.nombre,p.apellido,p.tipo,c.nombre as cargo FROM usuario as p
-                    JOIN cargo as c ON c.id = p.id_cargo  WHERE (p.estado = b'1' AND p.id_lugar='{$this->id_lugar_user}') AND (p.tipo=5 OR p.tipo=4)";
+                    JOIN cargo as c ON c.id = p.id_cargo  WHERE (p.estado = b'1' AND p.id_lugar='{$this->user_lugar}') AND (p.tipo=5 OR p.tipo=4)";
                $bajas="SELECT p.id,p.ci,p.nombre,p.apellido,p.tipo,c.nombre as cargo FROM usuario as p
-                    JOIN cargo as c ON c.id = p.id_cargo  WHERE (p.estado = b'0' AND p.id_lugar='{$this->id_lugar_user}') AND  (p.tipo=4 OR p.tipo=4)";
+                    JOIN cargo as c ON c.id = p.id_cargo  WHERE (p.estado = b'0' AND p.id_lugar='{$this->user_lugar}') AND  (p.tipo=4 OR p.tipo=4)";
                $result=["usuarios"=> parent::consultaRetorno($user),
                          "bajas"=> parent::consultaRetorno($bajas)
                ];
@@ -137,10 +135,34 @@
           }
           public function listar_jefatura(){
                $user="SELECT p.id,p.ci,p.nombre,p.apellido,p.tipo,c.nombre as cargo,u.nombre as unidad FROM usuario as p
-                    JOIN unidad as u ON u.id = p.id_lugar JOIN cargo as c ON c.id = p.id_cargo  WHERE (p.estado = b'1' AND u.id_jefatura='{$this->id_lugar_user}') AND (p.tipo=5 OR p.tipo=4)";
+                    JOIN unidad as u ON u.id = p.id_lugar JOIN cargo as c ON c.id = p.id_cargo  WHERE (p.estado = b'1' AND u.id_jefatura='{$this->user_lugar}') AND (p.tipo=5 OR p.tipo=4)";
                $bajas="SELECT p.id,p.ci,p.nombre,p.apellido,p.tipo,c.nombre as cargo,u.nombre as unidad FROM usuario as p
-                    JOIN unidad as u ON u.id = p.id_lugar JOIN cargo as c ON c.id = p.id_cargo  WHERE (p.estado = b'0' AND u.id_jefatura='{$this->id_lugar_user}') AND (p.tipo=5 OR p.tipo=4)";
+                    JOIN unidad as u ON u.id = p.id_lugar JOIN cargo as c ON c.id = p.id_cargo  WHERE (p.estado = b'0' AND u.id_jefatura='{$this->user_lugar}') AND (p.tipo=5 OR p.tipo=4)";
                $result=["usuarios"=> parent::consultaRetorno($user),
+                         "bajas"=> parent::consultaRetorno($bajas)
+               ];
+               return $result;
+          }
+
+          public function listar_planificador(){
+               $user="SELECT p.id,p.ci,CONCAT(p.nombre,'  ',p.apellido)as nombre,c.nombre as cargo,u.nombre as unidad,j.nombre as jefatura FROM usuario as p
+                    JOIN cargo as c ON c.id = p.id_cargo
+                    LEFT JOIN unidad as u ON u.id = p.id_lugar
+                    LEFT JOIN jefatura as j ON j.id = u.id_jefatura  WHERE p.estado = b'1' AND (p.tipo=5 OR p.tipo=4 OR p.tipo=3)";
+               $user_jefatura="SELECT p.id,p.ci,CONCAT(p.nombre,' ',p.apellido)as nombre,c.nombre as cargo,j.nombre as jefatura  FROM usuario as p
+                    JOIN cargo as c ON c.id = p.id_cargo LEFT JOIN jefatura as j ON j.id = p.id_lugar WHERE p.estado = b'1' AND p.tipo=3";
+               $userunidad="SELECT p.id,p.ci,CONCAT(p.nombre,' ',p.apellido)as nombre,c.nombre as cargo,u.nombre as unidad,j.nombre as jefatura FROM usuario as p
+                    JOIN cargo as c ON c.id = p.id_cargo
+                    LEFT JOIN unidad as u ON u.id = p.id_lugar
+                    LEFT JOIN jefatura as j ON j.id = u.id_jefatura  WHERE p.estado = b'1' AND p.tipo=4";
+               $bajas="SELECT p.id,p.ci,CONCAT(p.nombre,' ',p.apellido)as nombre,c.nombre as cargo,u.nombre as unidad,j.nombre as jefatura FROM usuario as p
+                    JOIN cargo as c ON c.id = p.id_cargo
+                    LEFT JOIN unidad as u ON u.id = p.id_lugar
+                    LEFT JOIN jefatura as j ON j.id = u.id_jefatura  WHERE p.estado = b'0' AND (p.tipo=5 OR p.tipo=4 OR p.tipo=3)";
+
+               $result=["usuarios"=> parent::consultaRetorno($user),
+                         "userjefatura"=> parent::consultaRetorno($user_jefatura),
+                         "userunidad"=> parent::consultaRetorno($userunidad),
                          "bajas"=> parent::consultaRetorno($bajas)
                ];
                return $result;

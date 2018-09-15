@@ -2,14 +2,14 @@
 	$users=['Administrador','Director','Planificador','Jefe de Jefatura','Jefe de Unidad','Normal'];
 ?>
 <div class="row">
-	<h2 class="text-center" style="margin:20px 0 1px 0;font-weight:300">LISTA DE USUARIOS</h2>
+	<h2 class="text-center" style="margin:20px 0 1px 0;font-weight:300">LISTA DEL PERSONAL DE LA UNIDAD USUARIOS</h2>
 </div>
 <div class="row" style="margin:10px"> <!-- SECTION TABLE USERS -->
 	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 		<div class="col-md-12">
 	          <ul class="nav nav-tabs nav-justified" id="myTabs">
 	               <li role="presentation" class="active"><a href="#todos" aria-controls="todos" role="tab" data-toggle="tab">TODOS<span class="badge" style="background:red;margin-left:10px;color:#fff"><?php echo mysql_num_rows($resultado["usuarios"]);?></span></a></li>
-				<li role="presentation"><a href="#baja" aria-controls="baja" role="tab" data-toggle="tab">BAJAS<span class="badge" style="background:red;margin-left:10px"><?php echo mysql_num_rows($resultado["bajas"]);?></span></a></li>
+	               <li role="presentation"><a href="#baja" aria-controls="baja" role="tab" data-toggle="tab">BAJAS<span class="badge" style="background:red;margin-left:10px"><?php echo mysql_num_rows($resultado["bajas"]);?></span></a></li>
 	          </ul>
 	     </div>
 		<div class="col-md-12 tab-content" style="margin:0px">
@@ -17,18 +17,25 @@
 				<div class="table-responsive">
 					<table id="tableusers" class="table table-striped table-condensed table-hover">
 						<thead>
-							<th width="9%">ci</th>
-							<th width="31%">apellidos y nombres</th>
-							<th width="25%">tipo</th>
-							<th width="35%">cargo</th>
+							<th width="7%">ci</th>
+							<th width="32%">apellidos y nombres</th>
+							<th width="20%">cargo</th>
+							<th width="35%">unidad</th>
+							<th width="6%">Opciones</th>
 						</thead>
 						<tbody>
 							<?php while($row=mysql_fetch_array($resultado["usuarios"])): ?>
 								<tr>
 									<td><h5><?php echo $row['ci'];?></h5></td>
-									<td style="text-align:left;padding-left:9px"><h5><?php echo ucwords(strtolower($row['apellido']))." ".ucwords(strtolower($row['nombre'])); ?></h5></td>
-									<td><h5><?php echo $users[$row['tipo']]; ?></h5></td>
+									<td style="text-align:left;padding-left:9px"><h5><?php echo ucwords(strtolower($row['apellido']))." ".ucwords(strtolower($row['nombre'])); ?> <small style="color:#1d7bbe"> <?php echo $users[$row['tipo']]; ?></small></h5></td>
 									<td><h5><?php echo ucwords(strtolower($row['cargo'])); ?></h5></td>
+									<td><h5><?php echo ucwords(strtolower($row['unidad'])); ?></h5></td>
+									<td>
+										<a data-target="#verusuarioModal" data-toggle="modal" onclick="verAjax(<?php echo $row['id'];?>)"><button title="Ver información de usuario" type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></button></a>
+										<?php if ($row['tipo']==5) {?>
+											<a  href="/<?php echo FOLDER?>/Planificacion/ver/<?php echo base64_encode($row['id'])?>"><button title="Ver Planificaciones" type="button" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></button></a>
+										<?php } ?>
+									</td>
 								</tr>
 							<?php endwhile; ?>
 						</tbody>
@@ -39,19 +46,20 @@
 						<div class="col-md-12">
 							<div class="alert alert-error alert-dismissible" role="alert">
 							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-							<strong>MENSAJE DE ALERTA!</strong> No se encontraron USUARIOS registrados.
+							<strong>MENSAJE DE ALERTA!</strong> No se encontró Personal registrado en esta unidad.
 							</div>
 						</div>
 					<?php endif;?>
 				</div>
 			</div>
-			<div id="baja" role="tabpanel" class="tab-pane">
+	          <div id="baja" role="tabpanel" class="tab-pane">
 				<div class="table-responsive">
 					<table class="table table-striped table-condensed table-hover">
 						<thead>
 							<th width="9%">ci</th>
-							<th width="31%">apellidos y nombres</th>
+							<th width="25%">apellidos y nombres</th>
 							<th width="25%">cargo</th>
+							<th width="6%">Opciones</th>
 						</thead>
 						<tbody>
 							<?php while($row=mysql_fetch_array($resultado["bajas"])): ?>
@@ -59,6 +67,10 @@
 									<td><h5><?php echo $row['ci'];?></h5></td>
 									<td style="text-align:left;padding-left:9px"><h5><?php echo ucwords(strtolower($row['apellido']))." ".ucwords(strtolower($row['nombre'])); ?><small style="color:#05cce0"><?php echo " (".$users[$row['tipo']].")";?></small></h5></td>
 									<td><h5><?php echo ucwords(strtolower($row['cargo'])); ?></h5></td>
+									<td>
+										<a data-target="#verusuarioModal" data-toggle="modal" onclick="verAjax(<?php echo $row['id'];?>)"><button title="Ver información de usuario" type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></button></a>
+										<a  onclick="altaAjax(<?php echo $row['id'];?>)"><button title="Ver Planificaciones" type="button" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></button></a>
+									</td>
 								</tr>
 							<?php endwhile; ?>
 						</tbody>
@@ -79,7 +91,7 @@
 	</div>
 </div>
 
-<?php include 'modalupdateusuario.php';?>
+<?php include 'modalverusuario.php';?>
 <script>
    	var id_lugar_u,id_cargo_u,id_user_u,psw_u,id_tipo_u;
 	var users_array=['Administrador','Director','Planificador','Jefe de Jefatura','Jefe de Unidad','Normal'];
@@ -187,24 +199,13 @@
 		});
          $('#selectcargo_u, #selectunidad_u, #selectjefatura_u, #selecttipo_u').change(function(){function_validate("false");});
 	});
-	function updateAjax(val){
+	function verAjax(val){
 		$.ajax({
 			url: '<?php echo URL;?>Usuario/ver/'+val,
 			type: 'get',
 			success:function(obj){
 				var data = JSON.parse(obj);
-				$('.unombre h5').html(data.nombre+"<br>"+data.apellido);$('.unombre p').text(data.ci);$('.unombre em').text(users_array[data.tipo]);$('.utelefono').text("(+591) "+data.telefono);$('.ucargo').text(data.cargo);$('.uunidad').text(data.unidad==null ? ("No Asignado"):(data.unidad));$('.ujefatura').text(data.jefatura==null ? ("No Asignado"):(data.jefatura));
-				$('#inputnombre_u').val(data.nombre.toLowerCase());$('#inputnombre_u').attr('placeholder',data.nombre.toLowerCase());
-				$('#inputapellido_u').val(data.apellido.toLowerCase());$('#inputapellido_u').attr('placeholder',data.apellido.toLowerCase());
-				$('#inputci_u').val(data.ci);$('#inputci_u').attr('placeholder',data.ci);
-				$('#inputpassword_u').val("");$('#inputpassword_u').removeClass('has-success').addClass('has-error');
-				$('#inputtelefono_u').val(data.telefono);$('#inputtelefono_u').attr('placeholder',data.telefono);
-				$('#selectunidad_u option[value='+data.id_lugar+']').attr('selected','selected');
-				$('#selectcargo_u option[value='+data.id_cargo+']').attr('selected','selected');
-				$('#selecttipo_u option[value='+data.tipo+']').attr('selected','selected');
-				$("#selectunidad_u,#selectcargo_u,#selecttipo_u").selectpicker('refresh');
-				accion_tipo("#selecttipo_u",".inputrow1_u",".inputrow2_u");
-				id_lugar_u=data.id_lugar;id_cargo_u=data.id_cargo;id_user_u=data.id;id_tipo_u=data.tipo;psw_u=data.password;
+				$('.unombre h5').html(data.nombre+"<br>"+data.apellido);$('.unombre p').text(data.ci);$('.unombre em').text(users_array[data.tipo]);$('.utelefono').text("(+591) "+data.telefono);$('.ucargo').text(data.cargo);$('.uunidad').text(data.unidad==null ? ("No Asignado"):(data.unidad));$('.uestado').text(data.estado==1 ? ("Activo"):("Inactivo"));
 			}
 		});
 	}

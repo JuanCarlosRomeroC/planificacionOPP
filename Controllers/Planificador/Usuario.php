@@ -6,7 +6,7 @@ class Usuario extends Controllers{
           $this->usuario=parent::loadClassmodels("UsuarioModel");
      }
      public function index(){
-         $resultado=$this->usuario->listar();
+         $resultado=$this->usuario->listar_planificador();
          $this->view->render($this,"index",$resultado);
      }
      public function ver($id){

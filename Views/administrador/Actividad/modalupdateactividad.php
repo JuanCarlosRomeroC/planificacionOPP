@@ -19,9 +19,9 @@
 	                           	<br><p class="uunidad" style="line-height: .95em !important;text-transform: lowercase;color:#cde9e5"></p>
 	                       	</center>
 	                   	</div>
-	                    <?php mysql_data_seek($resultado['jefaturas'],0);?>
+	                    <?php mysql_data_seek($resultado['jefaturas'],0);mysql_data_seek($resultado['unidades'],0)?>
 	                   	<div class="col-md-8">
-	                       	<center><h3 style="margin-top:5px;color: #1cd2dc;font-weight: 700;">MODIFICAR ACTIVIDAD</h3></center>
+	                       	<center><h3 style="margin-top:25px;color: #1cd2dc;font-weight: 700;">MODIFICAR ACTIVIDAD</h3></center>
 					   	<form autocomplete="off">
 	                            	<div class="form-group has-feedback has-success fila1_u" style="margin-bottom:20px">
 	                                	<label style="color:#3fd2e0;font-weight:400;font-family:arial;font-size:.8em;margin-bottom:2px">NOMBRE DE LA ACTIVIDAD</label>
@@ -38,8 +38,17 @@
 	                                    	<?php endwhile; ?>
 	                                	</select>
 							</div>
+							<div class="form-group inputrow1_u" style="margin-bottom:20px">
+								<label style="color:#3fd2e0;font-weight:400;font-family:arial;font-size:.8em;margin-bottom:2px">UNIDAD</label>
+								<select id="selectunidad_u" class="form-control selectpicker show-tick" data-live-search="true">
+									<option value="0">Sin Asignar</option>
+	                                    	<?php while($row=mysql_fetch_array($resultado['unidades'])): ?>
+	                                        	<option value="<?php echo $row['id'];?>" jefatura="<?php echo $row['id_jefatura'];?>"><?php echo ucwords(strtolower($row['nombre']));?></option>
+	                                    	<?php endwhile; ?>
+	                                	</select>
+							</div>
 	                            	<center>
-	                                	<button class="btn btn-success btn-lg" style="margin:30px 0 0 0" id="buttonupdate" type="button" disabled>Guardar</button>
+	                                	<button class="btn btn-success btn-lg" style="margin:20px 0 20px 0" id="buttonupdate" type="button" disabled>Guardar</button>
 	                            	</center>
 						</form>
 	                   	</div>

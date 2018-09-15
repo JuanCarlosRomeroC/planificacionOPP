@@ -18,15 +18,35 @@
                return $this->$atributo;
           }
           public function listar(){
-               $actividad="SELECT a.*,j.nombre as jefatura,u.nombre as unidad FROM actividad as a LEFT JOIN jefatura as j ON j.id = a.id_jefatura LEFT JOIN unidad as u ON u.id = a.id_unidad";
-               $sinasignar="SELECT * FROM actividad WHERE id_jefatura=0 AND estado='1'";
-               $baja="SELECT * FROM actividad WHERE estado='0' ";
+               $year=date("Y");
+               $actividad=parent::consultaRetorno("SELECT a.*,j.nombre as jefatura,u.nombre as unidad FROM actividad as a LEFT JOIN jefatura as j ON j.id = a.id_jefatura LEFT JOIN unidad as u ON u.id = a.id_unidad
+               WHERE a.id_jefatura<>0 AND  a.id_unidad<>0 AND a.estado='1'");
+               $all = array();
+               while($row = mysql_fetch_assoc($actividad)) {
+                  $all[] = $row;
+               }
+               $count=0;
+               while ($count<count($all)) {
+                    $id_a=$all[$count]['id'];
+                    $result=mysql_fetch_assoc(parent::consultaRetorno("SELECT COUNT(*) as total FROM planificacion_anual WHERE id_actividad = '{$id_a}' AND year='{$year}' "));
+                    $all[$count]["total"]=$result['total'];
+                    $count++;
+               }
+               $sinjefatura="SELECT a.*,j.nombre as jefatura,u.nombre as unidad FROM actividad as a LEFT JOIN jefatura as j ON j.id = a.id_jefatura LEFT JOIN unidad as u ON u.id = a.id_unidad
+               WHERE a.id_jefatura=0 AND a.estado='1'";
+               $sinunidad="SELECT a.*,j.nombre as jefatura,u.nombre as unidad FROM actividad as a LEFT JOIN jefatura as j ON j.id = a.id_jefatura LEFT JOIN unidad as u ON u.id = a.id_unidad
+               WHERE a.id_unidad=0 AND a.estado='1'";
+               $baja="SELECT a.*,j.nombre as jefatura,u.nombre as unidad FROM actividad as a LEFT JOIN jefatura as j ON j.id = a.id_jefatura LEFT JOIN unidad as u ON u.id = a.id_unidad
+               WHERE a.estado='0'";
+
                $jefatura="SELECT * FROM jefatura WHERE estado='1'";
                $unidad="SELECT * FROM unidad WHERE estado='1'";
-               $result=["actividades"=>parent::consultaRetorno($actividad),
-                         "sinasignar"=>parent::consultaRetorno($sinasignar),
+               $result=["actividades"=>$all,
+                         "sinjefatura"=>parent::consultaRetorno($sinjefatura),
+                         "sinunidad"=>parent::consultaRetorno($sinunidad),
                          "bajas"=>parent::consultaRetorno($baja),
-                         "jefaturas"=>parent::consultaRetorno($jefatura)
+                         "jefaturas"=>parent::consultaRetorno($jefatura),
+                         "unidades"=>parent::consultaRetorno($unidad)
                ];
                return $result;
           }
@@ -44,20 +64,20 @@
                if($ver_nombre != 0){
                     return "false";
                }else{
-                    $sql=("INSERT INTO actividad (nombre,id_jefatura,fecha_created) VALUES ('{$this->nombre}','{$this->id_jefatura}',NOW())");
+                    $sql=("INSERT INTO actividad (nombre,id_jefatura,id_unidad,fecha_created) VALUES ('{$this->nombre}','{$this->id_jefatura}','{$this->id_unidad}',NOW())");
                     parent::consultaSimple($sql);
                     return "La Actividad se Registro Satisfactoriamente";
                }
           }
           public function editar(){
                if($this->nombre==""){
-                    $sql=("UPDATE actividad SET id_jefatura='{$this->id_jefatura}',fecha_updated=NOW() WHERE id='{$this->id}'");
+                    $sql=("UPDATE actividad SET id_jefatura='{$this->id_jefatura}',id_unidad='{$this->id_unidad}',fecha_updated=NOW() WHERE id='{$this->id}'");
                }else{
                     $ver_nombre=$this->ver_nombre();
                     if($ver_nombre != 0){
                          return "false";
                     }else{
-                         $sql=("UPDATE actividad SET nombre='{$this->nombre}',id_jefatura='{$this->id_jefatura}',fecha_updated=NOW() WHERE id='{$this->id}'");
+                         $sql=("UPDATE actividad SET nombre='{$this->nombre}',id_jefatura='{$this->id_jefatura}',id_unidad='{$this->id_unidad}',fecha_updated=NOW() WHERE id='{$this->id}'");
                     }
                }
                parent::consultaSimple($sql);
@@ -117,6 +137,18 @@
                     WHERE id='{$this->id}'";
                parent::consultaSimple($sql);
                echo "La Actividad se elimino Satisfactoriamente de la unidad";
+          }
+          public function eliminar(){
+               $sql="UPDATE actividad SET estado=0
+                    WHERE id='{$this->id}'";
+               parent::consultaSimple($sql);
+               echo "La Actividad se dio de baja Satisfactoriamente";
+          }
+          public function alta(){
+               $sql="UPDATE actividad SET estado=1
+                    WHERE id='{$this->id}'";
+               parent::consultaSimple($sql);
+               echo "La Actividad se dio de Alta Satisfactoriamente";
           }
           public function crear_parausuario(){
                     $sql=("INSERT INTO planificacion_anual (id_usuario,id_actividad,year) VALUES ('{$this->user_id}','{$this->id_actividad}','{$this->year}' )");

@@ -28,13 +28,12 @@
 		<script src="<?php echo URL;?>public/js/Chart.bundle.min.js"></script>
 		<script src="<?php echo URL;?>public/js/bootstrap.min.js"></script>
 		<script src="<?php echo URL;?>public/js/admin.js"></script>
-		<script src="<?php echo URL;?>public/js/notificacion.js"></script>
 	</head>
 	<body class="hold-transition skin-blue sidebar-mini">
 		<div class="wrapper">
 			<header class="main-header" style="position:fixed;width:100%">
 				<!-- Logo -->
-				<a href="" class="logo" style="background-color: #9d92af;">
+				<a href="" class="logo col-md-12 hidden-xs" style="background-color: #9d92af;">
 					<!-- mini logo for sidebar mini 50x50 pixels -->
 					<span class="logo-mini">
 						<img src="<?php echo URL;?>public/images/icons/32/005-man.png" alt="">
@@ -133,3 +132,14 @@
 									<div class="row">
 										<div class="col-md-12">
 											<!--Contenido-->
+											<script type="text/javascript">
+											$(document).ready(function(){
+												$.ajax({
+													url: '<?php echo URL?>Notificacion/notificacion',type: "get",success: function(res){
+														console.log("llega",res);
+														if(res>0){
+															$('#cantobject').text(res);
+															$('#cantobject').show();
+														}else{
+															$('#cantobject').css('display','none');}}});})
+											</script>

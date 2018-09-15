@@ -34,7 +34,9 @@
 									<?php $encode= base64_encode($row['id']);?>
 									<td>
 										<a data-target="#verusuarioModal" data-toggle="modal" onclick="verAjax(<?php echo $row['id'];?>)"><button title="editar usuario" type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></button></a>
+										<?php if ($row['tipo']==5) {?>
 										<a  href="/<?php echo FOLDER?>/Planificacion/ver/<?php echo $encode;?>"><button title="Ver Planificaciones" type="button" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></button></a>
+										<?php } ?>
 									</td>
 								</tr>
 							<?php endwhile; ?>

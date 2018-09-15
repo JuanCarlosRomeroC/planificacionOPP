@@ -65,6 +65,9 @@
 		<a href="/<?php echo FOLDER;?>/Planificacion/printpdf/<?php echo base64_encode($resultado['titulo']['id'])."?date=".$resultado['year'].$resultado['month']?>" target="_blank"><div class="fab" style="background:#f21d1d"><span class="glyphicon glyphicon-print" style="font-size:.7em" aria-hidden="true"></span></div></a>
      <?php }?>
 </div>
+<?php include 'modalverpoai.php'; ?>
+<center><a data-target="#verpoaiModal" data-toggle="modal"><button type="button" class="btn btn-info" name="button">VER POAI</button> </a></center>
+<style>span#procent {position: absolute;left: 50%;top: 50%;font-size: 50px;transform: translate(-50%, -50%);color: #fff;font-weight: 200}span#procent::after {content: '%';}.canvas-wrap {position: relative;width: 300px;height: 300px;}</style>
 <script>
    	var id_actividad_u,id_planificacion_u,auxi=0,auxi2=0,rowobj=0,rowesp=0,validarbag=false,Get_ID;
     $(document).ready(function(){
@@ -74,8 +77,16 @@
                    window.location.href = "/<?php echo FOLDER;?>/Planificacion/ver/<?php echo base64_encode($resultado['titulo']['id'])?>?year="+e.date._d.getFullYear()+"&month="+au;
 		    }
 	    });
+	    //____________DIBUJAR AVANCE DE ACTIVIDAD
+	    var DomainName = <?php echo json_encode($resultado['actividades']) ?>,media= 100 / DomainName.length,progress=0;
+	    for (var i = 0; i < DomainName.length; i++) {if (DomainName[i].estado==1) {progress=progress+media;}else{progress=progress+parseInt(DomainName[i].total);}}
+
+	    var can = document.getElementById('canvas'),spanProcent = document.getElementById('procent'),c = can.getContext('2d');var posX = can.width / 2,posY = can.height / 2,fps = 1000 / 200,procent = 0,oneProcent = 360 / 100,result = oneProcent * progress;c.lineCap = 'round';arcMove();
+	    function arcMove(){var deegres = 0;var acrInterval = setInterval (function() {deegres += 1;c.clearRect( 0, 0, can.width, can.height );procent = deegres / oneProcent;spanProcent.innerHTML = procent.toFixed(); c.beginPath();c.arc( posX, posY, 70, (Math.PI/180) * 270, (Math.PI/180) * (270 + 360) );c.strokeStyle = '#d4a769';c.lineWidth = '10';c.stroke();c.beginPath();c.strokeStyle = '#ffdfb4';c.lineWidth = '10';c.arc( posX, posY, 70, (Math.PI/180) * 270, (Math.PI/180) * (270 + deegres) );c.stroke();if( deegres >= result ) clearInterval(acrInterval);}, fps);}
+
 	    $('#inputsearch').keyup(function(){$('#myTabs a[href="#todos"]').tab('show');
 		    var data=$(this).val().toLowerCase().trim();SEARCH_DATA(data,"tableplanificacion","No se encontraron Coincidencias.");});
+
 	});
 
 	function verAjax(val){

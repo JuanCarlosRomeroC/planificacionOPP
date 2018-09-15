@@ -6,7 +6,7 @@ class Unidad extends Controllers{
           $this->unidad=parent::loadClassmodels("UnidadModel");
      }
      public function index(){
-         $resultado=$this->unidad->listar();
+         $resultado=$this->unidad->listar_jefatura();
          $this->view->render($this,"index",$resultado);
      }
      public function ver($id){

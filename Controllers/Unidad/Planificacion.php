@@ -13,6 +13,11 @@ class Planificacion extends Controllers{
          $resultado=$this->planificacion->listar();
          $this->view->render($this,"index",$resultado);
      }
+     public function ver_miplanificacion($id){
+         $this->planificacion->set('id',$id);
+         $data=$this->planificacion->ver();
+         echo json_encode($data);
+     }
      public function ver($id){
          $this->planificacion->set('id',base64_decode($id));
          $this->planificacion->set('year',isset($_GET['year']) ? $_GET['year'] :date('Y'));
@@ -59,6 +64,9 @@ class Planificacion extends Controllers{
      public function completarinforme($id){
           $this->planificacion->set("id",$id);
           $this->planificacion->set("observacion",$_POST['observacion']);
+          $this->planificacion->set("vista_unidad",1);
+          $this->planificacion->set("vista_jefatura",0);
+          $this->planificacion->set("vista_planificador",0);
           $resultado=$this->planificacion->completarinforme();
           echo $resultado;
      }

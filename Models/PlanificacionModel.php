@@ -48,7 +48,7 @@
                return "La Planificacion se Modifico Satisfactoriamente";
           }
           public function completarinforme(){
-               $sql=("UPDATE planificacion SET observacion='{$this->observacion}',estado=1 WHERE id='{$this->id}'");
+               $sql=("UPDATE planificacion SET observacion='{$this->observacion}',vista_unidad='{$this->vista_unidad}',vista_jefatura='{$this->vista_jefatura}',vista_planificador='{$this->vista_planificador}',estado=1 WHERE id='{$this->id}'");
                parent::consultaSimple($sql);
                return "La Planificacion se Culminó Satisfactoriamente";
           }
@@ -102,15 +102,17 @@
                return mysql_num_rows($resultado);
           }
 
-
           //para unidad
           public function listar_unusuario(){
-               $usuario=mysql_fetch_assoc(parent::consultaRetorno("SELECT nombre,apellido,id FROM usuario WHERE id='{$this->id}' LIMIT 1"));
-               $planificacion="SELECT p.*,a.nombre as actividad FROM planificacion as p
-               JOIN actividad as a ON a.id=p.id_actividad where p.id_usuario='{$this->id}' AND YEAR(p.fecha_de) = '{$this->year}' AND MONTH(p.fecha_de) = '{$this->month}'";
-               $result=[
-                         "planificacion"=>parent::consultaRetorno($planificacion),
-                         "titulo"=>$usuario,
+               $usuario=mysql_fetch_assoc(parent::consultaRetorno("SELECT nombre,apellido,id,ci FROM usuario WHERE id='{$this->id}' LIMIT 1"));
+               $planificacion="SELECT p.*,a.nombre as actividad FROM planificacion as p JOIN actividad as a ON a.id=p.id_actividad where p.id_usuario='{$this->id}' AND YEAR(p.fecha_de) = '{$this->year}' AND MONTH(p.fecha_de) = '{$this->month}'";
+
+               $actividad=parent::consultaRetorno("SELECT p.*,a.nombre as actividad FROM planificacion_anual as p JOIN actividad as a ON a.id = p.id_actividad WHERE p.id_usuario='{$this->id}' AND p.year='{$this->year}' ");
+               $all = array();while ($rows =  mysql_fetch_assoc($actividad)) {$all[] = $rows;}
+               $count=0;while ($count < count($all)) {$rowactividad=$all[$count]["id_actividad"];$row=mysql_fetch_assoc(parent::consultaRetorno("SELECT COUNT(*) as total FROM planificacion WHERE id_usuario='{$this->id}' AND id_actividad='{$rowactividad}'  AND YEAR(fecha_de)='{$this->year}' AND estado=1"));$all[$count]['total']=$row['total'];$count=$count+1;}
+
+               $result=["planificacion"=>parent::consultaRetorno($planificacion),
+                         "titulo"=>$usuario,"actividades"=>$all,
                          "month"=>$this->month,"year"=>$this->year
                ];
                return $result;
@@ -146,18 +148,56 @@
                $result=["todos"=> $all,"viajes"=> $all2,"month"=>$this->month,"year"=>$this->year,"actividades"=>$actividad_unidad,"usuario"=>mysql_fetch_assoc(parent::consultaRetorno($user)),"actividad_porcentaje"=>$all3];
                return $result;
           }
-
           public function notificacion(){
                $planificacion=mysql_fetch_assoc(parent::consultaRetorno("SELECT COUNT(*) as total FROM planificacion as p
                     JOIN usuario as u ON u.id=p.id_usuario
                     WHERE u.id_lugar='{$this->user_lugar}' AND p.estado=1 AND p.vista_unidad=0 AND u.tipo=5"));
                echo $planificacion['total'];
-
           }
           public function notificacion_unidad(){
                $planificacion=parent::consultaRetorno("SELECT p.*,a.nombre as actividad,u.nombre,u.apellido FROM planificacion as p
                     JOIN usuario as u ON u.id=p.id_usuario JOIN actividad as a ON a.id=p.id_actividad
                     WHERE u.id_lugar='{$this->user_lugar}' AND p.estado=1 AND p.vista_unidad=0 AND u.tipo=5");
+               return $planificacion;
+          }
+
+          //para jefatura
+          public function validar_jefatura(){
+               $sql="UPDATE planificacion SET vista_jefatura=1
+                    WHERE id='{$this->id}'";
+               parent::consultaSimple($sql);
+               echo "La Actividad se Consolido Satisfactoriamente!";
+          }
+          public function notificacion_jefatura(){
+               $planificacion=mysql_fetch_assoc(parent::consultaRetorno("SELECT COUNT(*) as total FROM planificacion as p
+                    JOIN usuario as u ON u.id=p.id_usuario
+                    JOIN unidad as n ON n.id=u.id_lugar
+                    WHERE n.id_jefatura='{$this->user_lugar}' AND p.estado=1 AND p.vista_jefatura=0 AND (u.tipo=5 OR u.tipo=4)"));
+               echo $planificacion['total'];
+          }
+          public function notificacion_listajefatura(){
+               $planificacion=parent::consultaRetorno("SELECT p.*,a.nombre as actividad,u.nombre,u.apellido,n.nombre as unidad,u.tipo FROM planificacion as p
+                     JOIN actividad as a ON a.id=p.id_actividad JOIN usuario as u ON u.id=p.id_usuario JOIN unidad as n ON n.id=u.id_lugar
+                    WHERE n.id_jefatura='{$this->user_lugar}' AND p.estado=1 AND p.vista_jefatura=0 AND (u.tipo=5 OR u.tipo=4)");
+               return $planificacion;
+          }
+
+          //paraplanificador
+          public function validar_planificador(){
+               $sql="UPDATE planificacion SET vista_planificador=1
+                    WHERE id='{$this->id}'";
+               parent::consultaSimple($sql);
+               echo "La Actividad se Consolido Satisfactoriamente!";
+          }
+          public function notificacion_planificador(){
+               $planificacion=mysql_fetch_assoc(parent::consultaRetorno("SELECT COUNT(*) as total FROM planificacion
+                    WHERE estado=1 AND vista_planificador=0"));
+               echo $planificacion['total'];
+          }
+          public function notificacion_listaplanificador(){
+               $planificacion=parent::consultaRetorno("SELECT p.*,a.nombre as actividad,CONCAT(u.nombre,u.apellido) as nombre,n.nombre as unidad,u.tipo,j.nombre as jefatura FROM planificacion as p
+                    JOIN actividad as a ON a.id=p.id_actividad JOIN usuario as u ON u.id=p.id_usuario JOIN unidad as n ON n.id=u.id_lugar JOIN jefatura as j ON j.id=n.id_jefatura
+                    WHERE p.estado=1 AND p.vista_planificador=0");
                return $planificacion;
           }
      }

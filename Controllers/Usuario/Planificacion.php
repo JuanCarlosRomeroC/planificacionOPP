@@ -59,6 +59,9 @@ class Planificacion extends Controllers{
      public function completarinforme($id){
           $this->planificacion->set("id",$id);
           $this->planificacion->set("observacion",$_POST['observacion']);
+          $this->planificacion->set("vista_unidad",0);
+          $this->planificacion->set("vista_jefatura",0);
+          $this->planificacion->set("vista_planificador",0);
           $resultado=$this->planificacion->completarinforme();
           echo $resultado;
      }

@@ -31,7 +31,7 @@
 		<div class="wrapper">
 			<header class="main-header" style="position:fixed;width:100%">
 				<!-- Logo -->
-				<a href="" class="logo" style="background-color: #9d92af;">
+				<a href="" class="logo col-md-12 hidden-xs" style="background-color: #9d92af;">
 					<!-- mini logo for sidebar mini 50x50 pixels -->
 					<span class="logo-mini">
 						<img src="<?php echo URL;?>public/images/icons/32/005-man.png" alt="">

@@ -13,6 +13,7 @@
 		<link rel="stylesheet" href="<?php echo URL; ?>public/css/sweetalert.css">
 		<link rel="stylesheet" href="<?php echo URL; ?>public/css/bootstrap-datetimepicker.css">
 		<link rel="stylesheet" href="<?php echo URL; ?>public/css/bootstrap-select.min.css">
+		<link rel="stylesheet" href="<?php echo URL; ?>public/css/fullcalendar.min.css">
 		<link rel="stylesheet" href="<?php echo URL; ?>public/css/admin.css">
 
 		<script src="<?php echo URL;?>public/js/jQuery-2.1.4.min.js"></script>
@@ -25,13 +26,15 @@
 		<script src="<?php echo URL;?>public/js/sweetalert.min.js"></script>
 		<script src="<?php echo URL;?>public/js/Chart.bundle.min.js"></script>
 		<script src="<?php echo URL;?>public/js/bootstrap.min.js"></script>
+		<script src="<?php echo URL;?>public/js/fullcalendar.min.js"></script>
+		<script src="<?php echo URL;?>public/js/es.js"></script>
 		<script src="<?php echo URL;?>public/js/admin.js"></script>
 	</head>
 	<body class="hold-transition skin-blue sidebar-mini">
 		<div class="wrapper">
 			<header class="main-header" style="position:fixed;width:100%">
 				<!-- Logo -->
-				<a href="" class="logo" style="background-color: #9d92af;">
+				<a href="" class="logo col-md-12 hidden-xs" style="background-color: #9d92af;">
 					<!-- mini logo for sidebar mini 50x50 pixels -->
 					<span class="logo-mini">
 						<img src="<?php echo URL;?>public/images/icons/32/005-man.png" alt="">
@@ -139,7 +142,7 @@
 							</ul>
 						</li>
 						<li>
-							<a href="#" style="cursor:pointer">
+							<a href="/<?php echo FOLDER;?>/Notificacion" style="cursor:pointer">
 								<i class="fa fa-bell"></i> <span>Notificaciones</span>
 								<small class="label pull-right bg-red" style="display:none" id="cantobject"></small>
 							</a>
@@ -163,4 +166,13 @@
 								<div class="box-body">
 									<div class="row">
 										<div class="col-md-12">
-											<!--Contenido-->
+											<script type="text/javascript">
+											$(document).ready(function(){
+												$.ajax({
+													url: '<?php echo URL?>Notificacion/notificacion',type: "get",success: function(res){
+														if(res>0){
+															$('#cantobject').text(res);
+															$('#cantobject').show();
+														}else{
+															$('#cantobject').css('display','none');}}});})
+											</script>
