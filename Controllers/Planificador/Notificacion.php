@@ -20,5 +20,6 @@ class Notificacion extends Controllers{
      }
      public function notificacion(){
          $data=$this->notificacion->notificacion_planificador();
+         echo json_encode($data);
      }
 }

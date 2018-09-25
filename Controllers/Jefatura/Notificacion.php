@@ -14,12 +14,21 @@ class Notificacion extends Controllers{
          $data=$this->notificacion->ver();
          echo json_encode($data);
      }
-     public function validar_u($id){
+     public function validar_j($id){
          $this->notificacion->set('id',base64_decode($id));
-         $data=$this->notificacion->validar_unidad();
+         $data=$this->notificacion->validar_jefatura();
      }
      public function notificacion(){
          $data=$this->notificacion->notificacion_jefatura();
+         echo json_encode($data);
+     }
+     public function otra_planificacion(){
+         $resultado=$this->notificacion->notificacion_lista_otraplanificacion();
+         $this->view->render($this,"otra_planificacion",$resultado);
+     }
+     public function validar_notificacion_otro($id){
+         $this->notificacion->set('id',$id);
+         $data=$this->notificacion->validar_notificacion_otro();
      }
 }
  ?>

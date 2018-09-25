@@ -7,14 +7,15 @@
 		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
 		<link rel="stylesheet" href="<?php echo URL;?>public/css/bootstrap.min.css">
-		<link rel="stylesheet" href="<?php echo URL; ?>public/css/font-awesome.css">
-		<link rel="stylesheet" href="<?php echo URL; ?>public/css/_all-skins.min.css">
-		<link rel="stylesheet" href="<?php echo URL; ?>public/css/AdminLTE.min.css">
-		<link rel="stylesheet" href="<?php echo URL; ?>public/css/sweetalert.css">
-		<link rel="stylesheet" href="<?php echo URL; ?>public/css/bootstrap-datetimepicker.css">
-		<link rel="stylesheet" href="<?php echo URL; ?>public/css/bootstrap-select.min.css">
+		<link rel="stylesheet" href="<?php echo URL;?>public/css/font-awesome.css">
+		<link rel="stylesheet" href="<?php echo URL;?>public/css/_all-skins.min.css">
+		<link rel="stylesheet" href="<?php echo URL;?>public/css/AdminLTE.min.css">
+		<link rel="stylesheet" href="<?php echo URL;?>public/css/sweetalert.css">
+		<link rel="stylesheet" href="<?php echo URL;?>public/css/bootstrap-datetimepicker.css">
+		<link rel="stylesheet" href="<?php echo URL;?>public/css/bootstrap-select.min.css">
+		<link rel="stylesheet" href="<?php echo URL;?>public/css/bootstrap-toggle.min.css">
 		<link rel="stylesheet" href="<?php echo URL; ?>public/css/fullcalendar.min.css">
-		<link rel="stylesheet" href="<?php echo URL; ?>public/css/admin.css">
+		<link rel="stylesheet" href="<?php echo URL;?>public/css/admin.css">
 
 		<script src="<?php echo URL;?>public/js/jQuery-2.1.4.min.js"></script>
 
@@ -22,12 +23,12 @@
 		<script src="<?php echo URL;?>public/js/app.min.js"></script>
 		<script src="<?php echo URL;?>public/js/bootstrap-datetimepicker.js"></script>
 		<script src="<?php echo URL;?>public/js/bootstrap-select.min.js"></script>
+		<script src="<?php echo URL;?>public/js/bootstrap-toggle.min.js"></script>
 		<script src="<?php echo URL;?>public/js/es.js"></script>
 		<script src="<?php echo URL;?>public/js/sweetalert.min.js"></script>
 		<script src="<?php echo URL;?>public/js/Chart.bundle.min.js"></script>
 		<script src="<?php echo URL;?>public/js/bootstrap.min.js"></script>
 		<script src="<?php echo URL;?>public/js/fullcalendar.min.js"></script>
-		<script src="<?php echo URL;?>public/js/es.js"></script>
 		<script src="<?php echo URL;?>public/js/admin.js"></script>
 	</head>
 	<body class="hold-transition skin-blue sidebar-mini">
@@ -63,7 +64,7 @@
 						</div>
 						<div class="col-md-6 hidden-sm hidden-xs" style="padding:0">
 							<div style="float:left">
-								<h3 style="color:#a68db9;margin-bottom:0;margin-top:13px;margin-left:20px;font-weight:600">SERVÍCIO DEPARTAMENTAL DE SALUD</h3>
+								<h3 style="color:#a68db9;margin-bottom:0;margin-top:13px;margin-left:20px;font-weight:600;text-transform:uppercase;text-align:left"><?php echo isset($resultado['titulo']['nombre']) ? $resultado['titulo']['nombre'].$resultado['titulo']['apellido']:"SERVÍCIO DEPARTAMENTAL DE SALUD";?></h3>
 							</div>
 						</div>
 						<div class="col-md-5 col-sm-10 col-xs-10" style="padding:0" >
@@ -92,20 +93,34 @@
 						<li>
 							<a href="/<?php echo FOLDER;?>/Principal">
 								<i class="fa fa-home"></i> <span>Inicio</span>
-								<small class="label pull-right bg-yellow">Informacion</small>
 							</a>
 						</li>
 						<li>
 							<a href="/<?php echo FOLDER;?>/Usuario" style="cursor:pointer">
-								<i class="fa fa-group"></i> <span>Usuarios</span>
+								<i class="fa fa-group"></i> <span>Personal</span>
+							</a>
+						</li>
+						<li class="treeview">
+							<a href="/<?php echo FOLDER;?>/Planificacion">
+								<i class="fa fa-file"></i><span>Mis Planificaciones</span>
 								<small class="pull-right glyphicon glyphicon-ok" style="color:#5ac65b"></small>
 							</a>
 						</li>
 						<li class="treeview">
-							<a href="/<?php echo FOLDER;?>/Actividad">
-								<i class="fa fa-list"></i>
-								<span>Actividades</span>
-							</a>
+							<a><i class="fa fa-plus-square"></i><span style="color:#b7ab1f">ACTIVIDADES</span><i class="fa fa-angle-left pull-right"></i></a>
+							<ul class="treeview-menu">
+								<li><a href="/<?php echo FOLDER;?>/Actividad/all"><i class="fa fa-circle-o"></i>Todos</a></li>
+								<li><a href="/<?php echo FOLDER;?>/Actividad/unidad"><i class="fa fa-circle-o"></i>Actividades Unidad</a></li>
+								<li><a href="/<?php echo FOLDER;?>/Actividad"><i class="fa fa-circle-o"></i>MI POAI</a></li>
+
+							</ul>
+						</li>
+						<li class="treeview">
+							<a><i class="fa fa-calendar-check-o"></i><span>CRONOGRAMA</span><i class="fa fa-angle-left pull-right"></i></a>
+							<ul class="treeview-menu">
+								<li><a href="/<?php echo FOLDER;?>/Actividad"><i class="fa fa-circle-o"></i>POAI</a></li>
+								<li><a href="/<?php echo FOLDER;?>/Cronograma"><i class="fa fa-circle-o"></i>Viajes - Talleres & Otros</a></li>
+							</ul>
 						</li>
 						<li class="treeview">
 							<a href="#">
@@ -116,29 +131,6 @@
 							<ul class="treeview-menu">
 								<li><a href="/<?php echo FOLDER;?>/Jefatura"><i class="fa fa-circle-o"></i>Jefaturas</a></li>
 								<li><a href="/<?php echo FOLDER;?>/Unidad"><i class="fa fa-circle-o"></i>Unidades</a></li>
-							</ul>
-						</li>
-						<li class="treeview">
-							<a href="#">
-								<i class="fa fa-file"></i>
-								<span>Reportes</span>
-								<i class="fa fa-angle-left pull-right"></i>
-							</a>
-							<ul class="treeview-menu">
-								<li><a href=""><i class="fa fa-circle-o"></i>Jefatura</a></li>
-								<li><a href=""><i class="fa fa-circle-o"></i>Unidad</a></li>
-								<li><a href=""><i class="fa fa-circle-o"></i>Usuario</a></li>
-							</ul>
-						</li>
-						<li class="treeview">
-							<a href="#">
-								<i class="fa fa-wrench"></i>
-								<span>Configuraciones</span>
-								<i class="fa fa-angle-left pull-right"></i>
-							</a>
-							<ul class="treeview-menu">
-								<li><a href="#"><i class="fa fa-circle-o"></i>Usuarios</a></li>
-								<li><a href="#"><i class="fa fa-circle-o"></i>Vehiculos</a></li>
 							</ul>
 						</li>
 						<li>
@@ -168,10 +160,12 @@
 										<div class="col-md-12">
 											<script type="text/javascript">
 											$(document).ready(function(){
+			
 												$.ajax({
 													url: '<?php echo URL?>Notificacion/notificacion',type: "get",success: function(res){
-														if(res>0){
-															$('#cantobject').text(res);
+														var data = JSON.parse(res);
+														if(data.actividad.total>0){
+															$('#cantobject').text(data.actividad.total);
 															$('#cantobject').show();
 														}else{
 															$('#cantobject').css('display','none');}}});})

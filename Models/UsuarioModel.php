@@ -18,7 +18,7 @@
                return $this->$atributo;
           }
           public function login(){
-               $auth="SELECT id,tipo,password,nombre,apellido,id_lugar FROM usuario
+               $auth="SELECT id,tipo,password,nombre,apellido,id_lugar,auditorio FROM usuario
                     WHERE ci = '{$this->ci}' and estado=b'1'";
                $result= parent::consultaRetorno($auth);
                if(mysql_num_rows($result)==1){
@@ -135,9 +135,9 @@
           }
           public function listar_jefatura(){
                $user="SELECT p.id,p.ci,p.nombre,p.apellido,p.tipo,c.nombre as cargo,u.nombre as unidad FROM usuario as p
-                    JOIN unidad as u ON u.id = p.id_lugar JOIN cargo as c ON c.id = p.id_cargo  WHERE (p.estado = b'1' AND u.id_jefatura='{$this->user_lugar}') AND (p.tipo=5 OR p.tipo=4)";
+                    JOIN unidad as u ON u.id = p.id_lugar JOIN cargo as c ON c.id = p.id_cargo  WHERE (p.estado = b'1' AND u.id_jefatura='{$this->user_lugar}') AND (p.tipo=5 OR p.tipo=4 OR p.tipo=3)";
                $bajas="SELECT p.id,p.ci,p.nombre,p.apellido,p.tipo,c.nombre as cargo,u.nombre as unidad FROM usuario as p
-                    JOIN unidad as u ON u.id = p.id_lugar JOIN cargo as c ON c.id = p.id_cargo  WHERE (p.estado = b'0' AND u.id_jefatura='{$this->user_lugar}') AND (p.tipo=5 OR p.tipo=4)";
+                    JOIN unidad as u ON u.id = p.id_lugar JOIN cargo as c ON c.id = p.id_cargo  WHERE (p.estado = b'0' AND u.id_jefatura='{$this->user_lugar}') AND (p.tipo=5 OR p.tipo=4 OR p.tipo=3)";
                $result=["usuarios"=> parent::consultaRetorno($user),
                          "bajas"=> parent::consultaRetorno($bajas)
                ];

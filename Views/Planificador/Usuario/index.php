@@ -2,7 +2,7 @@
 	$users=['Administrador','Director','Planificador','Jefe de Jefatura','Jefe de Unidad','Normal'];
 ?>
 <div class="row">
-	<h2 class="text-center" style="margin:20px 0 1px 0;font-weight:300">LISTA DE USUARIOS</h2>
+	<h2 class="text-center" style="margin:20px 0 1px 0;font-weight:300">LISTA DE PERSONAL DE JEFATURAS Y UNIDADES</h2>
 </div>
 <div class="row" style="margin:10px"> <!-- SECTION TABLE USERS -->
 	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -33,9 +33,10 @@
 									<td><h5><?php echo ucwords(strtolower($row['cargo'])); ?></h5></td>
 									<td style="text-align:left;padding-left:9px"><h5><?php echo $row['jefatura']==null?"Sin Jefatura":ucwords(strtolower($row['jefatura'])); ?></h5></td>
 									<td style="text-align:left;padding-left:9px"><h5><?php echo $row['unidad']==null?"Sin Unidad":ucwords(strtolower($row['unidad'])); ?></h5></td>
+									<?php $encode= base64_encode($row['id']);?>
 									<td>
 										<a data-target="#verusuarioModal" data-toggle="modal" onclick="verAjax(<?php echo $row['id'];?>)"><button title="ver personal" type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></button></a>
-										<a  onclick="bajaAjax(<?php echo $row['id'];?>)"><button title="ver planificación de actividades" type="button" class="btn btn-info btn-xs"><span class="glyphicon glyphicon glyphicon-check" aria-hidden="true"></span></button></a>
+										<a  href="/<?php echo FOLDER?>/Planificacion/listar_unusuario/<?php echo $encode;?>"><button title="Ver Planificaciones" type="button" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></button></a>
 									</td>
 								</tr>
 							<?php endwhile; ?>
@@ -71,9 +72,10 @@
 									<td><h5><?php echo ucwords(strtolower($row['cargo'])); ?></h5></td>
 									<td style="text-align:left;padding-left:9px"><h5><?php echo $row['jefatura']==null?"Sin Jefatura":ucwords(strtolower($row['jefatura'])); ?></h5></td>
 									<td><h5>Jefe De Jefatura</h5></td>
+									<?php $encode= base64_encode($row['id']);?>
 									<td>
 										<a data-target="#verusuarioModal" data-toggle="modal" onclick="verAjax(<?php echo $row['id'];?>)"><button title="ver personal" type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></button></a>
-										<a  onclick="bajaAjax(<?php echo $row['id'];?>)"><button title="ver planificación de actividades" type="button" class="btn btn-info btn-xs"><span class="glyphicon glyphicon glyphicon-check" aria-hidden="true"></span></button></a>
+										<a  href="/<?php echo FOLDER?>/Planificacion/listar_unusuario/<?php echo $encode;?>"><button title="Ver Planificaciones" type="button" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></button></a>
 									</td>
 								</tr>
 							<?php endwhile; ?>
@@ -110,9 +112,10 @@
 									<td style="text-align:left;padding-left:9px"><h5><?php echo $row['jefatura']==null?"Sin Jefatura":ucwords(strtolower($row['jefatura'])); ?></h5></td>
 									<td style="text-align:left;padding-left:9px"><h5><?php echo $row['unidad']==null?"Sin Unidad":ucwords(strtolower($row['unidad'])); ?></h5></td>
 									<td>Jefe De Unidad</td>
+									<?php $encode= base64_encode($row['id']);?>
 									<td>
 										<a data-target="#verusuarioModal" data-toggle="modal" onclick="verAjax(<?php echo $row['id'];?>)"><button title="ver personal" type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></button></a>
-										<a  onclick="bajaAjax(<?php echo $row['id'];?>)"><button title="ver planificación de actividades" type="button" class="btn btn-info btn-xs"><span class="glyphicon glyphicon glyphicon-check" aria-hidden="true"></span></button></a>
+										<a  href="/<?php echo FOLDER?>/Planificacion/listar_unusuario/<?php echo $encode;?>"><button title="Ver Planificaciones" type="button" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></button></a>
 									</td>
 								</tr>
 							<?php endwhile; ?>
@@ -148,9 +151,10 @@
 									<td><h5><?php echo ucwords(strtolower($row['cargo'])); ?></h5></td>
 									<td style="text-align:left;padding-left:9px"><h5><?php echo $row['jefatura']==null?"Sin Jefatura":ucwords(strtolower($row['jefatura'])); ?></h5></td>
 									<td style="text-align:left;padding-left:9px"><h5><?php echo $row['unidad']==null?"Sin Unidad":ucwords(strtolower($row['unidad'])); ?></h5></td>
+									<?php $encode= base64_encode($row['id']);?>
 									<td>
 										<a data-target="#verusuarioModal" data-toggle="modal" onclick="verAjax(<?php echo $row['id'];?>)"><button title="ver personal" type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></button></a>
-										<a  onclick="bajaAjax(<?php echo $row['id'];?>)"><button title="ver planificación de actividades" type="button" class="btn btn-info btn-xs"><span class="glyphicon glyphicon glyphicon-check" aria-hidden="true"></span></button></a>
+										<a  href="/<?php echo FOLDER?>/Planificacion/listar_unusuario/<?php echo $encode;?>"><button title="Ver Planificaciones" type="button" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></button></a>
 									</td>
 								</tr>
 							<?php endwhile; ?>

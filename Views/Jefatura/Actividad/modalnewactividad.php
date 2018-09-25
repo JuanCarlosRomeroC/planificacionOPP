@@ -13,6 +13,15 @@
                                	<?php endwhile; ?>
                            	</select>
 					</div>
+					<div class="form-group">
+						<label style="color:#3fd2e0;font-weight:400;font-family:arial;font-size:.8em;margin-bottom:2px">SELECCIONE UNIDAD</label>
+						<select id="selectunidad" class="form-control selectpicker show-tick" data-live-search="true">
+							<option value="0" jefatura="0">Sin Asignar</option>
+							<?php while($row=mysql_fetch_array($resultado['unidades'])): ?>
+								<option value="<?php echo $row['id'];?>" jefatura="<?php echo $row['id_jefatura'];?>"><?php echo ucwords(strtolower($row['nombre']));?></option>
+							<?php endwhile; ?>
+						</select>
+					</div>
 				</form>
                </div>
 			<div class="modal-footer" style="padding:0">

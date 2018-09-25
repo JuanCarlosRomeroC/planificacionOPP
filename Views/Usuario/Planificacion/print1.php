@@ -105,8 +105,8 @@ for ($i=0; $i < count($actividadall); $i++) {
                          <td width="10%" colspan="2">FECHA</td>
                     </tr>
                     <tr>
-                         <td width="7%">DE</td>
-                         <td width="7%">HASTA</td>
+                         <td width="7%">INIICIO</td>
+                         <td width="7%">FIN</td>
                     </tr>
                </thead>
                <tbody>
@@ -137,20 +137,21 @@ for ($i=0; $i < count($actividadall); $i++) {
 
           </table>
           <?php  if (count($resultado['viajes'])>0) {?>
-               <h3 style="margin: 0">- Viajes</h3>
+               <h3 style="margin: 0">- Otra Actividad</h3>
                <table width="100%" style="margin-top:10px"  width="100%" cellspacing="0" cellpadding="0">
                     <thead style="background:#bdbdbd;text-align:center">
                          <tr>
                               <td width="11%" rowspan="2">ACTIVIDAD</td>
                               <td width="9%" rowspan="2">VIAJE</td>
                               <td width="10%" rowspan="2">CIUDAD</td>
-                              <td width="35%" rowspan="2">ESTABLECIMIENTO</td>
-                              <td width="25%" rowspan="2">LUGAR</td>
+                              <td width="25%" rowspan="2">ESTABLECIMIENTO</td>
+                              <td width="20%" rowspan="2">LUGAR</td>
+                              <td width="15%" rowspan="2">OBSERVACIONES</td>
                               <td width="10%" colspan="2">FECHA</td>
                          </tr>
                          <tr>
-                              <td width="10%">DE</td>
-                              <td width="10%">HASTA</td>
+                              <td width="10%">INICIO</td>
+                              <td width="10%">FIN</td>
                          </tr>
                     </thead>
                     <tbody>
@@ -159,10 +160,11 @@ for ($i=0; $i < count($actividadall); $i++) {
                                    <td><h5><?php echo $resultado['viajes'][$i]['actividad']; ?></h5></td>
                                    <td><h5><?php echo $resultado['viajes'][$i]['tipo_lugar']=="" ? "no se viajo" :$resultado['viajes'][$i]['tipo_lugar']; ?></h5></td>
                                    <td><h5><?php echo $resultado['viajes'][$i]['ciudad']=="" ?  "potosí" : $resultado['viajes'][$i]['ciudad']?></h5></td>
-                                   <td style="text-align:left;padding-left:9px"><h5><?php echo $resultado['viajes'][$i]['establecimiento']=="" ?  "sin establecimiento" : $resultado['viajes'][$i]['establecimiento']; ?> <small><?php echo $resultado['viajes'][$i]['municipio'];?></small></h5></td>
-                                   <td><h5><?php echo $resultado['viajes'][$i]['lugar']; ?></h5></td>
-                                   <td><h5><?php echo $resultado['viajes'][$i]['fecha_de']; ?></h5></td>
-                                   <td><h5><?php echo $resultado['viajes'][$i]['fecha_hasta']; ?></h5></td>
+                                   <td style="text-align:left;padding-left:9px;line-height: 1.2em"><h5><?php echo $resultado['viajes'][$i]['establecimiento']=="" ?  "sin establecimiento" : $resultado['viajes'][$i]['establecimiento']; ?> <small><?php echo $resultado['viajes'][$i]['municipio'];?></small></h5></td>
+                                   <td style="text-align:left;padding-left:9px;line-height: 1.2em"><h5><?php $estatus=$resultado['viajes'][$i]['estado'];echo $resultado['viajes'][$i]['lugar']; ?></h5></td>
+                                   <td style="text-align:left;padding-left:9px;line-height: 1.2em;color:<?php echo $estatus==0? '#da0d0d': '#262626'?>"><h5><?php echo $estatus==0 ?  "No Fue Validado" : $resultado['viajes'][$i]['observacion']; ?></h5></td>
+                                   <td style="line-height: 1.2em"><h5><?php echo $resultado['viajes'][$i]['fecha_de']; ?></h5></td>
+                                   <td style="line-height: 1.2em"><h5><?php echo $resultado['viajes'][$i]['fecha_hasta']; ?></h5></td>
                               </tr>
                          <?php } ?>
                     </tbody>

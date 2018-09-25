@@ -14,6 +14,7 @@
 		<link rel="stylesheet" href="<?php echo URL;?>public/css/bootstrap-datetimepicker.css">
 		<link rel="stylesheet" href="<?php echo URL;?>public/css/bootstrap-select.min.css">
 		<link rel="stylesheet" href="<?php echo URL;?>public/css/bootstrap-toggle.min.css">
+		<link rel="stylesheet" href="<?php echo URL; ?>public/css/fullcalendar.min.css">
 		<link rel="stylesheet" href="<?php echo URL;?>public/css/admin.css">
 
 		<script src="<?php echo URL;?>public/js/jQuery-2.1.4.min.js"></script>
@@ -27,6 +28,7 @@
 		<script src="<?php echo URL;?>public/js/sweetalert.min.js"></script>
 		<script src="<?php echo URL;?>public/js/Chart.bundle.min.js"></script>
 		<script src="<?php echo URL;?>public/js/bootstrap.min.js"></script>
+		<script src="<?php echo URL;?>public/js/fullcalendar.min.js"></script>
 		<script src="<?php echo URL;?>public/js/admin.js"></script>
 	</head>
 	<body class="hold-transition skin-blue sidebar-mini">
@@ -94,7 +96,14 @@
 							</a>
 						</li>
 						<li class="treeview">
-							<a href="/<?php echo FOLDER;?>/Actividad"><i class="fa fa-plus-square"></i><span style="color:#b7ab1f">ACTIVIDADES</span></a>
+							<a href="/<?php echo FOLDER;?>/Actividad">
+								<i class="fa fa-file-text-o"></i><span style="color:#b7ab1f">MI POAI</span>
+							</a>
+						</li>
+						<li class="treeview">
+							<a href="/<?php echo FOLDER;?>/Actividad/unidad">
+								<i class="fa fa-navicon"></i><span>Actividades de Unidad</span>
+							</a>
 						</li>
 						<li class="treeview">
 							<a href="/<?php echo FOLDER;?>/Usuario">
@@ -106,10 +115,21 @@
 								<i class="fa fa-file"></i><span>Planificaciones</span>
 							</a>
 						</li>
+						<li class="treeview">
+							<a href="/<?php echo FOLDER;?>/Cronograma">
+								<i class="fa fa-calendar-check-o"></i><span>Otra Planificación</span>
+							</a>
+						</li>
 						<li>
 							<a href="/<?php echo FOLDER;?>/Notificacion" style="cursor:pointer">
-								<i class="fa fa-bell"></i> <span>Notificaciones</span>
+								<i class="fa fa-check-circle"></i> <span>Consolidaciones</span>
 								<small class="label pull-right bg-red" style="display:none" id="cantobject"></small>
+							</a>
+						</li>
+						<li>
+							<a href="/<?php echo FOLDER;?>/Notificacion/otra_planificacion" style="cursor:pointer">
+								<i class="fa fa-bell"></i> <span>Notificaciones</span>
+								<small class="label pull-right bg-info" style="display:none" id="cantobject_otro"></small>
 							</a>
 						</li>
 						<li>
@@ -136,10 +156,10 @@
 											$(document).ready(function(){
 												$.ajax({
 													url: '<?php echo URL?>Notificacion/notificacion',type: "get",success: function(res){
-														console.log("llega",res);
-														if(res>0){
-															$('#cantobject').text(res);
-															$('#cantobject').show();
-														}else{
-															$('#cantobject').css('display','none');}}});})
+														var data = JSON.parse(res);
+														if(data.actividad.total>0){$('#cantobject').text(data.actividad.total);$('#cantobject').show();
+														}else{$('#cantobject').css('display','none');}
+														if(data.otro.total>0){$('#cantobject_otro').text(data.otro.total);$('#cantobject_otro').show();
+													}else{$('#cantobject_otro').hide();}
+														}});})
 											</script>

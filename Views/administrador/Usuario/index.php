@@ -244,15 +244,12 @@
    	var id_lugar_u,id_cargo_u,id_user_u,psw_u,id_tipo_u;
 	var users_array=['Administrador','Director','Planificador','Jefe de Jefatura','Jefe de Unidad','Normal'];
     $(document).ready(function(){
-
 	    	$('#selecttipo').change(function(){
 			accion_tipo("#selecttipo",".inputrow1",".inputrow2");
 	    	});
 		$('#selecttipo_u').change(function(){
 			accion_tipo("#selecttipo_u",".inputrow1_u",".inputrow2_u");
 	    	});
-
-
 		$('#inputsearch').keyup(function(){$('#myTabs a[href="#todos"]').tab('show');
 			var data=$(this).val().toLowerCase().trim();SEARCH_DATA(data,"tableusers","No se encontraron USUARIOS registrados.");});
 
@@ -280,7 +277,6 @@
 					setInterval(function(){ window.location.href = "/<?php echo FOLDER; ?>/Usuario"; }, 2000);
 				}}});
 		});
-
 		function function_validate(validate){
 			if(validate!="false"&&validate=="true"){
 				if(($('.fila1').hasClass('has-success'))&&($('.fila2').hasClass('has-success'))&&($('.fila3').hasClass('has-success'))&&($('.fila4').hasClass('has-success'))&&($('#selectcargo option').length>0)&&($('#selectunidad option').length>0)){

@@ -60,7 +60,7 @@
 				$("#tableunidad").empty();$("#alert_empty_usuario").hide();
 				if (data.usuarios.length>0) {
 					for (var i = 0; i < data.usuarios.length; i++) {
-						$('#tableunidad').append('<tr><td style="text-align:left;padding-left:10px">'+parseInt(i+1)+'. '+data.usuarios[i].nombre+' '+data.usuarios[i].apellido+'</td><td><a href="/<?php echo FOLDER;?>/Planificacion/ver/'+data.usuarios[i].id_hash+'"><button title="ver planificaciones" type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></button></a></td></tr>');
+						$('#tableunidad').append('<tr><td style="text-align:left;padding-left:10px">'+parseInt(i+1)+'. '+data.usuarios[i].nombre+' '+data.usuarios[i].apellido+'</td><td><a href="/<?php echo FOLDER;?>/Planificacion/listar_unusuario/'+data.usuarios[i].id_hash+'"><button title="ver planificaciones" type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></button></a></td></tr>');
 					}
 				}else {
 					$("#alert_empty_usuario").show();

@@ -65,7 +65,7 @@
 	<?php if(mysql_num_rows($resultado["planificacion"])<1){ //tabla vacia?>
 		<div class="col-md-12"><div class="alert alert-error alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>MENSAJE DE ALERTA!</strong> No se encontraron Planificaciones en este mes.</div></div>
 	<?php }else{ include 'modalverplanificacion.php';?>
-		<a href="/<?php echo FOLDER;?>/Planificacion/printpdf/<?php echo base64_encode($resultado['titulo']['id'])."?date=".$resultado['year'].$resultado['month']?>" target="_blank"><div class="fab" style="background:#f21d1d"><span class="glyphicon glyphicon-print" style="font-size:.7em" aria-hidden="true"></span></div></a>
+		<a href="/<?php echo FOLDER;?>/Planificacion/print_un_informe/<?php echo base64_encode($resultado['titulo']['id'])."?date=".$resultado['year'].$resultado['month']?>" target="_blank"><div class="fab" style="background:#f21d1d"><span class="glyphicon glyphicon-print" style="font-size:.7em" aria-hidden="true"></span></div></a>
      <?php }?>
 </div>
 <?php include 'modalverpoai.php'; ?>
@@ -78,7 +78,7 @@
 	    $('#datetimepickermes').datetimepicker({locale: 'es',format: 'YYYY-MM',ignoreReadonly: true,viewMode: 'months'}).on('dp.change', function(e){
 		    var placeholder=$('#datetimepickermes input').attr('placeholder'),input=$('#datetimepickermes input').val(),entero=parseInt(e.date._d.getMonth())+1,au= entero < 10 ? ("0" + entero) : (entero);
 		    if (placeholder.toString()!=input.toString()) {
-                   window.location.href = "/<?php echo FOLDER;?>/Planificacion/ver/<?php echo base64_encode($resultado['titulo']['id'])?>?year="+e.date._d.getFullYear()+"&month="+au;
+                   window.location.href = "/<?php echo FOLDER;?>/Planificacion/listar_unusuario/<?php echo base64_encode($resultado['titulo']['id'])?>?year="+e.date._d.getFullYear()+"&month="+au;
 		    }
 	    });
 
@@ -95,11 +95,10 @@
 	});
 	function verAjax(val){
      	$.ajax({
-			url: '<?php echo URL;?>Planificacion/ver_planificacion/'+val,
+			url: '<?php echo URL;?>Planificacion/ver/'+val,
 			type: 'get',
 			success:function(obj){
 				var data = JSON.parse(obj);
-                    console.log(data);
 				var arrayaobjetivo = data.objetivo==null ? ([0]):(data.objetivo.split("|"));
 				var arrayesperado = data.esperado==null ? ([0]):(data.esperado.split("|"));
 

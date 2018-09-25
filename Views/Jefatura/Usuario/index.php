@@ -2,7 +2,7 @@
 	$users=['Administrador','Director','Planificador','Jefe de Jefatura','Jefe de Unidad','Normal'];
 ?>
 <div class="row">
-	<h2 class="text-center" style="margin:20px 0 1px 0;font-weight:300">LISTA DEL PERSONAL DE LA UNIDAD USUARIOS</h2>
+	<h2 class="text-center" style="margin:20px 0 1px 0;font-weight:300">LISTA DEL PERSONAL DE LA JEFATURA</h2>
 </div>
 <div class="row" style="margin:10px"> <!-- SECTION TABLE USERS -->
 	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -32,8 +32,8 @@
 									<td><h5><?php echo ucwords(strtolower($row['unidad'])); ?></h5></td>
 									<td>
 										<a data-target="#verusuarioModal" data-toggle="modal" onclick="verAjax(<?php echo $row['id'];?>)"><button title="Ver información de usuario" type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></button></a>
-										<?php if ($row['tipo']==5) {?>
-											<a  href="/<?php echo FOLDER?>/Planificacion/ver/<?php echo base64_encode($row['id'])?>"><button title="Ver Planificaciones" type="button" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></button></a>
+										<?php if ($row['tipo']==5 ||$row['tipo']==4) {?>
+											<a  href="/<?php echo FOLDER?>/Planificacion/listar_unusuario/<?php echo base64_encode($row['id'])?>"><button title="Ver Planificaciones" type="button" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></button></a>
 										<?php } ?>
 									</td>
 								</tr>

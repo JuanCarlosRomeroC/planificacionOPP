@@ -131,7 +131,7 @@
 		}
 
 	//_______________REGISTRAR ACTIVIDAD
-		$('#btnregistrar').click(function(){array=[];$('.rows_resultados').each(function(){array.push($(this).text().trim());});var total = "";for (var i = 0; i < array.length; i++) {total=total+array[i]+"|";};arrayobj=[];$('.rows_objetivos').each(function(){arrayobj.push($(this).text().trim());});var totalobj = "";for (var i = 0; i < arrayobj.length; i++) {totalobj=totalobj+arrayobj[i]+"|";};$.ajax({url: '<?php echo URL;?>Planificacion/crear',type: 'post',data:{id_actividad:$('#selectactividad option:selected').val(),fecha_de:$('#datetimepicker1 input').val(),fecha_hasta:$('#datetimepicker2 input').val(),objetivo:totalobj,esperado:total},success:function(obj){swal("Mensaje de Alerta!", obj , "success");setInterval(function(){ window.location.href = "/<?php echo FOLDER; ?>/Planificacion"; }, 1500);}});});
+		$('#btnregistrar').click(function(){array=[];$('.rows_resultados').each(function(){array.push($(this).text().trim());});var total = "";for (var i = 0; i < array.length; i++) {total=total+array[i]+"|";};arrayobj=[];$('.rows_objetivos').each(function(){arrayobj.push($(this).text().trim());});var totalobj = "";for (var i = 0; i < arrayobj.length; i++) {totalobj=totalobj+arrayobj[i]+"|";};$.ajax({url: '<?php echo URL;?>Planificacion/crear',type: 'post',data:{id_actividad:$('#selectactividad option:selected').val(),fecha_de:$('#datetimepicker1 input').val(),fecha_hasta:$('#datetimepicker2 input').val(),objetivo:totalobj,esperado:total},success:function(obj){swal("Mensaje de Alerta!", obj , "success");setInterval(function(){ location.reload(); }, 1500);}});});
 		//agregar objetivos
 		$('#buttonadd_objetivo,#buttonadd_objetivo_u').click(function(){var type=$(this).attr("info"),estado=$(this).attr("validate");if (type=="_u") {validarbag=true;}if ($('#input_objetivo'+type).val().trim()!="") {$('#objetivo_caja'+type).append('<li class="list-group-item rows_objetivos'+type+' row_objetivo'+type+auxi2+'" style="padding: 5px 15px 5px 15px;"><span class="badge glyphicon glyphicon-remove badge_objetivo'+type+'"  row="'+auxi2+'" aria-hidden="true" style="background:#ca3030;cursor:pointer"> </span>'+$('#input_objetivo'+type).val()+'</li>');auxi2=auxi2+1;$('#input_objetivo'+type).val("");function_validate(estado);}$('.badge_objetivo'+type).click(function(){$('.row_objetivo'+type+$(this).attr('row')).remove();function_validate(estado);});});
 		//agregar resultados esperados
@@ -139,10 +139,10 @@
 
 	//__________________COMPLETAR INFORME DE PLANIFICACION
 		$('#textareaobjetivo').keyup(function(){if($(this).val().trim().length>4){validate_sinsmall($(this).attr('toggle'),true);$("#btninforme").attr('disabled', false);}else{validate_sinsmall($(this).attr('toggle'),false);$("#btninforme").attr('disabled', true);}});
-		$('#btninforme').click(function(){$.ajax({url: '<?php echo URL;?>Planificacion/completarinforme/'+Get_ID,type: 'post',data:{observacion:$('#textareaobjetivo').val(),},success:function(obj){swal("Mensaje de Alerta!", obj , "success");setInterval(function(){ window.location.href = "/<?php echo FOLDER; ?>/Planificacion"; }, 1000);}});});
+		$('#btninforme').click(function(){$.ajax({url: '<?php echo URL;?>Planificacion/completarinforme/'+Get_ID,type: 'post',data:{observacion:$('#textareaobjetivo').val(),},success:function(obj){swal("Mensaje de Alerta!", obj , "success");setInterval(function(){ location.reload();}, 1000);}});});
 
 	//_____________UPDATE PLANIFICACION
-		$('#buttonupdate').click(function(){array=[];$('.rows_resultados_u').each(function(){array.push($(this).text().trim());});var total = "";for (var i = 0; i < array.length; i++) {total=total+array[i]+"|";};arrayobj=[];$('.rows_objetivos_u').each(function(){arrayobj.push($(this).text().trim());});var totalobj = "";for (var i = 0; i < arrayobj.length; i++) {totalobj=totalobj+arrayobj[i]+"|";};$.ajax({url: '<?php echo URL;?>Planificacion/editar/'+id_planificacion_u,type: 'post',data:{id_actividad:$('#selectactividad_u option:selected').val(),fecha_de:$('#datetimepicker1_u input').val(),fecha_hasta:$('#datetimepicker2_u input').val(),objetivo:totalobj,esperado:total},success:function(obj){swal("Mensaje de Alerta!", obj , "success");setInterval(function(){ window.location.href = "/<?php echo FOLDER;?>/Planificacion"; }, 1500);}});});
+		$('#buttonupdate').click(function(){array=[];$('.rows_resultados_u').each(function(){array.push($(this).text().trim());});var total = "";for (var i = 0; i < array.length; i++) {total=total+array[i]+"|";};arrayobj=[];$('.rows_objetivos_u').each(function(){arrayobj.push($(this).text().trim());});var totalobj = "";for (var i = 0; i < arrayobj.length; i++) {totalobj=totalobj+arrayobj[i]+"|";};$.ajax({url: '<?php echo URL;?>Planificacion/editar/'+id_planificacion_u,type: 'post',data:{id_actividad:$('#selectactividad_u option:selected').val(),fecha_de:$('#datetimepicker1_u input').val(),fecha_hasta:$('#datetimepicker2_u input').val(),objetivo:totalobj,esperado:total},success:function(obj){swal("Mensaje de Alerta!", obj , "success");setInterval(function(){ location.reload();}, 1500);}});});
          	$('#selectactividad_u').change(function(){function_validate("false");});
 	});
 	function updateAjax(val){
@@ -183,7 +183,7 @@
 	}
 
 	//ELIMINAR PLANIFICACION
-	function bajaAjax(val){swal({title: "¿Estás seguro?",text: "Esta Seguro que quiere Eliminar la Planificacion?",type: "warning",showCancelButton: true,confirmButtonColor: "#d93333",confirmButtonText: "Dar de Baja!",closeOnConfirm: false},function(){$.ajax({url: '<?php echo URL;?>Planificacion/eliminar/'+val,type: 'get',success:function(obj){if (obj=="false") {}else{swal("Mensaje de Alerta!", obj , "success");setInterval(function(){ window.location.href = "/<?php echo FOLDER;?>/Planificacion"; }, 1000);}}});});}
+	function bajaAjax(val){swal({title: "¿Estás seguro?",text: "Esta Seguro que quiere Eliminar la Planificacion?",type: "warning",showCancelButton: true,confirmButtonColor: "#d93333",confirmButtonText: "Dar de Baja!",closeOnConfirm: false},function(){$.ajax({url: '<?php echo URL;?>Planificacion/eliminar/'+val,type: 'get',success:function(obj){if (obj=="false") {}else{swal("Mensaje de Alerta!", obj , "success");setInterval(function(){location.reload();}, 1000);}}});});}
 
 	function function_validate(validate){
 		if(validate!="false"&&validate=="true"){
@@ -272,7 +272,7 @@
 					if (obj=="false") {
 					}else{
 						swal("Mensaje de Alerta!", obj , "success");
-						setInterval(function(){ window.location.href = "/<?php echo FOLDER;?>/Planificacion"; }, 1000);
+						setInterval(function(){ location.reload();}, 1000);
 					}
 				}
 			});

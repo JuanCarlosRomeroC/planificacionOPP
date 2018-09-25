@@ -10,6 +10,7 @@
 					<div class="form-group">
 						<label class="col-sm-2 control-label">Actividades</label>
 						<div class="col-sm-10">
+							<?php mysql_data_seek($resultado['actividades'],0);?>
 							<select id="selectactividad" class="form-control selectpicker show-tick" data-live-search="true">
 								<?php while($row=mysql_fetch_array($resultado['actividades'])): ?>
 									<option value="<?php echo $row['id'];?>"><?php echo ucwords(strtolower($row['nombre']));?></option>

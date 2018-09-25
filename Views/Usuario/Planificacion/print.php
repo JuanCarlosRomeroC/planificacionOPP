@@ -76,8 +76,8 @@ $mes=$months[intval($resultado['month']) - 1];
                          <td width="10%" colspan="2">FECHA</td>
                     </tr>
                     <tr>
-                         <td width="7%">DE</td>
-                         <td width="7%">HASTA</td>
+                         <td width="7%">INICIO</td>
+                         <td width="7%">FIN</td>
                     </tr>
                </thead>
                <tbody>
@@ -126,8 +126,8 @@ $mes=$months[intval($resultado['month']) - 1];
                               <td width="10%" colspan="2">FECHA</td>
                          </tr>
                          <tr>
-                              <td width="10%">DE</td>
-                              <td width="10%">HASTA</td>
+                              <td width="10%">INICIO</td>
+                              <td width="10%">FIN</td>
                          </tr>
                     </thead>
                     <tbody>

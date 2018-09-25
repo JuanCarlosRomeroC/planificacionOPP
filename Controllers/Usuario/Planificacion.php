@@ -66,4 +66,4 @@ class Planificacion extends Controllers{
           echo $resultado;
      }
 }
- ?>
+?>

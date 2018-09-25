@@ -20,6 +20,15 @@ class Notificacion extends Controllers{
      }
      public function notificacion(){
          $data=$this->notificacion->notificacion();
+         echo json_encode($data);
+     }
+     public function otra_planificacion(){
+         $resultado=$this->notificacion->notificacion_lista_otraplanificacion();
+         $this->view->render($this,"otra_planificacion",$resultado);
+     }
+     public function validar_notificacion_otro($id){
+         $this->notificacion->set('id',$id);
+         $data=$this->notificacion->validar_notificacion_otro();
      }
 }
  ?>
