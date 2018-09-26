@@ -15,6 +15,14 @@ function not_number(e){var keyCode = (e.keyCode ? e.keyCode : e.which);if((keyCo
 function fraces_text(e){var keyCode = (e.keyCode ? e.keyCode : e.which);console.log(keyCode); if((keyCode > 96 && keyCode < 123)  || (keyCode > 64 && keyCode < 91) || keyCode == 241 || keyCode == 32 || keyCode == 8 || keyCode == 44){return true;}else{e.preventDefault();}}
 function small_error(e,t){if(t){$(e).removeClass('has-error').addClass('has-success');$(e+" span").first().removeClass('glyphicon-remove').addClass('glyphicon-ok');}else{$(e).removeClass('has-success').addClass('has-error');$(e+" span").first().removeClass('glyphicon-ok').addClass('glyphicon-remove');}}
 function validate_sinsmall(e,t){if(t){$(e).removeClass('has-error').addClass('has-success');}else{$(e).removeClass('has-success').addClass('has-error');}}
+function carnet_press(e){
+     var keyCode = (e.keyCode ? e.keyCode : e.which);
+     if((keyCode > 96 && keyCode < 123)  || (keyCode > 64 && keyCode < 91) || (keyCode > 47 && keyCode < 58) || keyCode == 241 || keyCode == 45 || keyCode == 8) {
+          return true;
+     }else{
+          e.preventDefault();
+     }
+}
 // funcion para ocultar y mostrar unidades y jefaturas cuando cambia tipo
 function accion_tipo(tipo,row1,row2){if(($(tipo+' option:selected').val()==4)||($(tipo+' option:selected').val()==5)){$(row1).show();$(row2).hide();}else{if($(tipo+' option:selected').val()==3){$(row2).show();$(row1).hide();}else {$(row1+","+row2).hide();}}}
 $(function() {

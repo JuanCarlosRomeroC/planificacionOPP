@@ -255,7 +255,23 @@
 
 		$('#inputnombre,#inputnombre_u').keypress(function(e){not_number(e);}).keyup(function(){if($(this).val().trim().length>2){small_error($(this).attr('toggle'),true);}else{small_error($(this).attr('toggle'),false);}function_validate($(this).attr('validate'));});
 		$('#inputapellido,#inputapellido_u').keypress(function(e){not_number(e);}).keyup(function(){if($(this).val().trim().length>6){small_error($(this).attr('toggle'),true);}else{small_error($(this).attr('toggle'),false);}function_validate($(this).attr('validate'));});
-		$('#inputci,#inputci_u').keypress(function(e){yes_number(e);}).keyup(function(){if($(this).val().trim().length>6){small_error($(this).attr('toggle'),true);}else{small_error($(this).attr('toggle'),false);}function_validate($(this).attr('validate'));});
+
+
+		$('#inputci,#inputci_u').keypress(function(e){
+			carnet_press(e);
+		}).keyup(function(){
+			var valor=$(this).val().split('-') == null ? ([]) : ($(this).val().split('-'));
+			if(valor.length<3 && parseInt(valor[0])>999999 && valor[1]!=""){
+				if($(this).val().trim().length>6 && $(this).val().trim().length<12){
+					small_error($(this).attr('toggle'),true);
+				}else{
+					small_error($(this).attr('toggle'),false);
+				}
+			}else{
+				small_error($(this).attr('toggle'),false);
+			}function_validate($(this).attr('validate'));
+		});
+
 		$('#inputpassword,#inputpassword_u').keyup(function(){if($(this).val().trim().length>4){small_error($(this).attr('toggle'),true);}else{small_error($(this).attr('toggle'),false);}function_validate($(this).attr('validate'));});
 		$('#inputtelefono,#inputtelefono_u').keypress(function(e){yes_number(e);}).keyup(function(){function_validate($(this).attr('validate'));});
 

@@ -36,10 +36,11 @@
      			type: 'post',
      			data: {'ci':ci,'password':pass},
      			success:function(obj){
-                         if (obj=="false") {
+                         var data = JSON.parse(obj);
+                         if (data == false) {
                               $('#alert_error').show();
                          }else{
-                              window.location.href = "/<?php echo FOLDER;?>/Principal";
+                             window.location.href = "/<?php echo FOLDER;?>/Principal";
                          }
      			}
      		});

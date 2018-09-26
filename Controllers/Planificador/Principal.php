@@ -9,5 +9,15 @@ class Principal extends Controllers{
           $resultado=$this->principal->listar();
           $this->view->render($this,"index",$resultado);
      }
+     public function editar($id){
+          $this->principal->set("nombre",$_POST['nombre']);
+          $this->principal->set("apellido",$_POST['apellido']);
+          $this->principal->set("ci",$_POST['ci']);
+          $this->principal->set("password",$_POST['password']);
+          $this->principal->set("id_cargo",$_POST['id_cargo']);
+          $this->principal->set("telefono",$_POST['telefono']);
+          $resultado=$this->principal->editar_profile();
+          echo $resultado;
+     }
 }
 ?>

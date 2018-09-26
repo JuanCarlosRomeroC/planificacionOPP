@@ -19,6 +19,19 @@
           }
           public function listar(){
                $year=date('Y');$month=date('m');
+               $actividad=parent::consultaRetorno("SELECT p.id_actividad,a.nombre as actividad,p.estado FROM planificacion_anual as p
+               JOIN actividad as a ON a.id = p.id_actividad WHERE p.id_usuario='{$this->user_id}' AND p.year='{$year}' ");
+               $all = array();while ($rows =  mysql_fetch_assoc($actividad)) {$all[] = $rows;}
+               $count=0;
+               while ($count < count($all)) {
+                    $rowactividad=$all[$count]["id_actividad"];
+                    $row=mysql_fetch_assoc(parent::consultaRetorno("SELECT COUNT(*) as total FROM planificacion
+                    WHERE id_usuario='{$this->user_id}' AND id_actividad='{$rowactividad}'  AND YEAR(fecha_de)='{$year}' AND estado=1"));
+                    $all[$count]['total']=$row['total'];$count=$count+1;
+               }
+               $planificacion_u="SELECT p.*,a.nombre as actividad FROM planificacion as p
+               JOIN actividad as a ON a.id=p.id_actividad where p.id_usuario='{$this->user_id}' AND YEAR(p.fecha_de) = '{$year}' AND MONTH(p.fecha_de) = '{$month}'";
+
                $profile=parent::consultaRetorno("SELECT u.*,c.nombre as cargo FROM usuario as u JOIN cargo as c ON c.id=u.id_cargo WHERE u.id='{$this->user_id}' LIMIT 1");
                $poai=parent::consultaRetorno("SELECT COUNT(*) as total FROM planificacion_anual WHERE  id_usuario='{$this->user_id}' AND year='{$year}'");
                $planificacion=parent::consultaRetorno("SELECT COUNT(*) as total FROM planificacion WHERE id_usuario='{$this->user_id}' AND MONTH(fecha_de)='{$month}' ");
@@ -26,6 +39,8 @@
                $notificacion=parent::consultaRetorno("SELECT COUNT(*) as total FROM otra_planificacion WHERE  id_usuario='{$this->user_id}' AND modificado=1 AND visto=0");
                $cargos="SELECT * FROM cargo WHERE estado=b'1' ";
                $result=["profile"=> mysql_fetch_assoc($profile),
+                         "actividades"=>$all,
+                         "planificacionmes"=>parent::consultaRetorno($planificacion_u),
                          "poai"=> mysql_fetch_assoc($poai),
                          "planificacion"=> mysql_fetch_assoc($planificacion),
                          "otraplanificacion"=> mysql_fetch_assoc($otraplanificacion),

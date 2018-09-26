@@ -34,22 +34,22 @@
 					   	<form autocomplete="off">
 	                            	<div class="form-group has-feedback has-success fila1_u" style="margin-bottom:10px">
 	                                <label style="color:#3fd2e0;font-weight:400;font-family:arial;font-size:.8em;margin-bottom:2px">NOMBRES</label>
-	                                <input type="text" name="nombre" id="inputnombre_u" class="form-control input-sm" validate="false" toggle=".fila1_u">
+	                                <input type="text" id="inputnombre_u" class="form-control input-sm" validate="false" toggle=".fila1_u">
 	                                <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
 	                            	</div>
 	                            	<div class="form-group has-feedback has-success fila2_u" style="margin-bottom:10px">
 	                                <label style="color:#3fd2e0;font-weight:400;font-family:arial;font-size:.8em;margin-bottom:2px">APELIDOS</label>
-	                                <input type="text" name="apellido" id="inputapellido_u" class="form-control input-sm" validate="false" toggle=".fila2_u">
+	                                <input type="text" id="inputapellido_u" class="form-control input-sm" validate="false" toggle=".fila2_u">
 	                                <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
 	                            	</div>
 	                            	<div class="form-group has-feedback has-success fila3_u" style="margin-bottom:10px">
 	                                <label style="color:#3fd2e0;font-weight:400;font-family:arial;font-size:.8em;margin-bottom:2px">NÚMERO DE CARNET</label>
-	                                <input type="number" autocomplete="false" name="ci" id="inputci_u" min="1" class="form-control input-sm" validate="false" toggle=".fila3_u">
+	                                <input type="text" autocomplete="false"  id="inputci_u" class="form-control input-sm" validate="false" toggle=".fila3_u">
 	                                <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
 	                            	</div>
 						   	<div class="form-group has-feedback has-error fila4_u">
 	                            	<label style="color:#3fd2e0;font-weight:400;font-family:arial;font-size:.8em;margin-bottom:2px">NUEVA CONTRASEÑA <small> (OPCIONAL)</small></label>
-	                                <input type="password" autocomplete="false" autocorrect="off" class="form-control input-sm" id="inputpassword_u" validate="false" name="password" placeholder="Minimo 5 caracteres" toggle=".fila4_u">
+	                                <input type="password" autocomplete="false" autocorrect="off" class="form-control input-sm" id="inputpassword_u" validate="false" placeholder="Minimo 5 caracteres" toggle=".fila4_u">
 	                                <span toggle="#inputpassword_u" id="togglepassword_u" class="fa fa-fw fa-eye field-icon"></span>
 							  <em style="color:#cf6666;display:none" id="error_update">El carnet de identidad ya esta en uso!</em>
 						   	</div>

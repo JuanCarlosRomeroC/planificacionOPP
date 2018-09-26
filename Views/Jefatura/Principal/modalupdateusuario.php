@@ -43,7 +43,7 @@
 	                            	</div>
 	                            	<div class="form-group has-feedback has-success fila3_u" style="margin-bottom:15px">
 	                                <label style="color:#3fd2e0;font-weight:400;font-family:arial;font-size:.8em;margin-bottom:2px">NÚMERO DE CARNET</label>
-	                                <input type="text" autocomplete="false" id="inputci_u" class="form-control">
+	                                <input type="number" autocomplete="false" id="inputci_u" min="1" class="form-control">
 	                                <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
 							  	<em style="color:#cf6666;display:none" id="error_update">El carnet de identidad ya esta en uso!</em>
 							</div>

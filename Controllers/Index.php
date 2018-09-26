@@ -17,7 +17,7 @@ class Index extends Controllers{
                     $this->createSession($data);
                     $rows= json_encode($data);
                     echo $rows;
-               }else{echo false;}
+               }else{echo "false";}
          }
      }
      function createSession($user){

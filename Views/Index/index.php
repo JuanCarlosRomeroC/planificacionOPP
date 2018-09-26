@@ -28,13 +28,13 @@
           <form class="form-horizontal" autocomplete="false" autocorrect="off">
                <div class="form-group">
                     <label style="text-align:left;font-weight:400;font-size:1.2em;color:#cabdd5">NUMERO DE CARNET</label>
-                    <input id="inputci" placeholder="Ejemplo: 5570310" autocomplete="false" autocorrect="off" type="number" class="form-control input-lg" name="user_name" value="">
+                    <input id="inputci" placeholder="Ejemplo: 5570310" autocomplete="false" autocorrect="off" type="text" class="form-control input-lg">
                </div>
                <div class="form-group">
                     <label style="text-align:left;font-weight:400;font-size:1.2em;color:#cabdd5;margin-top:20px">CONTRASEÑA</label>
-                    <input id="inputpassword" placeholder="Minimo 6 caracteres.." autocomplete="false" autocorrect="off" type="password" class="form-control input-lg" name="password">
+                    <input id="inputpassword" placeholder="Minimo 6 caracteres.." autocomplete="false" autocorrect="off" type="password" class="form-control input-lg">
                </div>
-               <button class="btn btn-link-1 scroll-link" style="margin-top:30px" id="btnlogin" type="button" disabled>INICIAR SESION <i class="fa fa-btn fa-sign-in"></i></button>
+               <button class="btn btn-warning" style="margin-top:30px" id="btnlogin" type="button">INICIAR SESION <i class="fa fa-btn fa-sign-in"></i></button>
           </form>
      </div>
 </div>

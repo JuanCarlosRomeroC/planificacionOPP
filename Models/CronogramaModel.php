@@ -68,6 +68,18 @@
                parent::consultaSimple($sql);
                echo "La Cronograma se Modifico Satisfactoriamente";
           }
+          // public function editar_planificador(){
+          //      $sql=("UPDATE otra_planificacion SET id_usuario='{$this->id}',id_establecimiento='{$this->id_establecimiento}',tipo_actividad='{$this->tipo_actividad}',tipo_lugar='{$this->tipo_lugar}',
+          //           ciudad='{$this->ciudad}',id_otra_actividad='{$this->id_otra_actividad}',lugar='{$this->lugar}',fecha_de='{$this->fecha_de}',fecha_hasta='{$this->fecha_hasta}' WHERE id='{$this->id}'");
+          //      parent::consultaSimple($sql);
+          //      echo "La Cronograma se Modifico Satisfactoriamente";
+          // }
+          public function editar_planificador(){
+               $sql=("UPDATE otra_planificacion SET modificado_descripcion='{$this->modificado_descripcion}',modificado_persona='{$this->user_id}',updated_at=NOW(),modificado=1,fecha_de='{$this->fecha_de}',fecha_hasta='{$this->fecha_hasta}' WHERE id='{$this->id}'");
+               parent::consultaSimple($sql);
+               echo "La Cronograma se Modifico Satisfactoriamente";
+          }
+
           public function imprimir(){
                $planificacion="SELECT p.*,a.nombre as actividad,e.nombre as establecimiento,m.nombre as municipio FROM otra_planificacion as p
                     JOIN otra_actividad as a ON a.id=p.id_otra_actividad
@@ -113,6 +125,28 @@
                $sql=("UPDATE otra_planificacion SET estado=1,observacion='{$this->observacion}' WHERE id='{$this->id}'");
                parent::consultaSimple($sql);
                echo "true";
+          }
+          public function listar_planificador(){
+               if ($this->type==0) {
+                    $todos=parent::consultaRetorno("SELECT p.id,p.tipo_actividad,a.nombre as actividad,p.fecha_de,p.fecha_hasta,CONCAT(u.nombre,' ',u.apellido) as nombre FROM otra_planificacion as p
+                    JOIN otra_actividad as a ON a.id=p.id_otra_actividad JOIN usuario as u ON u.id=p.id_usuario WHERE p.tipo_actividad='viaje'");
+               }else{
+                    $todos=parent::consultaRetorno("SELECT p.id,p.tipo_actividad,a.nombre as actividad,p.fecha_de,p.fecha_hasta,CONCAT(u.nombre,' ',u.apellido) as nombre FROM otra_planificacion as p
+                    JOIN otra_actividad as a ON a.id=p.id_otra_actividad JOIN usuario as u ON u.id=p.id_usuario WHERE  p.id_otra_actividad='{$this->type}'");
+               }
+               $all = array();while($row = mysql_fetch_assoc($todos)) {$all[] = $row;}
+               $redsalud="SELECT * FROM redsalud";
+               $municipio="SELECT m.*,r.nombre as redsalud FROM municipio as m JOIN redsalud as r ON r.id=m.id_redsalud";
+               $establecimiento="SELECT e.*,m.nombre as municipio FROM establecimiento as e JOIN municipio as m ON m.id=e.id_municipio";
+               $otraactividad="SELECT * FROM otra_actividad";
+               $result=["planificacion"=> $all,
+                         "redsalud"=>parent::consultaRetorno($redsalud),
+                         "municipios"=>parent::consultaRetorno($municipio),
+                         "establecimientos"=>parent::consultaRetorno($establecimiento),
+                         "actividad"=>parent::consultaRetorno($otraactividad),
+                         "type"=>$this->type
+               ];
+               return $result;
           }
      }
  ?>

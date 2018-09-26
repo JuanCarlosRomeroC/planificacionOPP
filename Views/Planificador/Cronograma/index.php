@@ -7,6 +7,7 @@
 		</div>
 		<div class="col-md-2" style="padding:0">
 			<select id="selectactividad" class="form-control selectpicker show-tick" type="<?php echo $resultado['type']?>">
+				<option value="0">Viajes</option>
 				<?php while($row=mysql_fetch_array($resultado['actividad'])): ?>
 					<option value="<?php echo $row['id'];?>"><?php echo ucwords(strtolower($row['nombre']));?></option>
 				<?php endwhile; ?>
@@ -50,7 +51,7 @@
     			header: {
     				left: 'prev,next today',
     				center: 'title',
-    				right: 'month,basicWeek,basicDay'
+    				right: 'month, agendaWeek, agendaDay'
     			},
     			defaultDate: '<?php echo date('Y-m-d')?>',
     			navLinks: true,
@@ -67,54 +68,53 @@
 			    $('#verplanificacionModal').modal('show');
 		    },
 		    eventDrop: function(event, delta, revertFunc) {
-			    $('#updatecronogramaModal').modal({
-				    backdrop: 'static',
-				    keyboard: true,
-				    show: true
-			   });
-			   $('#btncambiarfecha').click(function(){
-				    var m=parseInt(event.end._d.getMonth())+1,mes_fin= m < 10 ? ("0" + m) : (m);
-				    var d=parseInt(event.end._d.getDate()),dia_fin= d < 10 ? ("0" + d) : (d);
-				    var fecha_hasta=event.end._d.getFullYear()+"-"+mes_fin+"-"+dia_fin;
-
-				    var m=parseInt(event.start._d.getMonth())+1,mes_inicio= m < 10 ? ("0" + m) : (m);
-				    var d=parseInt(event.start._d.getDate()),dia_inicio= d < 10 ? ("0" + d) : (d);
-				    var fecha_de=event.start._d.getFullYear()+"-"+mes_inicio+"-"+dia_inicio;
-				    updateAjax(event.id,fecha_de,fecha_hasta,true);
-			   });
-			   $('#btncancelar').click(function(){
-				   revertFunc();
-				   $('#updatecronogramaModal').modal('toggle');
-				   small_error('.fila1',false);$("#btncambiarfecha").attr('disabled', true);
-			   })
+			     if (event.end._d.getFullYear()>=<?php echo intval(date('Y'))?> && event.end._d.getMonth()+1>= <?php echo intval(date('m'))?>&& event.end._d.getDate()>=<?php echo intval(date('d'))?>) {
+				     $('#updatecronogramaModal').modal({
+					    backdrop: 'static',
+					    keyboard: true,
+					    show: true
+	 		    		});
+				     $('#btncambiarfecha').click(function(){
+					    updateAjax(event.id,event.start.format(),event.end.format());
+				     });
+				     $('#btncancelar').click(function(){
+					   revertFunc();
+					   $('#updatecronogramaModal').modal('toggle');
+					   small_error('.fila1',false);$("#btncambiarfecha").attr('disabled', true);
+				     })
+				}else{
+					revertFunc();
+				}
 		   	},
 			eventResize: function(event, delta, revertFunc) {
-				$('#updatecronogramaModal').modal({
-					backdrop: 'static',
-                         keyboard: true,
-                         show: true
-			    });
-			    $('#btncambiarfecha').click(function(){
-				     var m=parseInt(event.end._d.getMonth())+1,mes_fin= m < 10 ? ("0" + m) : (m);
-				     var d=parseInt(event.end._d.getDate()),dia_fin= d < 10 ? ("0" + d) : (d);
-				     var fecha_hasta=event.end._d.getFullYear()+"-"+mes_fin+"-"+dia_fin;
-					updateAjax(event.id,event.start._i,fecha_hasta,false);
-			    });
-			    $('#btncancelar').click(function(){
-				    revertFunc();
-				    $('#updatecronogramaModal').modal('toggle');
-				    small_error('.fila1',false);$("#btncambiarfecha").attr('disabled', true);
-			    })
+				if (event.end._d.getFullYear()>=<?php echo intval(date('Y'))?> && event.end._d.getMonth()+1>= <?php echo intval(date('m'))?>&& event.end._d.getDate()>=<?php echo intval(date('d'))?>) {
+					console.log(event.start.format(),event.end.format());
+					$('#updatecronogramaModal').modal({
+						backdrop: 'static',
+	                         keyboard: true,
+	                         show: true
+				     });
+				     $('#btncambiarfecha').click(function(){
+						updateAjax(event.id,event.start.format(),event.end.format());
+				     });
+				     $('#btncancelar').click(function(){
+					    revertFunc();
+					    $('#updatecronogramaModal').modal('toggle');
+					    small_error('.fila1',false);$("#btncambiarfecha").attr('disabled', true);
+				     })
+		    		}else{
+			    		revertFunc();
+		    		}
 			}
     		});
 
 	});
-	function updateAjax(id,fecha_de,fecha_hasta,status){
+	function updateAjax(id,fecha_de,fecha_hasta){
 		console.log(id,fecha_de,fecha_hasta);
 		$.ajax({
 			url: '<?php echo URL;?>Cronograma/editar/'+id,
 			type: 'post',
-		  data:{descripcion:$("#textareadescripcion").val(),fecha_de:fecha_de,fecha_hasta:fecha_hasta,estado:status},
+		  data:{descripcion:$("#textareadescripcion").val(),fecha_de:fecha_de,fecha_hasta:fecha_hasta},
 			success:function(obj){
 				$('#updatecronogramaModal').modal('toggle');
 				small_error('.fila1',false);$("#btncambiarfecha").attr('disabled', true);
@@ -148,29 +148,6 @@
 				$('.ufechade').text(data.fecha_de);
 
 			}
-		});
-	}
-	function validarAjax(id){
-		swal({
-			title: "¿Esta seguro de Consolidar la actividad?",
-			text: "Una vez consolidado la actividad usted da el visto bueno de que el personal concluyo con éxito su trabajo!. Asegurese de revisar toda la información",
-			type: "warning",
-			showCancelButton: true,confirmButtonColor: "#24be66",
-			confirmButtonText: "Consolidar Actividad!",
-			closeOnConfirm: false
-		},function(){
-			$.ajax({
-				url: '<?php echo URL;?>Planificacion/validar_p/'+id,
-				type: 'get',
-				success:function(obj){
-					console.log(obj);
-					if (obj=="false") {
-					}else{
-						swal("Mensaje de Alerta!", obj , "success");
-						setInterval(function(){ location.reload();}, 1000);
-					}
-				}
-			});
 		});
 	}
 </script>
