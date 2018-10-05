@@ -29,12 +29,12 @@
                }
                h6{
                     font-weight: 200;
-                    font-size: .7em;
+                    font-size: .64em;
                     margin: 0px;
                     text-align: center;
                }
                td{
-                  line-height: 1.3em;
+                  line-height: .8em;
                   padding: 0;
                   margin: 0;
                   text-align: center;
@@ -45,12 +45,12 @@
                }
                small{
                     font-weight: 200;
-                    color: #757575;
+                    color: #555555;
                     font-size: .98em;
                }
                h5{
                     margin:3px;padding:0;
-                    font-weight:200;font-size: .7em;
+                    font-weight:200;font-size: .64em;
                }
                h3{
                     margin: 0;padding: 0;
@@ -70,25 +70,30 @@
                          <td width="11%" rowspan="2">ACTIVIDAD</td>
                          <td width="13%" rowspan="2">VIAJE</td>
                          <td width="9%" rowspan="2">CIUDAD</td>
-                         <td width="32%" rowspan="2">ESTABLECIMIENTO</td>
-                         <td width="25%" rowspan="2">LUGAR</td>
-                         <td width="10%" colspan="2">FECHA</td>
+                         <td width="32%" rowspan="2">LUGAR</td>
+                         <td width="25%" rowspan="2">DESCRIPCIÓN</td>
+                         <td style="padding:3px" width="10%" colspan="2">FECHA</td>
                     </tr>
                     <tr>
-                         <td width="8%">INICIO</td>
-                         <td width="8%">FIN</td>
+                         <td style="padding:2px" width="8%">INICIO</td>
+                         <td style="padding:2px" width="8%">FIN</td>
                     </tr>
                </thead>
                <tbody>
                     <?php for($i=0;$i< count($resultado['todos']);$i++){?>
                          <tr>
                               <td><h5><?php echo $resultado['todos'][$i]['actividad']; ?></h5></td>
-                              <td><h5><?php echo $resultado['todos'][$i]['tipo_lugar']=="" ? "no se viajo" :"inter - ".$resultado['todos'][$i]['tipo_lugar']; ?></h5></td>
-                              <td><h5><?php echo $resultado['todos'][$i]['ciudad']=="" ?  "potosí" : $resultado['todos'][$i]['ciudad']?></h5></td>
-                              <td style="text-align:left;padding-left:9px"><h5><?php echo $resultado['todos'][$i]['establecimiento']=="" ?  "sin establecimiento" : $resultado['todos'][$i]['establecimiento']; ?> <small><?php echo $resultado['todos'][$i]['municipio'];?></small></h5></td>
-                              <td><h5><?php echo $resultado['todos'][$i]['lugar']; ?></h5></td>
-                              <td style="line-height: 1.2em;"><h5><?php echo $resultado['todos'][$i]['fecha_de']; ?></h5></td>
-                              <td style="line-height: 1.2em;"><h5><?php echo $resultado['todos'][$i]['fecha_hasta']; ?></h5></td>
+                              <td><h5><?php echo "Inter - ".$resultado['todos'][$i]['tipo_lugar']?></h5></td>
+                              <td><h5><?php echo strtoupper($resultado['todos'][$i]['ciudad'])?></h5></td>
+                              <td style="text-align:left;padding-left:4px">
+                                   <h5>
+                                   <?php  echo $resultado['todos'][$i]['redsalud']."  ".strtolower($resultado['todos'][$i]['municipio']);?>
+                                   <small  style="text-transform:lowercase"><br><?php echo $resultado['todos'][$i]['establecimiento'].$resultado['todos'][$i]['lugar'];?></small>
+                                   </h5>
+                              </td>
+                              <td style="text-align:left;padding-left:9px;text-transform:lowercase"><h5><?php echo $resultado['todos'][$i]['descripcion']?></h5></td>
+                              <td style="line-height: 1em;"><h5><?php echo $resultado['todos'][$i]['fecha_de']; ?></h5></td>
+                              <td style="line-height: 1em;"><h5><?php echo $resultado['todos'][$i]['fecha_hasta']; ?></h5></td>
                          </tr>
                     <?php } ?>
                </tbody>

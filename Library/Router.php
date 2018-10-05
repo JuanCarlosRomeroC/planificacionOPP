@@ -6,7 +6,7 @@ class Router{
      public $param;
      private $session;
      public $users= array('Administrador','Director','Planificador','Jefatura','Unidad','Usuario');
-     public $tipo;
+     public $tipo;public $auditorio;public $director;
      public function __construct(){
           Session::start();
           $this->setSession();
@@ -18,6 +18,8 @@ class Router{
      public function setSession(){
           $this->session=Session::getSession('User');
           if (isset($this->session)) {
+               $this->auditorio=$this->session['auditorio'];
+               $this->director=$this->session['director'];
                if ('/'.FOLDER.'/'==URI) {
                     header("Location: ".URL.'Principal');
                     $this->tipo=$this->users[$this->session['tipo']].'/';
@@ -39,6 +41,16 @@ class Router{
      }
      public function setController(){
           $this->controller = $this->uri[2] === '' ? 'Index' : $this->uri[2];
+          if ($this->uri[2] === 'Auditorio') {
+               if ($this->auditorio==0) {
+                    header("Location: ".URL.'Principal');
+               }
+          }
+          if ($this->uri[2] === 'Agenda') {
+               if ($this->director==0) {
+                    header("Location: ".URL.'Principal');
+               }
+          }
      }
      public function setMethod(){
           $this->method = ! empty($this->uri[3]) ? $this->uri[3] : 'index';
@@ -54,17 +66,17 @@ class Router{
      }
      public function getController(){
           $aux=explode('?', $this->controller)==null ? [] : explode('?', $this->controller);
-          $this->controller= $aux==[] ?  $this->controller : $aux[0] ;
+          $this->controller= $aux==[] ?  $this->controller : $aux[0];
           return $this->controller;
      }
      public function getMethod(){
           $aux=explode('?', $this->method)==null ? [] : explode('?', $this->method);
-          $this->method= $aux==[] ?  $this->method : $aux[0] ;
+          $this->method= $aux==[] ?  $this->method : $aux[0];
           return $this->method;
      }
      public function getParam(){
           $aux=explode('?', $this->param)==null ? [] : explode('?', $this->param);
-          $this->param= $aux==[] ?  $this->param : $aux[0] ;
+          $this->param= $aux==[] ?  $this->param : $aux[0];
           return $this->param;
      }
 }

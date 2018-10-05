@@ -124,13 +124,13 @@
 						<li>
 							<a href="/<?php echo FOLDER;?>/Notificacion" style="cursor:pointer">
 								<i class="fa fa-check-circle"></i> <span>Consolidaciones</span>
-								<small class="label pull-right bg-red" style="display:none" id="cantobject"></small>
+								<small class="label pull-right" style="display:none;background:<?php echo COLOR ?>" id="cantobject"></small>
 							</a>
 						</li>
 						<li>
 							<a href="/<?php echo FOLDER;?>/Notificacion/otra_planificacion" style="cursor:pointer">
 								<i class="fa fa-bell"></i> <span>Notificaciones</span>
-								<small class="label pull-right bg-info" style="display:none" id="cantobject_otro"></small>
+								<small class="label pull-right  bg-red" style="display:none;" id="cantobject_otro"></small>
 							</a>
 						</li>
 						<li>

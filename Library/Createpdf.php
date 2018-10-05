@@ -12,9 +12,11 @@ class Createpdf{
           require_once '/../dompdf/dompdf_config.inc.php';
           $dompdf = new DOMPDF();
 
-          $dompdf->load_html(ob_get_clean());
-          $dompdf->set_paper('letter', $paper); //landscape,portrait
+          $datos=utf8_encode(ob_get_clean());
+          $dompdf->load_html(utf8_decode($datos));
+          $dompdf->set_paper('letter', $paper); //portrait
           $dompdf->render();
+          ob_end_clean();
           $dompdf->stream($controllers.'.pdf',array('Attachment'=>0));
      }
 }

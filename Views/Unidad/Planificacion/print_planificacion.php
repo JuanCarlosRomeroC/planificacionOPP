@@ -29,7 +29,7 @@ $mes=$months[intval($resultado['month']) - 1];
                }
                h6{
                     font-weight: 200;
-                    font-size: .7em;
+                    font-size: .65em;
                     margin: 0px;
                     text-align: center;
                }
@@ -50,7 +50,7 @@ $mes=$months[intval($resultado['month']) - 1];
                }
                h5{
                     margin:3px;padding:0;
-                    font-weight:200;font-size: .7em;
+                    font-weight:200;font-size: .65em;
                }
                h3{
                     margin: 0;padding: 0;
@@ -66,36 +66,33 @@ $mes=$months[intval($resultado['month']) - 1];
           <h5>UNIDAD: <small><?php echo strtolower($resultado['usuario']['unidad']);?></small> </h5>
           <h5>FECHA DE ELABORACIÓN: <small><?php  echo $resultado['todos'][0]['fecha_elaboracion']?></small> </h5>
           <h5>FECHA DE PRESENTACIÓN: <small><?php echo $resultado['todos'][0]['fecha_presentacion']?></small> </h5>
-          <table width="100%" style="margin:10px 0 20px 0"  width="100%" cellspacing="0" cellpadding="0">
-               <thead style="background:#bdbdbd;text-align:center">
+          <table width="100%" style="margin:10px 0 20px 0; width:100%;"  width="100%" cellspacing="0" cellpadding="0">
                     <tr>
-                         <td width="20%" rowspan="2">ACTIVIDADES DE UNIDAD</td>
-                         <td width="20%" rowspan="2">ACTIVIDAD</td>
-                         <td width="30%"  rowspan="2" >OBJETIVOS</td>
-                         <td width="20%"  rowspan="2" >RESULTADOS ESPERADOS</td>
-                         <td width="10%" colspan="2">FECHA</td>
+                         <td width="30%" rowspan="2">PROGRAMACION OPERATIVA ANUAL (POAI GESTIÓN)</td>
+                         <td width="10%" rowspan="2">ESTRATEGIAS PROGRAMADAS</td>
+                         <td width="25%"  rowspan="2" >TAREAS</td>
+                         <td width="25%"  rowspan="2" >RESULTADOS ESPERADOS</td>
+                         <td width="15%" colspan="2">FECHA</td>
                     </tr>
                     <tr>
-                         <td width="7%">INICIO</td>
-                         <td width="7%">FIN</td>
+                         <td width="6%">INICIO</td>
+                         <td width="12%">FIN</td>
                     </tr>
-               </thead>
-               <tbody>
                     <?php for($i=0;$i< count($resultado['todos']);$i++){?>
                          <tr>
                               <?php if ($i==0): ?>
-                                   <td rowspan="<?php echo count($resultado['todos'])?>">
-                                        <?php $coun=1;while($row = mysql_fetch_assoc($resultado['actividades'])): ?>
-                                             <h6 style="margin:0 5px 3px 5px;line-height: 1.2em;text-transform: lowercase;text-align:left"><strong><?php echo $coun?>. </strong><?php echo $row["nombre"]; ?></h6>
-                                        <?php $coun++;endwhile; ?>
+                                   <td rowspan="<?php echo count($resultado['todos'])?>" style="max-height:100px">
+                                        <?php $coun=1;for($j=0;$j<count($resultado['actividades']);$j++): ?>
+                                             <h6 style="margin:0 5px 3px 5px;line-height: 1.2em;text-transform: lowercase;text-align:left"><strong><?php echo $coun?>. </strong><?php echo $resultado['actividades'][$j]["nombre"]; ?></h6>
+                                        <?php $coun++;endfor; ?>
                                    </td>
                               <?php endif; ?>
                               <td  style="text-align:left;padding-left:4px;text-transform: lowercase"><h5 style="line-height: 1.2em;"><?php echo $resultado['todos'][$i]['actividad']; ?></h5></td>
                               <td style="text-align:left">
-                                   <?php $espera = explode("|", $resultado['todos'][$i]['objetivo'])==null ? [1]:explode("|", $resultado['todos'][$i]['objetivo']);
+                                   <?php $objetivo = explode("|", $resultado['todos'][$i]['objetivo'])==null ? [1]:explode("|", $resultado['todos'][$i]['objetivo']);
                                         $cont = 0;
-                                        while ( $cont < count($espera)-1) {
-                                             echo '<h5 style="margin:0 0 0 5px;">- '.$espera[$cont].'</h5>';
+                                        while ( $cont < count($objetivo)-1) {
+                                             echo '<h5 style="margin:0 0 0 5px;">-  '.$objetivo[$cont].'</h5>';
                                              $cont++;
                                         }
                               ?></td>
@@ -103,7 +100,7 @@ $mes=$months[intval($resultado['month']) - 1];
                                    <?php $espera = explode("|", $resultado['todos'][$i]['esperado'])==null ? [1]:explode("|", $resultado['todos'][$i]['esperado']);
                                         $cont = 0;
                                         while ( $cont < count($espera)-1) {
-                                             echo '<h5 style="margin:0 0 0 5px;"> -    '.$espera[$cont].'</h5>';
+                                             echo '<h5 style="margin:0 0 0 5px;"> -  '.$espera[$cont].'</h5>';
                                              $cont++;
                                         }
                               ?></td>
@@ -111,19 +108,19 @@ $mes=$months[intval($resultado['month']) - 1];
                               <td><h5><?php echo $resultado['todos'][$i]['fecha_hasta']; ?></h5></td>
                          </tr>
                     <?php } ?>
-               </tbody>
+
           </table>
           <?php  if (count($resultado['viajes'])>0) {?>
-               <h3 style="margin: 0">- Otras Actividades</h3>
+               <h3 style="margin: 0">- DETALLE DE ACTIVIDADES</h3>
                <table width="100%" style="margin-top:10px"  width="100%" cellspacing="0" cellpadding="0">
                     <thead style="background:#bdbdbd;text-align:center">
                          <tr>
-                              <td width="11%" rowspan="2">ACTIVIDAD</td>
-                              <td width="9%" rowspan="2">VIAJE</td>
-                              <td width="10%" rowspan="2">CIUDAD</td>
-                              <td width="35%" rowspan="2">ESTABLECIMIENTO</td>
-                              <td width="25%" rowspan="2">LUGAR</td>
-                              <td width="10%" colspan="2">FECHA</td>
+                              <td width="14%" rowspan="2">ACTIVIDAD</td>
+                              <td width="10%" rowspan="2">VIAJE</td>
+                              <td width="9%" rowspan="2">CIUDAD</td>
+                              <td width="32%" rowspan="2">LUGAR</td>
+                              <td width="25%" rowspan="2">DESCRIPCIÓN</td>
+                              <td style="padding:3px" width="10%" colspan="2">FECHA</td>
                          </tr>
                          <tr>
                               <td width="10%">INICIO</td>
@@ -133,17 +130,25 @@ $mes=$months[intval($resultado['month']) - 1];
                     <tbody>
                          <?php for($i=0;$i< count($resultado['viajes']);$i++){?>
                               <tr>
-                                   <td><h5><?php echo $resultado['viajes'][$i]['actividad']; ?></h5></td>
-                                   <td><h5><?php echo $resultado['viajes'][$i]['tipo_lugar']=="" ? "no se viajo" :$resultado['viajes'][$i]['tipo_lugar']; ?></h5></td>
-                                   <td><h5><?php echo $resultado['viajes'][$i]['ciudad']=="" ?  "potosí" : $resultado['viajes'][$i]['ciudad']?></h5></td>
-                                   <td style="text-align:left;padding-left:9px"><h5><?php echo $resultado['viajes'][$i]['establecimiento']=="" ?  "sin establecimiento" : $resultado['viajes'][$i]['establecimiento']; ?> <small><?php echo $resultado['viajes'][$i]['municipio'];?></small></h5></td>
-                                   <td><h5><?php echo $resultado['viajes'][$i]['lugar']; ?></h5></td>
-                                   <td><h5><?php echo $resultado['viajes'][$i]['fecha_de']; ?></h5></td>
-                                   <td><h5><?php echo $resultado['viajes'][$i]['fecha_hasta']; ?></h5></td>
+                                   <td style="text-align:left;padding-left:10px"><h5><?php echo $resultado['viajes'][$i]['actividad']; ?></h5></td>
+                                   <td><h5><?php echo "Inter - ".$resultado['viajes'][$i]['tipo_lugar']?></h5></td>
+                                   <td><h5><?php echo strtoupper($resultado['viajes'][$i]['ciudad'])?></h5></td>
+                                   <td style="text-align:left;padding-left:4px">
+                                        <h5>
+                                        <?php  echo $resultado['viajes'][$i]['redsalud']."  ".strtolower($resultado['viajes'][$i]['municipio']);?>
+                                        <small  style="text-transform:lowercase"><br><?php echo $resultado['viajes'][$i]['establecimiento'].$resultado['viajes'][$i]['lugar'];?></small>
+                                        </h5>
+                                   </td>
+                                        </h5>
+                                   </td>
+                                   <td style="text-align:left;padding-left:9px;text-transform:lowercase"><h5><?php echo $resultado['viajes'][$i]['descripcion']?></h5></td>
+                                   <td><h5 style="line-height: 1.2em"><?php echo $resultado['viajes'][$i]['fecha_de']; ?></h5></td>
+                                   <td><h5 style="line-height: 1.2em"><?php echo $resultado['viajes'][$i]['fecha_hasta']; ?></h5></td>
                               </tr>
                          <?php } ?>
                     </tbody>
                </table>
           <?php } ?>
+          <h5 style="position:absolute;bottom:-25px;right:0;text-align:center"><?php echo $resultado['usuario']['nombre']." ".$resultado['usuario']['apellido']; ?> <br><small><?php echo strtolower($resultado['usuario']['cargo'])?></small></h5>
      </body>
 </html>

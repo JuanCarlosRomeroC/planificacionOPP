@@ -73,7 +73,8 @@
 							<div class="col-md-3 col-sm-3 col-xs-3" style="padding:0">
 								<input type="button" value="BUSCAR" id="btnsearch">
 							</div>
-
+							<div class="list-group col-md-8 col-sm-8 col-xs-8" style="position:absolute;top:46px;left:55px;max-height:400px;overflow-y: auto;padding-right: 0px" id="searchprincipal">
+							</div>
 						</div>
 					</div>
 				</nav>
@@ -117,32 +118,16 @@
 						</li>
 						<li class="treeview">
 							<a href="#">
-								<i class="fa fa-file"></i>
-								<span>Reportes</span>
-								<i class="fa fa-angle-left pull-right"></i>
-							</a>
-							<ul class="treeview-menu">
-								<li><a href=""><i class="fa fa-circle-o"></i>Jefatura</a></li>
-								<li><a href=""><i class="fa fa-circle-o"></i>Unidad</a></li>
-								<li><a href=""><i class="fa fa-circle-o"></i>Usuario</a></li>
-							</ul>
-						</li>
-						<li class="treeview">
-							<a href="#">
 								<i class="fa fa-wrench"></i>
 								<span>Configuraciones</span>
 								<i class="fa fa-angle-left pull-right"></i>
 							</a>
 							<ul class="treeview-menu">
-								<li><a href="#"><i class="fa fa-circle-o"></i>Usuarios</a></li>
-								<li><a href="#"><i class="fa fa-circle-o"></i>Vehiculos</a></li>
+								<li><a href="/<?php echo FOLDER;?>/Configuracion/otro"><i class="fa fa-circle-o"></i>Otras Actividades</a></li>
+								<li><a href="/<?php echo FOLDER;?>/Configuracion/auditorio"><i class="fa fa-circle-o"></i>Auditorio</a></li>
+								<li><a href="/<?php echo FOLDER;?>/Configuracion/cargo"><i class="fa fa-circle-o"></i>Cargos</a></li>
+								<li><a href="/<?php echo FOLDER;?>/Configuracion/director"><i class="fa fa-circle-o"></i>Director SEDES</a></li>
 							</ul>
-						</li>
-						<li>
-							<a href="#" style="cursor:pointer">
-								<i class="fa fa-bell"></i> <span>Notificaciones</span>
-								<small class="label pull-right bg-red" style="display:none" id="cantobject"></small>
-							</a>
 						</li>
 						<li>
 							<a href="/<?php echo FOLDER;?>/Usuario/destroySession" style="cursor:pointer">

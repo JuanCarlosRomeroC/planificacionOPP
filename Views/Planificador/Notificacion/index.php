@@ -41,8 +41,9 @@
 <div class="row" id="alert_empty"> <!-- SECTION EMPTY TABLE -->
 	<?php if(mysql_num_rows($resultado)<1){ //tabla vacia?>
 		<div class="col-md-12"><div class="alert alert-error alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>MENSAJE DE ALERTA!</strong> No se encontraron Planificaciones pendientes.</div></div>
-	<?php }else{include 'modalverplanificacion.php';}?>
+	<?php }?>
 </div>
+<?php include 'modalverplanificacion.php'; ?>
 <script>
    	var id_actividad_u,id_planificacion_u,auxi=0,auxi2=0,rowobj=0,rowesp=0,validarbag=false,Get_ID;
      $(document).ready(function(){

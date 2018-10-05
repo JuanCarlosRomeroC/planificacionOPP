@@ -94,14 +94,14 @@
 								<i class="fa fa-home"></i> <span>Inicio</span>
 							</a>
 						</li>
-						<li>
-							<a href="/<?php echo FOLDER;?>/Usuario" style="cursor:pointer">
-								<i class="fa fa-group"></i> <span>Personal</span>
-							</a>
-						</li>
 						<li class="treeview">
 							<a href="/<?php echo FOLDER;?>/Actividad">
 								<i class="fa fa-plus-square"></i><span>MI POAI</span>
+							</a>
+						</li>
+						<li class="treeview">
+							<a href="/<?php echo FOLDER;?>/Actividad/director">
+								<i class="fa fa-plus-square"></i><span>Mis Actividades</span>
 							</a>
 						</li>
 						<li class="treeview">
@@ -125,12 +125,6 @@
 							</ul>
 						</li>
 						<li>
-							<a href="/<?php echo FOLDER;?>/Notificacion" style="cursor:pointer">
-								<i class="fa fa-bell"></i> <span>Notificaciones</span>
-								<small class="label pull-right bg-red" style="display:none" id="cantobject"></small>
-							</a>
-						</li>
-						<li>
 							<a href="/<?php echo FOLDER;?>/Usuario/destroySession" style="cursor:pointer">
 								<i class="fa fa-sign-out"></i> <span>Salir</span>
 							</a>
@@ -149,13 +143,3 @@
 								<div class="box-body">
 									<div class="row">
 										<div class="col-md-12">
-											<script type="text/javascript">
-											$(document).ready(function(){
-												$.ajax({
-													url: '<?php echo URL?>Notificacion/notificacion',type: "get",success: function(res){
-														if(res>0){
-															$('#cantobject').text(res);
-															$('#cantobject').show();
-														}else{
-															$('#cantobject').css('display','none');}}});})
-											</script>

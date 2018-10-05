@@ -73,10 +73,18 @@
      var users_array=['Administrador','Director','Planificador','Jefe de Jefatura','Jefe de Unidad','Normal'];
      $(document).ready(function(){
           //____________DIBUJAR AVANCE DE ACTIVIDAD
-		var DomainName = <?php echo json_encode($resultado['actividades']) ?>,media= 100 / DomainName.length,progress=0;
-          console.log(DomainName);
-		for (var i = 0; i < DomainName.length; i++) {if (DomainName[i].estado==1) {progress=progress+media;}else{progress=progress+parseInt(DomainName[i].total);}}
-
+          function roundToTwo(num) {
+		    return +(Math.round(num + "e+2")  + "e-2");
+		}
+          var DomainName = <?php echo json_encode($resultado['actividades']) ?>,media=roundToTwo(100 / DomainName.length),progress=0;
+		for (var i = 0; i < DomainName.length; i++) {
+			if (DomainName[i].estado==1) {
+				progress=progress+media;
+			}else{
+				porcentaje=roundToTwo(media/DomainName[i].total);
+				progress=progress+roundToTwo(porcentaje*DomainName[i].porcentaje);
+			}
+		}
 		var can = document.getElementById('canvas'),spanProcent = document.getElementById('procent'),c = can.getContext('2d');var posX = can.width / 2,posY = can.height / 2,fps = 1000 / 200,procent = 0,oneProcent = 360 / 100,result = oneProcent * progress;c.lineCap = 'round';arcMove();
 	  	function arcMove(){var deegres = 0;var acrInterval = setInterval (function() {deegres += 1;c.clearRect( 0, 0, can.width, can.height );procent = deegres / oneProcent;spanProcent.innerHTML = procent.toFixed()+"%"; c.beginPath();c.arc( posX, posY, 70, (Math.PI/180) * 270, (Math.PI/180) * (270 + 360) );c.strokeStyle = '#b9cbbc';c.lineWidth = '10';c.stroke();c.beginPath();c.strokeStyle = '#27c277';c.lineWidth = '10';c.arc( posX, posY, 70, (Math.PI/180) * 270, (Math.PI/180) * (270 + deegres) );c.stroke();if( deegres >= result ) clearInterval(acrInterval);}, fps);}
 

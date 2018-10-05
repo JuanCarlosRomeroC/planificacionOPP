@@ -13,7 +13,7 @@
 				</form>
 			</div>
 			<div class="modal-footer" style="border-left:10px solid  #84da92;margin-top: 15px;padding:3px 5px 3px 5px">
-                    <button type="button" class="btn btn-danger" id="btncancelar">Cancelar</button>
+                    <button class="btn" id="btncancelar" type="button" data-dismiss="modal" aria-label="Close">Cancelar</button>
 				<button class="btn btn-success" id="btncambiarfecha" type="button" disabled>CAMBIAR FECHA</button>
 	      	</div>
 		</div>

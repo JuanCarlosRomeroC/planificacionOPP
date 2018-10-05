@@ -32,7 +32,6 @@
 									<td style="text-align:left;padding-left:9px;vertical-align:inherit"><h5 style="text-align:left"><?php echo $resultado["actividades"][$i]['unidad']==null ? "Sin Unidad Asingnada" : ucwords(strtolower($resultado["actividades"][$i]['unidad'])); ?></h5></td>
 									<td style="vertical-align:inherit">
 										<a data-target="#updateactividadModal" data-toggle="modal" onclick="updateAjax(<?php echo $resultado["actividades"][$i]['id'];?>)"><span title="editar actividad"  class="glyphicon glyphicon-pencil" aria-hidden="true" style="cursor:pointer;margin:0 2px 0 2px"></span></a>
-										<a  onclick="verAjax(<?php echo $resultado["actividades"][$i]['id'];?>)"><span title="ver actividad" class="glyphicon glyphicon-eye-open" aria-hidden="true" style="cursor:pointer;color:#313131;margin:0 2px 0 2px"></span></a>
 										<?php if ($resultado["actividades"][$i]['total']<1) {?>
 											<a  onclick="bajaAjax(<?php echo $resultado["actividades"][$i]['id'];?>)"><span title="dar de baja actividad" class="glyphicon glyphicon-remove" aria-hidden="true" style="cursor:pointer;color:red;margin:0 2px 0 2px"></span></a>
 										<?php } ?>

@@ -119,6 +119,11 @@
 								<a href="/<?php echo FOLDER;?>/Auditorio" style="cursor:pointer"><i class="fa fa-calendar-plus-o"></i> <span>Auditorio</span></a>
 							</li>
 						<?php } ?>
+						<?php if ($session['director']==1) { ?>
+							<li>
+								<a href="/<?php echo FOLDER;?>/Agenda" style="cursor:pointer"><i class="fa fa-calendar-plus-o"></i> <span>Agenda Director</span></a>
+							</li>
+						<?php } ?>
 						<li>
 							<a href="/<?php echo FOLDER;?>/Usuario/destroySession">
 								<i class="fa fa-sign-out"></i> <span>Salir</span>

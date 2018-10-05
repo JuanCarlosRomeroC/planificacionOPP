@@ -35,6 +35,13 @@
 						</select>
 					</div>
 				</div>
+				<div class="row" style="margin:0">
+					<div class="form-group  has-feedback has-error fila1">
+						<label style="color:#3fd2e0;font-weight:400;font-family:arial;font-size:.8em;margin-bottom:2px">DESCRIPCIÓN</label>
+						<input type="text" id="inputdescripcion" placeholder="Ejemplo: Capacitación de uso del sistema" class="form-control" validate=true toggle=".fila1">
+						<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden=true style="right:2px"></span>
+					</div>
+				</div>
 				<div class="panel-group" id="accordion3" role="tablist" aria-multiselectable="true">
 					<div class="panel panel-default">
 						<div class="panel-heading" style="background:#383838;height:50px;padding:0 0 10px 15px" id="heading1" href="#collapse5" data-parent="#accordion3">
@@ -72,7 +79,8 @@
 										</select>
 									</div>
 									<div class="form-group classprovincial" style="display:none">
-										<label>Red De Salud</label>
+										<label>Coordinación de Red</label>
+										<?php mysql_data_seek($resultado['redsalud'], 0);mysql_data_seek($resultado['municipios'], 0);mysql_data_seek($resultado['establecimientos'], 0);?>
 										<select id="selectredsalud" class="form-control selectpicker show-tick" data-live-search="true" validate=true>
 											<?php while($row=mysql_fetch_array($resultado['redsalud'])): ?>
 												<option value="<?php echo $row['id'];?>"><?php echo ucwords(strtolower($row['nombre']));?></option>
@@ -80,18 +88,18 @@
 										</select>
 									</div>
 									<div class="form-group classprovincial" style="display:none">
-										<label>Municipio</label>
+										<label>Red Municipal</label>
 										<select id="selectmunicipio" class="form-control selectpicker show-tick" data-live-search="true" data-show-subtext="true" validate=true>
-											<option disabled selected value> -- seleccione un municipio -- </option>
+											<option disabled selected value municipio="0"> -- seleccione un municipio -- </option>
 											<?php while($row=mysql_fetch_array($resultado['municipios'])): ?>
 												<option value="<?php echo $row['id_redsalud'];?>" municipio="<?php echo $row['id'];?>" data-subtext="<?php echo ucwords(strtolower($row['redsalud']));?>"><?php echo ucwords(strtolower($row['nombre']));?></option>
 											<?php endwhile;?>
 										</select>
 									</div>
 									<div class="form-group classprovincial" style="display:none">
-										<label>Establecimiento</label>
+										<label>Establecimientos de Salud</label>
 										<select id="selectestablecimiento" class="form-control selectpicker show-tick" data-live-search="true" data-show-subtext="true" validate=true>
-											<option disabled selected value> -- seleccione un establecimiento -- </option>
+											<option disabled selected value toggle="0"> -- seleccione un establecimiento -- </option>
 											<?php while($row=mysql_fetch_array($resultado['establecimientos'])): ?>
 												<option value="<?php echo $row['id_municipio'];?>" toggle="<?php echo $row['id'];?>" data-subtext="<?php echo ucwords(strtolower($row['municipio']));?>"><?php echo ucwords(strtolower($row['nombre']));?></option>
 											<?php endwhile;?>
@@ -110,9 +118,9 @@
 						</div>
 					</div>
 					<div class="row" style="margin:15px" id="rowlugar">
-						<div class="form-group  has-feedback has-error fila1">
+						<div class="form-group  has-feedback has-error fila2">
 							<label style="color:#3fd2e0;font-weight:400;font-family:arial;font-size:.8em;margin-bottom:2px">LUGAR DE EJECUCIÓN DE LA ACTIVIDAD</label>
-							<input type="text" id="inputlugar" class="form-control" placeholder="Ejemplo: Hotel Claudia" validate=true toggle=".fila1">
+							<input type="text" id="inputlugar" class="form-control" placeholder="Ejemplo: Hotel Claudia" validate=true toggle=".fila2">
 							<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden=true style="right:2px"></span>
 						</div>
 					</div>

@@ -112,10 +112,12 @@
 	});
 	function verAjax(val){
      	$.ajax({
-			url: '<?php echo URL;?>Notificacion/ver_otra_planificacion/'+val,
+			url: '<?php echo URL;?>Notificacion/ver_planificacion/'+val,
 			type: 'get',
 			success:function(obj){
+				console.log(obj)
 				var data = JSON.parse(obj);
+				console.log(data)
 				if (data.visto==1) {
 					console.log("lo vio");
 					$('#marcarleido').hide();

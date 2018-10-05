@@ -9,7 +9,7 @@
 	                       	<center class="unombre">
 	                           	<h5  style="color: #abaaaa;margin-top:0;margin-bottom:0px;text-transform:uppercase;z-index:900">nombre del usuario</h5>
 							<p style="margin:0px;color:#ced161;font-weight: 700;">CI: 23423434</p>
-							<h6 style="margin:0 0 5px 0;color:#dcdcdc;font-weight: 400;text-transform:lowercase">Jefe de Jefatura</h6>
+							<h6 style="margin:0 0 5px 0;color:#dcdcdc;font-weight: 400;">Usuario</h6>
 						</center>
                          </div>
                          <div class="col-md-6">
@@ -21,7 +21,7 @@
                          <div class="col-md-6">
                               <center>
 	                           	<img src="<?php echo URL;?>public/images/icons/32/placeholder.png"  style="padding:15px 0 5px 0;margin-top:0px">
-		                         <br><p class="uciudad" style="line-height: .95em !important;text-transform: lowercase;color:#797979">reterterte</p>
+		                         <br><p class="uciudad" style="line-height: .95em !important;color:#797979">reterterte</p>
 	                       	</center>
                          </div>
                          <div class="col-md-6">

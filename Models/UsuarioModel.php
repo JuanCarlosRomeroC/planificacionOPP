@@ -18,7 +18,7 @@
                return $this->$atributo;
           }
           public function login(){
-               $auth="SELECT id,tipo,password,nombre,apellido,id_lugar,auditorio FROM usuario
+               $auth="SELECT id,tipo,password,nombre,apellido,id_lugar,auditorio,director FROM usuario
                     WHERE ci = '{$this->ci}' and estado=b'1'";
                $result= parent::consultaRetorno($auth);
                if(mysql_num_rows($result)==1){

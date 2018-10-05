@@ -9,7 +9,7 @@
 	                       	<center class="unombre">
 	                           	<h5  style="color: #abaaaa;margin-top:0;margin-bottom:0px;text-transform:uppercase;z-index:900">nombre del usuario</h5>
 							<p style="margin:0px;color:#ced161;font-weight: 700;">CI: 23423434</p>
-							<h6 style="margin:0 0 5px 0;color:#dcdcdc;font-weight: 400;text-transform:lowercase">Jefe de Jefatura</h6>
+							<h6 style="margin:0 0 5px 0;color:#dcdcdc;font-weight: 400;">Usuario</h6>
 						</center>
                          </div>
                          <div class="col-md-6">
@@ -18,10 +18,22 @@
 	                           	<br><p class="uactividad" style="line-height: .95em !important;text-transform: lowercase;color:#797979">terwterwter</p>
 	                       	</center>
                          </div>
+					<div class="col-md-6">
+                              <center>
+	                           	<img src="<?php echo URL;?>public/images/icons/32/guidepost.png"  style="padding:15px 0 5px 0;margin-top:0px">
+	                           	<br><p class="utipo" style="line-height: .95em !important;color:#797979">tipo</p>
+	                       	</center>
+                         </div>
                          <div class="col-md-6">
                               <center>
 	                           	<img src="<?php echo URL;?>public/images/icons/32/placeholder.png"  style="padding:15px 0 5px 0;margin-top:0px">
-		                         <br><p class="uciudad" style="line-height: .95em !important;text-transform: lowercase;color:#797979">reterterte</p>
+		                         <br><p class="uciudad" style="line-height: .95em !important;color:#797979">reterterte</p>
+	                       	</center>
+                         </div>
+					<div class="col-md-6">
+                              <center>
+	                           	<img src="<?php echo URL;?>public/images/icons/32/place.png"  style="padding:15px 0 5px 0;margin:0">
+	                           	<br><p class="ulugar" style="line-height: .95em !important;color:#797979">lugar</p>
 	                       	</center>
                          </div>
                          <div class="col-md-6">
@@ -38,32 +50,17 @@
                          </div>
 					<div class="col-md-6">
                               <center>
-	                           	<img src="<?php echo URL;?>public/images/icons/32/place.png"  style="padding:15px 0 5px 0;margin:0">
-	                           	<br><p class="ulugar" style="line-height: .95em !important;color:#797979">tertrte</p>
-	                       	</center>
-                         </div>
-                         <div class="col-md-6">
-                              <center>
-	                           	<img src="<?php echo URL;?>public/images/icons/32/guidepost.png"  style="padding:15px 0 5px 0;margin-top:0px">
-	                           	<br><p class="utipo" style="line-height: .95em !important;color:#797979">rtreter</p>
-	                       	</center>
-                         </div>
-					<div class="col-md-6">
-                              <center>
 	                           	<img src="<?php echo URL;?>public/images/icons/32/calendar1.png"  style="padding:15px 0 5px 0;margin:0">
-	                           	<br><p class="ufechade" style="line-height: .95em !important;color:#797979">tertrte</p>
+	                           	<br><p class="ufechade" style="line-height: .95em !important;color:#797979">fecha-de</p>
 	                       	</center>
                          </div>
-                         <div class="col-md-6">
+                         <div class="col-md-6" style="margin-bottom:20px">
                               <center>
 	                           	<img src="<?php echo URL;?>public/images/icons/32/calendar.png"  style="padding:15px 0 5px 0;margin-top:0px">
-	                           	<br><p class="ufechahasta" style="line-height: .95em !important;color:#797979">rtreter</p>
+	                           	<br><p class="ufechahasta" style="line-height: .95em !important;color:#797979">fecha-hasta</p>
 	                       	</center>
                          </div>
                     </div>
-               </div>
-               <div class="modal-footer" style="padding: 5px">
-                    <button class="btn btn-danger" style="margin:0px" type="button" class="close" data-dismiss="modal" aria-label="Close">Cerrar</button>
                </div>
 		</div>
 	</div>

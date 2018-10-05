@@ -5,10 +5,9 @@ class Actividad extends Controllers{
           parent::__construct();
           $this->actividad=parent::loadClassmodels("ActividadModel");
      }
-     public function index(){
-          $this->actividad->set('year',isset($_GET['year']) ? $_GET['year'] :date('Y'));
-          $resultado=$this->actividad->listar_poai_director();
-          $this->view->render($this,"index",$resultado);
+     public function director(){
+          $resultado=$this->actividad->listarparadirector();
+          $this->view->render($this,"actividad_director",$resultado);
      }
      public function ver($id){
           $this->actividad->set('id',$id);
@@ -16,19 +15,43 @@ class Actividad extends Controllers{
          echo json_encode($data);
      }
      public function crear(){
-          $this->actividad->set("id_actividad",$_POST['id_actividad']);
-          $this->actividad->set("year",$_POST['year']);
-          $resultado=$this->actividad->crear_parausuario();
-          echo $resultado;
+          $this->actividad->set("nombre",$_POST['nombre']);
+          $resultado=$this->actividad->crear();
      }
-     public function terminar($id){
-          $this->actividad->set('id',$id);
-          $data=$this->actividad->terminaractividad();
-         echo json_encode($data);
+     public function editar($id){
+         $this->actividad->set('id',$id);
+         $this->actividad->set("nombre",$_POST['nombre']);
+         $this->actividad->editar();
      }
      public function eliminar($id){
          $this->actividad->set('id',$id);
-         $this->actividad->eliminar_actividadjefatura();
+         $this->actividad->eliminar();
+     }
+     public function alta($id){
+         $this->actividad->set('id',$id);
+         $this->actividad->alta();
+     }
+
+     public function index(){
+          $this->actividad->set('year',isset($_GET['year']) ? $_GET['year'] :date('Y'));
+          $resultado=$this->actividad->listar_poai();
+          $this->view->render($this,"mi_poai",$resultado);
+     }
+     public function crear_poai(){
+          $year=intval(date('Y'))+1;
+          $this->actividad->set("id_actividad",$_POST['id_actividad']);
+          $this->actividad->set("year",$year);
+          $this->actividad->set("total",$_POST['total']);
+          $this->actividad->crear_poai();
+     }
+     public function editar_poai($id){
+          $this->actividad->set("id",$id);
+          $this->actividad->set("total",$_POST['total']);
+          $this->actividad->editar_poai();
+     }
+     public function eliminar_poai($id){
+         $this->actividad->set('id',$id);
+         $this->actividad->eliminar_poai();
      }
 }
  ?>

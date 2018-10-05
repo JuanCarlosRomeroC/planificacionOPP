@@ -1,6 +1,7 @@
 <?php
 	$months=["Enero","Febrero","Marzo", "Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
 ?>
+<div class="fab" id="btnprint"><span class="glyphicon glyphicon-save" aria-hidden="true" style="font-size:.7em;margin-left: 3px;"></span></div>
 <div class="col-md-12">
 		<div class="col-md-10">
 			<h2 class="text-center" style="margin:5px 0 10px 0;font-weight:600">PLANIFICADOR GENERAL DE SEDES POTOSÍ</h2>
@@ -8,6 +9,7 @@
 		<div class="col-md-2" style="padding:0">
 			<select id="selectactividad" class="form-control selectpicker show-tick" type="<?php echo $resultado['type']?>">
 				<option value="0">Viajes</option>
+				<option value="all">Todos</option>
 				<?php while($row=mysql_fetch_array($resultado['actividad'])): ?>
 					<option value="<?php echo $row['id'];?>"><?php echo ucwords(strtolower($row['nombre']));?></option>
 				<?php endwhile; ?>
@@ -31,6 +33,9 @@
 </style>
 <script>
    	var id_actividad_u,id_planificacion_u,auxi=0,auxi2=0,rowobj=0,rowesp=0,validarbag=false,Get_ID;
+	var users_array=['Administrador','Director','Planificador','Jefe de Jefatura','Jefe de Unidad','Normal'];
+	var citys={['potosi']:"Potosí",['lapaz']:"La Paz",['cochabamba']:"Cochabamba",['santacruz']:"Santa Cruz",['tarija']:"Tarija",['chuquisaca']:"Chuquisaca",['oruro']:"Oruro",['beni']:"Beni",['pando']:"Pando"};
+
      $(document).ready(function(){
 		$('#textareadescripcion').keyup(function(){if($(this).val().trim().length>8){small_error('.fila1',true);$("#btncambiarfecha").attr('disabled', false);}else{small_error('.fila1',false);$("#btncambiarfecha").attr('disabled', true);}});
 
@@ -43,9 +48,8 @@
     		for (var i = 0; i < data.length; i++) {
 			var viaje= data[i].tipo_actividad=="viaje" ? (" (con viaje)") : (" (sin viaje)");
 			var title=data[i].actividad.toUpperCase()+viaje;
-    			myObj = { "id":data[i].id, "title":title, "start":data[i].fecha_de,"end":data[i].fecha_hasta,"description": 'Usuario:'+data[i].nombre.toLowerCase(),"color":getRandomColor()};
+    			myObj = { "id":data[i].id,"_id":i, "title":title, "start":data[i].fecha_de,"end":data[i].fecha_hasta,"description": 'Usuario:'+data[i].nombre.toLowerCase(),"color":getRandomColor()};
     			datos.push(myObj);}
-		console.log(datos);
     		$('#calendar').fullCalendar({
     			locale: 'es',
     			header: {
@@ -66,51 +70,61 @@
 			eventClick: function(calEvent) {
 				verAjax(calEvent.id);
 			    $('#verplanificacionModal').modal('show');
-		    },
+		     },
 		    eventDrop: function(event, delta, revertFunc) {
-			     if (event.end._d.getFullYear()>=<?php echo intval(date('Y'))?> && event.end._d.getMonth()+1>= <?php echo intval(date('m'))?>&& event.end._d.getDate()>=<?php echo intval(date('d'))?>) {
+			    var old=new Date(event.source.rawEventDefs[event._id].end);
+			    var CurrentDate = new Date(),GivenDate = new Date(event.end.format());
+			    if (GivenDate>CurrentDate &&  old >= CurrentDate) {
 				     $('#updatecronogramaModal').modal({
 					    backdrop: 'static',
 					    keyboard: true,
 					    show: true
 	 		    		});
-				     $('#btncambiarfecha').click(function(){
-					    updateAjax(event.id,event.start.format(),event.end.format());
-				     });
-				     $('#btncancelar').click(function(){
-					   revertFunc();
-					   $('#updatecronogramaModal').modal('toggle');
-					   small_error('.fila1',false);$("#btncambiarfecha").attr('disabled', true);
-				     })
 				}else{
 					revertFunc();
 				}
+				$('#btncambiarfecha').click(function(){
+					updateAjax(event.id,event.start.format(),event.end.format());
+				});
+				$('#btncancelar').click(function(){
+				   revertFunc();
+				   small_error('.fila1',false);$("#btncambiarfecha").attr('disabled', true);
+				})
 		   	},
 			eventResize: function(event, delta, revertFunc) {
-				if (event.end._d.getFullYear()>=<?php echo intval(date('Y'))?> && event.end._d.getMonth()+1>= <?php echo intval(date('m'))?>&& event.end._d.getDate()>=<?php echo intval(date('d'))?>) {
-					console.log(event.start.format(),event.end.format());
+				var old=new Date(event.source.rawEventDefs[event._id].end);
+ 			     var CurrentDate = new Date(),GivenDate = new Date(event.end.format());
+ 			     if (GivenDate>CurrentDate &&  old >= CurrentDate) {
 					$('#updatecronogramaModal').modal({
 						backdrop: 'static',
 	                         keyboard: true,
 	                         show: true
 				     });
-				     $('#btncambiarfecha').click(function(){
-						updateAjax(event.id,event.start.format(),event.end.format());
-				     });
-				     $('#btncancelar').click(function(){
-					    revertFunc();
-					    $('#updatecronogramaModal').modal('toggle');
-					    small_error('.fila1',false);$("#btncambiarfecha").attr('disabled', true);
-				     })
 		    		}else{
 			    		revertFunc();
 		    		}
+				$('#btncambiarfecha').click(function(){
+					updateAjax(event.id,event.start.format(),event.end.format());
+				});
+				$('#btncancelar').click(function(){
+				    revertFunc();
+				    small_error('.fila1',false);$("#btncambiarfecha").attr('disabled', true);
+				})
+			},
+			viewRender: function( view, element ){
+				date_start=view.intervalStart.format();
+				var d=parseInt(view.intervalEnd._d.getDate()),m=parseInt(view.intervalEnd._d.getMonth())+1;
+				var aux=d<10?("0"+d):(d);
+				var aux2=m<10?("0"+m):(m);
+				date_end=view.intervalEnd._d.getFullYear()+"-"+aux2+"-"+aux;
+				$('#btnprint').click(function(){
+					window.open("/<?php echo FOLDER;?>/Cronograma/printpdf/"+$('#selectactividad').val()+"?de="+date_start+"&hasta="+date_end, '_blank');
+				});
 			}
-    		});
+		});
 
 	});
 	function updateAjax(id,fecha_de,fecha_hasta){
-		console.log(id,fecha_de,fecha_hasta);
 		$.ajax({
 			url: '<?php echo URL;?>Cronograma/editar/'+id,
 			type: 'post',
@@ -129,24 +143,28 @@
 			type: 'get',
 			success:function(obj){
 				var data = JSON.parse(obj);
-                    console.log(data);
-
 				$('.unombre h5').text(data.nombre);
 				$('.unombre p').text(data.ci);
-				// $('#unombre').text(data.fecha_hasta);
-				// $('#unombre').text(data.fecha_hasta);
 				$('.uactividad').text(data.actividad);
 				$('.uviaje').text(data.tipo_actividad=="local" ? ("Sin Viaje"):("Con Viaje"));
-				$('.uciudad').text(data.ciudad=="" ? ("potosí"):(data.ciudad));
-				$('.ulugar').text(data.lugar);
-				// $('#uviaje').text(data.fecha_hasta);
-				var aux=['departamental','provincial'];
-				var u=['Inter-departamental','Inter - Municipal'];
-				$('.uestablecimiento').text(data.establecimiento==null ? ("Sin Establecimiento"):(data.establecimiento));
-				$('.utipo').text(data.tipo_lugar=="" ? ("Inter - Departamental"):(data.tipo_lugar));
+				$('.uciudad').text("CIUDAD: "+citys[data.ciudad]);
+				var aux={['departamental']:"Inter-Departamental",['provincial']:"Inter - Municipal"};
+				$('.uestablecimiento').text(data.establecimiento==null ? ("Sin Establecimiento"):(data.establecimiento.toLowerCase()));
+				$('.utipo').text(aux[data.tipo_lugar]);
+				var lugar="";
+				if (data.lugar!=null && data.lugar!="") {
+					lugar=data.lugar.toLowerCase();
+				}else{
+					if (data.redsalud!=null) {
+						lugar=data.redsalud.toLowerCase();
+						if (data.municipio!=null) {
+							lugar=data.municipio.toLowerCase();
+						}
+					}
+				}
+				$('.ulugar').text(lugar);
 				$('.ufechahasta').text(data.fecha_hasta);
 				$('.ufechade').text(data.fecha_de);
-
 			}
 		});
 	}

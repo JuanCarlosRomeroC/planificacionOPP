@@ -47,6 +47,7 @@ class Planificacion extends Controllers{
      }
      public function completarinforme($id){//completa mi informe
           $this->planificacion->set("id",$id);
+          $this->planificacion->set("terminado",$_POST['terminado']);
           $this->planificacion->set("observacion",$_POST['observacion']);
           $this->planificacion->set("vista_unidad",1);
           $this->planificacion->set("vista_jefatura",1);
@@ -54,17 +55,21 @@ class Planificacion extends Controllers{
           $resultado=$this->planificacion->completarinforme();
           echo $resultado;
      }
-     public function print_mi_planificacion($id){//imprime mi planificacion
+     public function print_planificacion($id){//imprime mi planificacion
           $this->planificacion->set('year',substr($id, 0, -2));
           $this->planificacion->set('month',substr($id, -2));
           $data=$this->planificacion->imprimir();
           $this->pdf->loadPDF($this,'print_planificacion','landscape',$data);
      }
-     public function print_mi_informe($id){ //imprime mi informe
+     public function print_informe($id){ //imprime mi informe
           $this->planificacion->set('year',substr($id, 0, -2));
           $this->planificacion->set('month',substr($id, -2));
           $data=$this->planificacion->imprimir();
           $this->pdf->loadPDF($this,'print_informe','landscape',$data);
+     }
+     public function eliminar($id){
+        $this->planificacion->set("id",$id);
+         $data=$this->planificacion->eliminar();
      }
 
 //__________ACCIONES PARA USUARIO___________
@@ -83,7 +88,7 @@ class Planificacion extends Controllers{
           $this->planificacion->set('id',base64_decode($id));
           $this->planificacion->set('year',substr($_GET['date'], 0, -2));
           $this->planificacion->set('month',substr($_GET['date'], -2));
-          $data=$this->planificacion->imprimir_unusuario();
+          $data=$this->planificacion->imprimir();
           $this->pdf->loadPDF($this,'print_informe','landscape',$data);
      }
 }

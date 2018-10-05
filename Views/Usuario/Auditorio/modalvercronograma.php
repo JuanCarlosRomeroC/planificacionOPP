@@ -12,40 +12,16 @@
 							<h6 style="margin:0 0 5px 0;color:#dcdcdc;font-weight: 400;text-transform:lowercase">Jefe de Jefatura</h6>
 						</center>
                          </div>
-                         <div class="col-md-6">
-                              <center>
-	                           	<img src="<?php echo URL;?>public/images/icons/32/new-file.png"  style="padding:15px 0 5px 0;margin-top:0px;color:#313131">
-	                           	<br><p class="uactividad" style="line-height: .95em !important;text-transform: lowercase;color:#797979">terwterwter</p>
-	                       	</center>
-                         </div>
-                         <div class="col-md-6">
-                              <center>
-	                           	<img src="<?php echo URL;?>public/images/icons/32/placeholder.png"  style="padding:15px 0 5px 0;margin-top:0px">
-		                         <br><p class="uciudad" style="line-height: .95em !important;text-transform: lowercase;color:#797979">reterterte</p>
-	                       	</center>
-                         </div>
-                         <div class="col-md-6">
-                              <center>
-	                           	<img src="<?php echo URL;?>public/images/icons/32/car.png"  style="padding:15px 0 5px 0;margin:0">
-	                           	<br><p class="uviaje" style="line-height: .95em !important;color:#797979">rtertrte</p>
-	                       	</center>
-                         </div>
-                         <div class="col-md-6">
-                              <center>
-	                           	<img src="<?php echo URL;?>public/images/icons/32/hospital.png"  style="padding:15px 0 5px 0;margin-top:0px">
-	                           	<br><p class="uestablecimiento" style="line-height: .95em !important;color:#797979">reterter</p>
-	                       	</center>
-                         </div>
 					<div class="col-md-6">
                               <center>
 	                           	<img src="<?php echo URL;?>public/images/icons/32/place.png"  style="padding:15px 0 5px 0;margin:0">
-	                           	<br><p class="ulugar" style="line-height: .95em !important;color:#797979">tertrte</p>
+	                           	<br><p style="line-height: .95em !important;color:#797979">Uso de Auditorio</p>
 	                       	</center>
                          </div>
                          <div class="col-md-6">
                               <center>
-	                           	<img src="<?php echo URL;?>public/images/icons/32/guidepost.png"  style="padding:15px 0 5px 0;margin-top:0px">
-	                           	<br><p class="utipo" style="line-height: .95em !important;color:#797979">rtreter</p>
+	                           	<img src="<?php echo URL;?>public/images/icons/32/new-file.png"  style="padding:15px 0 5px 0;margin-top:0px;color:#313131">
+	                           	<br><p class="uactividad" style="line-height: .95em !important;color:#797979">terwterwter</p>
 	                       	</center>
                          </div>
 					<div class="col-md-6">
@@ -62,9 +38,11 @@
                          </div>
                     </div>
                </div>
-               <div class="modal-footer" style="padding: 5px">
-                    <button class="btn btn-danger" style="margin:0px" type="button" class="close" data-dismiss="modal" aria-label="Close">Cerrar</button>
-               </div>
+			<div class="modal-footer" style="border-left:10px solid  #84da92;margin-top: 15px;padding:10px 0 10px 0">
+				<div class="col-md-12">
+					<h4 class="vdescripcion" style="font-weight:200;color:#ff0000;margin:0;text-align:left">DESCRIPCIÓN<span style="font-size:0.75em;color:#2d2d2d;margin-left:15px">el boton de registro de habilitara una vez llene toda la información</span></h4>
+				</div>
+	      	</div>
 		</div>
 	</div>
 </div>

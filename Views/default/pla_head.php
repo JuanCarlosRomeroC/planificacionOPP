@@ -101,26 +101,7 @@
 							</a>
 						</li>
 						<li class="treeview">
-							<a href="/<?php echo FOLDER;?>/Planificacion">
-								<i class="fa fa-file"></i><span>Mis Planificaciones</span>
-								<small class="pull-right glyphicon glyphicon-ok" style="color:#5ac65b"></small>
-							</a>
-						</li>
-						<li class="treeview">
-							<a><i class="fa fa-plus-square"></i><span style="color:#b7ab1f">ACTIVIDADES</span><i class="fa fa-angle-left pull-right"></i></a>
-							<ul class="treeview-menu">
-								<li><a href="/<?php echo FOLDER;?>/Actividad/all"><i class="fa fa-circle-o"></i>Todos</a></li>
-								<li><a href="/<?php echo FOLDER;?>/Actividad/unidad"><i class="fa fa-circle-o"></i>Actividades Unidad</a></li>
-								<li><a href="/<?php echo FOLDER;?>/Actividad"><i class="fa fa-circle-o"></i>MI POAI</a></li>
-
-							</ul>
-						</li>
-						<li class="treeview">
-							<a><i class="fa fa-calendar-check-o"></i><span>CRONOGRAMA</span><i class="fa fa-angle-left pull-right"></i></a>
-							<ul class="treeview-menu">
-								<li><a href="/<?php echo FOLDER;?>/Actividad"><i class="fa fa-circle-o"></i>POAI</a></li>
-								<li><a href="/<?php echo FOLDER;?>/Cronograma"><i class="fa fa-circle-o"></i>Viajes - Talleres & Otros</a></li>
-							</ul>
+							<a href="/<?php echo FOLDER;?>/Cronograma"><i class="fa fa-calendar-check-o"></i><span>CRONOGRAMA</span></a>
 						</li>
 						<li class="treeview">
 							<a href="#">
@@ -160,7 +141,7 @@
 										<div class="col-md-12">
 											<script type="text/javascript">
 											$(document).ready(function(){
-			
+
 												$.ajax({
 													url: '<?php echo URL?>Notificacion/notificacion',type: "get",success: function(res){
 														var data = JSON.parse(res);

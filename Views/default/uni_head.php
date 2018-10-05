@@ -129,7 +129,7 @@
 						<li>
 							<a href="/<?php echo FOLDER;?>/Notificacion/otra_planificacion" style="cursor:pointer">
 								<i class="fa fa-bell"></i> <span>Notificaciones</span>
-								<small class="label pull-right bg-info" style="display:none" id="cantobject_otro"></small>
+								<small class="label pull-right bg-red" style="display:none;" id="cantobject_otro"></small>
 							</a>
 						</li>
 						<li>

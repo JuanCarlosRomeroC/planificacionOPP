@@ -11,12 +11,15 @@ class Cronograma extends Controllers{
          $this->view->render($this,"index",$resultado);
      }
      public function crear(){
+          $this->cronograma->set("id_redsalud",$_POST['id_redsalud']);
+          $this->cronograma->set("id_municipio",$_POST['id_municipio']);
           $this->cronograma->set("id_establecimiento",$_POST['id_establecimiento']);
           $this->cronograma->set("tipo_actividad",$_POST['tipo_actividad']);
           $this->cronograma->set("tipo_lugar",$_POST['tipo_lugar']);
           $this->cronograma->set("ciudad",$_POST['ciudad']);
           $this->cronograma->set("id_otra_actividad",$_POST['id_otra_actividad']);
           $this->cronograma->set("lugar",$_POST['lugar']);
+          $this->cronograma->set("descripcion",$_POST['descripcion']);
           $this->cronograma->set("fecha_de",$_POST['fecha_de']);
           $this->cronograma->set("fecha_hasta",$_POST['fecha_hasta']);
           $resultado=$this->cronograma->crear();
@@ -24,12 +27,15 @@ class Cronograma extends Controllers{
      }
      public function editar($id){
           $this->cronograma->set("id",$id);
+          $this->cronograma->set("id_redsalud",$_POST['id_redsalud']);
+          $this->cronograma->set("id_municipio",$_POST['id_municipio']);
           $this->cronograma->set("id_establecimiento",$_POST['id_establecimiento']);
           $this->cronograma->set("tipo_actividad",$_POST['tipo_actividad']);
           $this->cronograma->set("tipo_lugar",$_POST['tipo_lugar']);
           $this->cronograma->set("ciudad",$_POST['ciudad']);
           $this->cronograma->set("id_otra_actividad",$_POST['id_otra_actividad']);
           $this->cronograma->set("lugar",$_POST['lugar']);
+          $this->cronograma->set("descripcion",$_POST['descripcion']);
           $this->cronograma->set("fecha_de",$_POST['fecha_de']);
           $this->cronograma->set("fecha_hasta",$_POST['fecha_hasta']);
          $resultado=$this->cronograma->editar();

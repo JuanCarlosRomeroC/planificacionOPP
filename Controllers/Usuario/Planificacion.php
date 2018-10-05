@@ -18,25 +18,6 @@ class Planificacion extends Controllers{
          $data=$this->planificacion->ver();
          echo json_encode($data);
      }
-     public function printpdf($id){
-          $this->planificacion->set('year',substr($id, 0, -2));
-          $this->planificacion->set('month',substr($id, -2));
-          $data=$this->planificacion->imprimir();
-          $this->pdf->loadPDF($this,'print','landscape',$data);
-     }
-     public function print1pdf($id){
-          $this->planificacion->set('year',substr($id, 0, -2));
-          $this->planificacion->set('month',substr($id, -2));
-          $data=$this->planificacion->imprimir();
-          $this->pdf->loadPDF($this,'print1','landscape',$data);
-     }
-     public function validar($id){
-         $this->planificacion->set('id',$id);
-         $this->planificacion->set("month",$_GET['month']);
-         $this->planificacion->set("year",$_GET['year']);
-         $data=$this->planificacion->validar();
-         echo json_encode($data);
-     }
      public function crear(){
           $this->planificacion->set("id_actividad",$_POST['id_actividad']);
           $this->planificacion->set("fecha_de",$_POST['fecha_de']);
@@ -56,14 +37,38 @@ class Planificacion extends Controllers{
          $resultado=$this->planificacion->editar();
          echo $resultado;
      }
+     public function validar($id){
+         $this->planificacion->set('id',$id);
+         $this->planificacion->set("month",$_GET['month']);
+         $this->planificacion->set("year",$_GET['year']);
+         $data=$this->planificacion->validar();
+         echo json_encode($data);
+     }
      public function completarinforme($id){
           $this->planificacion->set("id",$id);
+          $this->planificacion->set("terminado",$_POST['terminado']);
           $this->planificacion->set("observacion",$_POST['observacion']);
           $this->planificacion->set("vista_unidad",0);
           $this->planificacion->set("vista_jefatura",0);
           $this->planificacion->set("vista_planificador",0);
           $resultado=$this->planificacion->completarinforme();
           echo $resultado;
+     }
+     public function print_planificacion($id){
+          $this->planificacion->set('year',substr($id, 0, -2));
+          $this->planificacion->set('month',substr($id, -2));
+          $data=$this->planificacion->imprimir();
+          $this->pdf->loadPDF($this,'print_planificacion','landscape',$data);
+     }
+     public function print_informe($id){
+          $this->planificacion->set('year',substr($id, 0, -2));
+          $this->planificacion->set('month',substr($id, -2));
+          $data=$this->planificacion->imprimir();
+          $this->pdf->loadPDF($this,'print_informe','landscape',$data);
+     }
+     public function eliminar($id){
+        $this->planificacion->set("id",$id);
+         $data=$this->planificacion->eliminar();
      }
 }
 ?>

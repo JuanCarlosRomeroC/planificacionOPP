@@ -73,17 +73,15 @@
      var users_array=['Administrador','Director','Planificador','Jefe de Jefatura','Jefe de Unidad','Normal'];
      $(document).ready(function(){
           //____________DIBUJAR AVANCE DE ACTIVIDAD
-		var DomainName = <?php echo json_encode($resultado['actividades']) ?>,media= 100 / DomainName.length,progress=0;
-          console.log(DomainName);
-		for (var i = 0; i < DomainName.length; i++) {if (DomainName[i].estado==1) {progress=progress+media;}else{progress=progress+parseInt(DomainName[i].total);}}
-
+          function roundToTwo(num) {return +(Math.round(num + "e+2")  + "e-2");}
+          var DomainName = <?php echo json_encode($resultado['actividades']) ?>,media=roundToTwo(100 / DomainName.length),progress=0;
+		for (var i = 0; i < DomainName.length; i++) {if (DomainName[i].estado==1) {progress=progress+media;}else{porcentaje=roundToTwo(media/DomainName[i].total);progress=progress+roundToTwo(porcentaje*DomainName[i].porcentaje);}}
 		var can = document.getElementById('canvas'),spanProcent = document.getElementById('procent'),c = can.getContext('2d');var posX = can.width / 2,posY = can.height / 2,fps = 1000 / 200,procent = 0,oneProcent = 360 / 100,result = oneProcent * progress;c.lineCap = 'round';arcMove();
 	  	function arcMove(){var deegres = 0;var acrInterval = setInterval (function() {deegres += 1;c.clearRect( 0, 0, can.width, can.height );procent = deegres / oneProcent;spanProcent.innerHTML = procent.toFixed()+"%"; c.beginPath();c.arc( posX, posY, 70, (Math.PI/180) * 270, (Math.PI/180) * (270 + 360) );c.strokeStyle = '#b9cbbc';c.lineWidth = '10';c.stroke();c.beginPath();c.strokeStyle = '#27c277';c.lineWidth = '10';c.arc( posX, posY, 70, (Math.PI/180) * 270, (Math.PI/180) * (270 + deegres) );c.stroke();if( deegres >= result ) clearInterval(acrInterval);}, fps);}
 
           $('#inputnombre_u').keypress(function(e){not_number(e);}).keyup(function(){if($(this).val().trim().length>2){small_error('.fila1_u',true);}else{small_error('.fila1_u',false);}function_validate();});
 		$('#inputapellido_u').keypress(function(e){not_number(e);}).keyup(function(){if($(this).val().trim().length>6){small_error('.fila2_u',true);}else{small_error('.fila2_u',false);}function_validate();});
           $('#inputci_u').keypress(function(e){carnet_press(e);}).keyup(function(){var valor=$(this).val().split('-') == null ? ([]) : ($(this).val().split('-'));if(valor.length<3 && parseInt(valor[0])>999999 && valor[1]!=""){if($(this).val().trim().length>6 && $(this).val().trim().length<12){small_error('.fila3_u',true);}else{small_error('.fila3_u',false);}}else{small_error('.fila3_u',false);}function_validate();});
-
 		$('#inputpassword_u').keyup(function(){if($(this).val().trim().length>4){small_error('fila4_u',true);}else{small_error('fila4_u',false);}function_validate();});
 		$('#inputtelefono_u').keypress(function(e){yes_number(e);}).keyup(function(){function_validate();});
           $('#selectcargo_u').change(function(){function_validate();});
@@ -133,7 +131,6 @@
                type: 'get',
                success:function(obj){
                     var data = JSON.parse(obj);
-                    console.log(data);
                     $('.unombre h5').html(data.nombre+"<br>"+data.apellido);$('.unombre p').text(data.ci);$('.unombre em').text(users_array[data.tipo]);$('.utelefono').text("(+591) "+data.telefono);$('.ucargo').text(data.cargo);$('.uunidad').text(data.unidad==null ? ("No Asignado"):(data.unidad));$('.ujefatura').text(data.jefatura==null ? ("No Asignado"):(data.jefatura));
                     $('#inputnombre_u').val(data.nombre.toLowerCase());$('#inputnombre_u').attr('placeholder',data.nombre.toLowerCase());
                     $('#inputapellido_u').val(data.apellido.toLowerCase());$('#inputapellido_u').attr('placeholder',data.apellido.toLowerCase());

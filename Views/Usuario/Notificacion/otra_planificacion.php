@@ -15,15 +15,12 @@
 					<table id="tableplanificacion" class="table table-striped table-condensed table-hover">
 						<thead>
 							<tr style="background-color: #313131">
-								<th rowspan="2" width="7%" style="padding-bottom:10px;">Nro</th>
-								<th rowspan="2" width="30%" style="padding-bottom:10px;">Actividad</th>
-								<th rowspan="2" width="40%" style="padding-bottom:10px;">lugar</th>
-								<th width="15%" colspan="2" style="padding:0;margin:0">fecha</th>
-								<th rowspan="2" width="8%" style="padding-bottom:10px;">Opciones</th>
-							</tr>
-							<tr style="background-color: #555555">
-								<th width="10%" style="padding:0;margin:0;font-size:.9em">de</th>
-								<th width="10%" style="padding:0;margin:0;font-size:.9em">hasta</th>
+								<th width="7%" style="padding-bottom:10px;">Nro</th>
+								<th width="20%" style="padding-bottom:10px;">Actividad</th>
+								<th width="20%" style="padding-bottom:10px;">modificado por</th>
+								<th width="25%" style="padding-bottom:10px;">motivo</th>
+								<th width="20%" style="padding:5px;margin:5px;line-height:.9em">fecha de modificación</th>
+								<th width="8%" style="padding-bottom:10px;">Opciones</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -32,9 +29,9 @@
 								<tr>
 									<td><h5><?php echo $aux;?></h5></td>
 									<td style="text-align:left;padding-left:9px"><h5><?php echo $row['actividad']; ?></h5></td>
-									<td style="text-align:left;padding-left:9px"><h5><?php echo $row['lugar']; ?></h5></td>
-									<td><h5><?php echo $row['fecha_de']; ?></h5></td>
-									<td><h5><?php echo $row['fecha_hasta']; ?></h5></td>
+									<td style="text-align:left;padding-left:9px"><h5><?php echo $row['nombre']; ?></h5></td>
+									<td style="text-align:left;padding-left:9px"><h5><?php echo $row['modificado_descripcion']; ?></h5></td>
+									<td><h5><?php echo $row['updated_at']; ?></h5></td>
 									<td>
 										<a data-target="#verotraplanificacionModal" data-toggle="modal" onclick="verAjax(<?php echo $row['id'];?>)"><span class="glyphicon glyphicon-eye-open" title="ver planificación" aria-hidden="true" style="padding:0 5px 0 5px;color:#313131;cursor:pointer"></span></a>
 									</td>
@@ -60,15 +57,12 @@
 					<table class="table table-striped table-condensed table-hover">
 						<thead>
 							<tr style="background-color: #313131">
-								<th rowspan="2" width="7%" style="padding-bottom:10px;">Nro</th>
-								<th rowspan="2" width="30%" style="padding-bottom:10px;">Actividad</th>
-								<th rowspan="2" width="40%" style="padding-bottom:10px;">lugar</th>
-								<th width="15%" colspan="2" style="padding:0;margin:0">fecha</th>
-								<th rowspan="2" width="8%" style="padding-bottom:10px;">Opciones</th>
-							</tr>
-							<tr style="background-color: #555555">
-								<th width="10%" style="padding:0;margin:0;font-size:.9em">de</th>
-								<th width="10%" style="padding:0;margin:0;font-size:.9em">hasta</th>
+								<th width="7%" style="padding-bottom:10px;">Nro</th>
+								<th width="20%" style="padding-bottom:10px;">Actividad</th>
+								<th width="20%" style="padding-bottom:10px;">modificado por</th>
+								<th width="25%" style="padding-bottom:10px;">motivo</th>
+								<th width="20%" style="padding:5px;margin:5px;line-height:.9em">fecha de modificación</th>
+								<th width="8%" style="padding-bottom:10px;">Opciones</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -77,9 +71,9 @@
 								<tr>
 									<td><h5><?php echo $aux;?></h5></td>
 									<td style="text-align:left;padding-left:9px"><h5><?php echo $row['actividad']; ?></h5></td>
-									<td style="text-align:left;padding-left:9px"><h5><?php echo $row['lugar']; ?></h5></td>
-									<td><h5><?php echo $row['fecha_de']; ?></h5></td>
-									<td><h5><?php echo $row['fecha_hasta']; ?></h5></td>
+									<td style="text-align:left;padding-left:9px"><h5><?php echo $row['nombre']; ?></h5></td>
+									<td style="text-align:left;padding-left:9px"><h5><?php echo $row['modificado_descripcion']; ?></h5></td>
+									<td><h5><?php echo $row['updated_at']; ?></h5></td>
 									<td>
 										<a data-target="#verotraplanificacionModal" data-toggle="modal" onclick="verAjax(<?php echo $row['id'];?>)"><span class="glyphicon glyphicon-eye-open" title="ver planificación" aria-hidden="true" style="padding:0 5px 0 5px;color:#313131;cursor:pointer"></span></a>
 									</td>
@@ -105,6 +99,7 @@
 </div>
 <?php include 'modalverotraplanificacion.php';?>
 <script>
+	var citys={['potosi']:"Potosí",['lapaz']:"La Paz",['cochabamba']:"Cochabamba",['santacruz']:"Santa Cruz",['tarija']:"Tarija",['chuquisaca']:"Chuquisaca",['oruro']:"Oruro",['beni']:"Beni",['pando']:"Pando"};
    	var Get_ID;
      $(document).ready(function(){
 	    $('#inputsearch').keyup(function(){$('#myTabs a[href="#sinleer"]').tab('show');
@@ -117,7 +112,6 @@
 			success:function(obj){
 				var data = JSON.parse(obj);
 				if (data.visto==1) {
-					console.log("lo vio");
 					$('#marcarleido').hide();
 				}else{
 					$('#marcarleido').show();
@@ -126,14 +120,25 @@
 				$('.unombre h6').text("motivo de modificacion: "+data.modificado_descripcion);
 				$('.uactividad').text(data.actividad);
 				$('.uviaje').text(data.tipo_actividad=="local" ? ("Sin Viaje"):("Con Viaje"));
-				$('.uciudad').text(data.ciudad=="" ? ("potosí"):(data.ciudad));
-				$('.ulugar').text(data.lugar);
-				if (data.tipo_lugar=="" && data.tipo_lugar=="departamental") {
-					$('.utipo').text("Inter - Departamental");
-				}else{
-					$('.utipo').text("Inter - Municipal");
-				}
+				$('.uciudad').text("CIUDAD: "+citys[data.ciudad]);
+				var aux={['departamental']:"Inter-Departamental",['provincial']:"Inter - Municipal"};
 				$('.uestablecimiento').text(data.establecimiento==null ? ("Sin Establecimiento"):(data.establecimiento));
+				$('.utipo').text(aux[data.tipo_lugar]);
+				var lugar="";
+				if (data.lugar!=null && data.lugar!="") {
+					lugar=data.lugar.toLowerCase();
+				}else{
+					if (data.redsalud!=null) {
+						lugar=data.redsalud.toLowerCase();
+						if (data.municipio!=null) {
+							lugar=data.municipio.toLowerCase();
+							if (data.establecimiento!=null) {
+								lugar=data.establecimiento.toLowerCase();
+							}
+						}
+					}
+				}
+				$('.ulugar').text(lugar);
 				$('.ufechahasta').text(data.fecha_hasta);
 				$('.ufechade').text(data.fecha_de);
 				Get_ID=data.id;

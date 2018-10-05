@@ -12,6 +12,8 @@ class Auditorio extends Controllers{
      public function crear(){
           $this->cronograma->set("id_usuario",$_POST['id_usuario']);
           $this->cronograma->set("id_establecimiento",0);
+          $this->cronograma->set("id_redsalud",0);
+          $this->cronograma->set("id_municipio",0);
           $this->cronograma->set("tipo_actividad","local");
           $this->cronograma->set("tipo_lugar","departamental");
           $this->cronograma->set("ciudad","potosi");
@@ -19,6 +21,7 @@ class Auditorio extends Controllers{
           $this->cronograma->set("lugar","auditorio");
           $this->cronograma->set("fecha_de",$_POST['fecha_de']);
           $this->cronograma->set("fecha_hasta",$_POST['fecha_hasta']);
+          $this->cronograma->set("descripcion",$_POST['descripcion']);
           $resultado=$this->cronograma->crear();
           echo $resultado;
      }
@@ -26,6 +29,8 @@ class Auditorio extends Controllers{
           $this->cronograma->set("id",$id);
           $this->cronograma->set("id_usuario",$_POST['id_usuario']);
           $this->cronograma->set("id_establecimiento",0);
+          $this->cronograma->set("id_redsalud",0);
+          $this->cronograma->set("id_municipio",0);
           $this->cronograma->set("tipo_actividad","local");
           $this->cronograma->set("tipo_lugar","departamental");
           $this->cronograma->set("ciudad","potosi");
@@ -33,6 +38,7 @@ class Auditorio extends Controllers{
           $this->cronograma->set("lugar","auditorio");
           $this->cronograma->set("fecha_de",$_POST['fecha_de']);
           $this->cronograma->set("fecha_hasta",$_POST['fecha_hasta']);
+          $this->cronograma->set("descripcion",$_POST['descripcion']);
          $resultado=$this->cronograma->editar();
          echo $resultado;
      }
@@ -46,6 +52,10 @@ class Auditorio extends Controllers{
          $this->cronograma->set('hasta',$_GET['hasta']);
          $data=$this->cronograma->imprimir_auditorio();
          $this->pdf->loadPDF($this,'print','landscape',$data);
+     }
+     public function eliminar_actividad($id){
+         $this->cronograma->set('id',$id);
+         $data=$this->cronograma->eliminar_de_auditorio();
      }
 }
  ?>

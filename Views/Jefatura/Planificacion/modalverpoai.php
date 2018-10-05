@@ -47,11 +47,13 @@
 									<?php for($i=0; $i<count($resultado["actividades"]);$i++): ?>
 										<tr>
 											<td style="text-align:left;padding-left:9px;vertical-align:inherit"><h5 style="text-align:left"><?php echo ucwords(strtolower($resultado['actividades'][$i]['actividad'])); ?></h5></td>
-											<?php if ($resultado['actividades'][$i]['estado']==0) {
-												echo '<td><div class="progress"><div  class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="'.$resultado['actividades'][$i]['total'].'" aria-valuemin="0" aria-valuemax="100" style="background:#cd9850;min-width: 2em;width: '.$resultado['actividades'][$i]['total'].'%;">'.$resultado['actividades'][$i]['total'].'% </div></div></td>';
-											} else{
-												echo '<td><div class="progress"><div  class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="background:#cd9850;min-width: 2em;width: 100%;">100% </div></div></td>';
-											}?>
+                                                       <?php if ($resultado['actividades'][$i]['porcentaje']!=0) {
+                    								$media=100/($resultado['actividades'][$i]['total']);
+                    								$porcentaje=round($resultado['actividades'][$i]['porcentaje']*$media);
+                                                            echo '<td><div class="progress"><div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="'.$porcentaje.'" aria-valuemin="0" aria-valuemax="100" style="background:#cd9850;min-width: 2em;width: '.$porcentaje.'%;">'.$porcentaje.'% </div></div></td>';
+                                                       } else{
+                                                            echo '<td><div class="progress"><div  class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="background:#cd9850;min-width: 2em;width: 0%;">0% </div></div></td>';
+                                                       }?>
 										</tr>
 									<?php endfor; ?>
 								</tbody>

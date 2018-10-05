@@ -7,6 +7,12 @@
 			</div>
 			<div class="modal-body" style="margin:0;padding:0">
 				<form  class="form-horizontal" autocomplete="off" style="margin:25px 40px 25px 40px">
+					<div class="form-group">
+						<center>
+							<label>Se Realizó la actividad? </label>
+							<input type="checkbox" data-toggle="toggle" data-onstyle="danger" style="float:right" data-on="Si"  data-off="No" data-style="ios" id="checkterminado" validate=true checked>
+						</center>
+					</div>
                          <div class="form-group has-feedback has-error fila1_i">
 						<label>Observaciones</label>
 						<textarea id="textareaobjetivo" toggle=".fila1_i" validate="true" rows="2" placeholder="EJEMPLO: La planificación se terminó satisfactoriamente" maxlength="150" style="resize: none;padding:10px"  class="form-control"></textarea>

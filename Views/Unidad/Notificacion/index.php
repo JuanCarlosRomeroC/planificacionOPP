@@ -58,7 +58,7 @@
 
 	function verAjax(val){
      	$.ajax({
-			url: '<?php echo URL;?>Planificacion/ver_planificacion/'+val,
+			url: '<?php echo URL;?>Notificacion/ver_planificacion/'+val,
 			type: 'get',
 			success:function(obj){
 				var data = JSON.parse(obj);

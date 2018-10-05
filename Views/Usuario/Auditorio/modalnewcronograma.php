@@ -46,6 +46,12 @@
 						</select>
 					</div>
 				</div>
+				<div class="row" style="margin:0">
+					<div class="form-group">
+						<label style="color:#3fd2e0;font-weight:400;font-family:arial;font-size:.8em;margin-bottom:2px">DESCRIPCIÓN</label>
+						<input type="text" id="inputdescripcion" placeholder="Ejemplo: Capacitación de uso del sistema" class="form-control">
+					</div>
+				</div>
 			</div>
 			<div class="modal-footer" style="border-left:10px solid  #84da92;margin: 0;padding:10px 0 10px 0">
 					<div class="col-md-9">

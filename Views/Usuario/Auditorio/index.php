@@ -21,6 +21,7 @@
 </style>
 <script>
 	var typemodal="",Get_ID,date_start,date_end;
+	var users_array=['Administrador','Director','Planificador','Jefe de Jefatura','Jefe de Unidad','Normal'];
      $(document).ready(function(){
 		function getRandomColor() {var letters = '0123456789ABCDEF'.split(''),color = '#';for (var i = 0; i < 6; i++ ) {color += letters[Math.floor(Math.random() * 16)];}return color;} //random color
 		$('#btnregistrar').click(function(){
@@ -31,7 +32,8 @@
 					id_usuario:$('#selectusuario option:selected').val(),
 					id_otra_actividad:$('#selectactividad option:selected').val(),
 					fecha_de:$('#fecha_de').val(),
-					fecha_hasta:$('#fecha_hasta').val()
+					fecha_hasta:$('#fecha_hasta').val(),
+					descripcion:$('#inputdescripcion').val()
 				},
 				success:function(obj){
 					swal("Mensaje de Alerta!", obj , "success");
@@ -47,7 +49,8 @@
 					id_usuario:$('#selectusuario_u option:selected').val(),
 					id_otra_actividad:$('#selectactividad_u option:selected').val(),
 					fecha_de:$('#fecha_de_u').val(),
-					fecha_hasta:$('#fecha_hasta_u').val()
+					fecha_hasta:$('#fecha_hasta_u').val(),
+					descripcion:$('#inputdescripcion_u').val()
 				},
 				success:function(obj){
 					swal("Mensaje de Alerta!", obj , "success");
@@ -58,7 +61,7 @@
 		var datos = [],data = <?php echo json_encode($resultado['planificacion'])?>;
     		for (var i = 0; i < data.length; i++) {
 			var title=data[i].actividad.toUpperCase();
-    			myObj = { "id":data[i].id, "title":title, "start":data[i].fecha_de,"end":data[i].fecha_hasta,"description": 'USUARIO: '+data[i].nombre.toLowerCase(),"color":getRandomColor()};
+    			myObj = { "id":data[i].id,"_id":i,"title":title, "start":data[i].fecha_de,"end":data[i].fecha_hasta,"description": 'USUARIO: '+data[i].nombre.toLowerCase(),"color":getRandomColor()};
     			datos.push(myObj);}
     		$('#calendar').fullCalendar({
     			locale: 'es',
@@ -80,41 +83,48 @@
     	            element.find('.fc-title').append("<br/>" + event.description);
 		  	},
 			select: function(startDate, endDate, jsEvent) {
-				typemodal=""
-				$('#fecha_de').val(startDate.format());
-				$('#fecha_hasta').val(endDate.format());
-				$('#newcronogramaModal').modal({
- 				    backdrop: 'static',
- 				    keyboard: true,
- 				    show: true
- 			     });
+				if (endDate._d.getFullYear()>=<?php echo intval(date('Y'))?> && (endDate._d.getMonth()+1>= <?php echo intval(date('m'))?>&& endDate._d.getDate()>=<?php echo intval(date('d'))?>) ||  (endDate._d.getMonth()== <?php echo intval(date('m'))?>)) {
+					typemodal=""
+					$('#fecha_de').val(startDate.format());
+					$('#fecha_hasta').val(endDate.format());
+					$('#newcronogramaModal').modal({
+	 				    backdrop: 'static',
+	 				    keyboard: true,
+	 				    show: true
+	 			     });
+				}
 	          },
 			eventClick: function(event) {
-				if (event.end._d.getFullYear()>=<?php echo intval(date('Y'))?> && event.end._d.getMonth()+1>= <?php echo intval(date('m'))?>&& event.end._d.getDate()>=<?php echo intval(date('d'))?>) {
+				var CurrentDate = new Date(),GivenDate = new Date(event.end.format());
+				if (GivenDate>CurrentDate) {
 					updateAjax(event.id,false,false);
-				    $('#updatecronogramaModal').modal('show');
+					$('#updatecronogramaModal').modal('show');
 				}else{
 					verAjax(event.id);
-				    $('#vercronogramaModal').modal('show');
+				     $('#vercronogramaModal').modal('show');
 				}
 		     },
 		     eventDrop: function(event, delta, revertFunc) {
-				if (event.end._d.getFullYear()>=<?php echo intval(date('Y'))?> && event.end._d.getMonth()+1>= <?php echo intval(date('m'))?>&& event.end._d.getDate()>=<?php echo intval(date('d'))?>) {
+				var old=new Date(event.source.rawEventDefs[event._id].end);
+				var CurrentDate = new Date(),GivenDate = new Date(event.end.format());
+				if (GivenDate>CurrentDate &&  old >= CurrentDate) {
 					updateAjax(event.id,event.start.format(),event.end.format());
 				     $('#updatecronogramaModal').modal({
 					     backdrop: 'static',
 					     keyboard: true,
 					     show: true
 				     });
-				     $('#btncancelar').click(function(){
-					     revertFunc();
-				     })
 				}else{
 					revertFunc();
 				}
+				$('#btncancelar').click(function(){
+					revertFunc();
+				})
 		   	},
 			eventResize: function(event, delta, revertFunc) {
-				if (event.end._d.getFullYear()>=<?php echo intval(date('Y'))?> && event.end._d.getMonth()+1>= <?php echo intval(date('m'))?>&& event.end._d.getDate()>=<?php echo intval(date('d'))?>) {
+				var old=new Date(event.source.rawEventDefs[event._id].end);
+				var CurrentDate = new Date(),GivenDate = new Date(event.end.format());
+				if (GivenDate>CurrentDate &&  old >= CurrentDate) {
 					updateAjax(event.id,event.start.format(),event.end.format());
 				     $('#updatecronogramaModal').modal({
 					     backdrop: 'static',
@@ -153,6 +163,7 @@
 				$('#selectactividad_u option[value='+data.id_otra_actividad+']').attr('selected','selected');
 				$('#selectusuario_u option[value='+data.id_usuario+']').attr('selected','selected');
 				$("#selectactividad_u,#selectusuario_u").selectpicker('refresh');
+				$('#inputdescripcion_u').val(data.descripcion);
 			}
 		});
 	}
@@ -162,67 +173,37 @@
 			type: 'get',
 			success:function(obj){
 				var data = JSON.parse(obj);
+				console.log(data);
 				$('.unombre h5').text(data.nombre);
+				$('.unombre h6').text(users_array[data.tipo]);
 				$('.unombre p').text(data.ci);
-				$('.uactividad').text(data.actividad);
-				$('.uviaje').text(data.tipo_actividad=="local" ? ("Sin Viaje"):("Con Viaje"));
-				$('.uciudad').text(data.ciudad=="" ? ("potosí"):(data.ciudad));
-				$('.ulugar').text(data.lugar);
-				var aux=['departamental','provincial'];
-				var u=['Inter-departamental','Inter - Municipal'];
-				$('.uestablecimiento').text(data.establecimiento==null ? ("Sin Establecimiento"):(data.establecimiento));
-				$('.utipo').text(data.tipo_lugar=="" ? ("Inter - Departamental"):(data.tipo_lugar));
+				$('.uactividad').text("ACTIVIDAD: "+data.actividad.toLowerCase());
 				$('.ufechahasta').text(data.fecha_hasta);
 				$('.ufechade').text(data.fecha_de);
-
+				$('.vdescripcion span').text(data.descripcion!=null?(data.descripcion):("La descripción no fue detallada"));
 			}
 		});
 	}
-	function function_validate(validate){
-		if(validate!="false"&&validate=="true"){
-			if($('#checkviaje').is(':checked')){
-				if($('.fila1').hasClass('has-success')) {
-					if ($('.checklugar:checked').val()=="provincial") {
-						if ($('#selectmunicipio option:selected').val()!="") {
-							if ($('#selectestablecimiento option:selected').val()!="") {
-								$("#btnregistrar").attr('disabled', false);
-							}else{$("#btnregistrar").attr('disabled', true);}
-						}else{$("#btnregistrar").attr('disabled', true);}
-					}else{$("#btnregistrar").attr('disabled', false);}
-				}else{$("#btnregistrar").attr('disabled', true);}
-			}else{
-				if($('#checkauditorio').is(':checked')){
-					$("#btnregistrar").attr('disabled', false);
-				}else{
-					if($('.fila1').hasClass('has-success')) {
-						$("#btnregistrar").attr('disabled', false);
+	function bajaAjax(){
+		swal({
+			title: "¿Estás seguro?",
+			text: "Esta Seguro que quiere eliminar esta actividad del Auditorio?",
+			type: "warning",
+			showCancelButton: true,confirmButtonColor: "#d93333",
+			confirmButtonText: "Eliminar Actividad!",
+			closeOnConfirm: false
+		},function(){
+			$.ajax({
+				url: '<?php echo URL;?>Auditorio/eliminar_actividad/'+Get_ID,
+				type: 'get',
+				success:function(obj){
+					if (obj=="false") {
 					}else{
-						$("#btnregistrar").attr('disabled', true);
+						swal("Mensaje de Alerta!", obj , "success");
+						setInterval(function(){ location.reload() }, 1000);
 					}
 				}
-			}
-		}else{
-			if($('#checkviaje_u').is(':checked')){
-				if($('.fila1_u').hasClass('has-success')) {
-					if ($('.checklugar_u:checked').val()=="provincial") {
-						if ($('#selectmunicipio_u option:selected').val()!="") {
-							if ($('#selectestablecimiento_u option:selected').val()!="") {
-								$("#buttonupdate").attr('disabled', false);
-							}else{$("#buttonupdate").attr('disabled', true);}
-						}else{$("#buttonupdate").attr('disabled', true);}
-					}else{$("#buttonupdate").attr('disabled', false);}
-				}else{$("#buttonupdate").attr('disabled', true);}
-			}else{
-				if($('#checkauditorio_u').is(':checked')){
-					$("#buttonupdate").attr('disabled', false);
-				}else{
-					if($('.fila1_u').hasClass('has-success')) {
-						$("#buttonupdate").attr('disabled', false);
-					}else{
-						$("#buttonupdate").attr('disabled', true);
-					}
-				}
-			}
-		}
+			});
+		});
 	}
 </script>
