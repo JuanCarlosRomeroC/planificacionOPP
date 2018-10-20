@@ -30,6 +30,7 @@
           public function ver(){
                $unidad="SELECT * FROM unidad WHERE id = '{$this->id}' LIMIT 1";
                $usuarios="SELECT * FROM usuario WHERE id_lugar = '{$this->id}'";
+               $encargado=parent::consultaRetorno("SELECT CONCAT(nombre,' ',apellido) as nombre FROM usuario WHERE id_lugar = '{$this->id}' AND tipo=4 LIMIT 1");
                $all = array();$query=parent::consultaRetorno($usuarios);
                while($row = mysql_fetch_assoc($query)){
                   $all[] = $row;
@@ -40,7 +41,7 @@
                   $count++;
                }
                $result=["usuarios"=> $all,
-                         "unidad"=> mysql_fetch_assoc(parent::consultaRetorno($unidad))
+                         "unidad"=> mysql_fetch_assoc(parent::consultaRetorno($unidad)),"encargado"=>mysql_fetch_assoc($encargado)
                ];
                return $result;
           }
@@ -84,7 +85,6 @@
                $resultado=parent::consultaRetorno($sql2);
                return mysql_num_rows($resultado);
           }
-
           public function listar_jefatura(){
                $unidad="SELECT u.id,u.nombre,j.nombre as jefatura FROM unidad as u
                     JOIN jefatura as j ON j.id = u.id_jefatura

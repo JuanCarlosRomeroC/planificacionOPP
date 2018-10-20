@@ -1,12 +1,12 @@
 <div class="fab" data-target="#newactividadModal" data-toggle="modal"> + </div>
 <div class="col-md-12">
-	<h2 class="text-center" style="margin:0px 0 1px 0;font-weight:300">LISTA DE ACTIVIDADES DE LA UNIDAD</h2>
+	<h2 class="text-center" style="margin:0px 0 1px 0;font-weight:300">LISTA DE ACTIVIDADES DEL DIRECTOR</h2>
 </div>
 <div class="row" style="margin:10px"> <!-- SECTION TABLE USERS -->
 	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 		<div class="col-md-12">
 	          <ul class="nav nav-tabs nav-justified" id="myTabs">
-	               <li role="presentation" class="active"><a href="#todos" aria-controls="todos" role="tab" data-toggle="tab">TODOS<span class="badge" style="background:red;margin-left:10px;color:#fff"><?php echo count($resultado["actividades"]);?></span></a></li>
+	               <li role="presentation" class="active"><a href="#todos" aria-controls="todos" role="tab" data-toggle="tab">TODOS<span class="badge" style="background:red;margin-left:10px;color:#fff"><?php echo mysql_num_rows($resultado["actividades"]);?></span></a></li>
 	               <li role="presentation"><a href="#baja" aria-controls="baja" role="tab" data-toggle="tab">BAJAS<span class="badge" style="background:red;margin-left:10px"><?php echo mysql_num_rows($resultado["bajas"]);?></span></a></li>
 	          </ul>
 	     </div>
@@ -36,7 +36,7 @@
 					</table>
 				</div>
 				<div class="row" id="alert_empty"> <!-- SECTION EMPTY TABLE -->
-					<?php if(count($resultado["actividades"])<1):?>
+					<?php if(mysql_num_rows($resultado["actividades"])<1):?>
 						<div class="col-md-12">
 							<div class="alert alert-error alert-dismissible" role="alert">
 							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>

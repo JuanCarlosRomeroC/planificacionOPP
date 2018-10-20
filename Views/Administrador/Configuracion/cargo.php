@@ -1,5 +1,5 @@
 <div class="fab" data-target="#newcargoModal" data-toggle="modal"> + </div>
-<div class="row"><h2 class="text-center" style="margin:20px 0 1px 0;font-weight:300">LISTA DE OTRAS ACTIVIDADES</h2></div>
+<div class="row"><h2 class="text-center" style="margin:20px 0 1px 0;font-weight:300">LISTA DE CARGOS</h2></div>
 
 <div class="row" style="margin:10px"> <!-- SECTION TABLE USERS -->
 	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">

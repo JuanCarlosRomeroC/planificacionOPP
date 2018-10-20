@@ -53,6 +53,7 @@
 				$('.unombre').text(data.unidad.nombre);
 				$('.uusuarios').text(data.usuarios.length);
 				$('.uestado').text(data.unidad.estado=="1" ? ("Activo") : ("Inactivo"));
+				$('.ujefe').text(data.encargado.nombre==null?('Sin Encargado'):(data.encargado.nombre));
 				$("#tableunidad").empty();$("#alert_empty_usuario").hide();
 				if (data.usuarios.length>0) {
 					for (var i = 0; i < data.usuarios.length; i++) {

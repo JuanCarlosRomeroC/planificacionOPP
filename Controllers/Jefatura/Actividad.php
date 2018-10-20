@@ -11,9 +11,7 @@ class Actividad extends Controllers{
           $this->view->render($this,"mi_poai",$resultado);
      }
      public function crear_poai(){
-          $year=intval(date('Y'))+1;
           $this->actividad->set("id_actividad",$_POST['id_actividad']);
-          $this->actividad->set("year",$year);
           $this->actividad->set("total",$_POST['total']);
           $this->actividad->crear_poai();
      }

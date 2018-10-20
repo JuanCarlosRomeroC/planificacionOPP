@@ -23,16 +23,17 @@
 	                           	<br><p class="uelaborado" style="line-height: .95em !important;text-transform: lowercase;color:#cde9e5"></p>
 	                       	</center>
 	                   	</div>
-	                    <?php mysql_data_seek($resultado['actividades'], 0);?>
 	                   	<div class="col-md-9" style="background:#fff;height:100%">
 	                       	<center><h4 style="margin-top:15px;color: #1cd2dc;font-weight: 700;">MODIFICAR PLANIFICACION</h4></center>
 					   	<form autocomplete="off">
 	                            	<div class="form-group" style="margin-bottom:10px">
 	                                	<label style="color:#3fd2e0;font-weight:400;font-family:arial;font-size:.8em;margin-bottom:2px">NOMBRE DE LA ACTIVIDAD</label>
 							  	<select id="selectactividad_u" class="form-control selectpicker show-tick" data-live-search="true">
-  									<?php while($row=mysql_fetch_array($resultado['actividades'])): ?>
-  										<option value="<?php echo $row['id'];?>"><?php echo ucwords(strtolower($row['nombre']));?></option>
-  									<?php endwhile;?>
+									<?php for ($i=0; $i < count($resultado['actividades']) ; $i++) {
+										if ($resultado['actividades'][$i]['estado']) {
+											echo '<option value="'.$resultado['actividades'][$i]['id'].'">'.$resultado['actividades'][$i]['nombre'].'</option>';
+										}
+									} ?>
   								</select>
 	                            	</div>
 	                            	<div class="form-group has-feedback has-success fila1_u" style="margin-bottom:10px">

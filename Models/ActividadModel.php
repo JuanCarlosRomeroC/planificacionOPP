@@ -159,7 +159,8 @@
                return $result;
           }
           public function crear_poai(){
-               $sql=("INSERT INTO planificacion_anual (id_usuario,id_actividad,total,year) VALUES ('{$this->user_id}','{$this->id_actividad}','{$this->total}','{$this->year}')");
+               $year=date('Y');
+               $sql=("INSERT INTO planificacion_anual (id_usuario,id_actividad,total,year) VALUES ('{$this->user_id}','{$this->id_actividad}','{$this->total}','{$year}')");
                parent::consultaSimple($sql);
                echo "La Actividad se Registro Satisfactoriamente";
           }

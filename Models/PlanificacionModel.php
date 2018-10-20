@@ -18,11 +18,22 @@
                return $this->$atributo;
           }
           public function listar(){
-               $actividad="SELECT pa.year,a.nombre,a.id FROM planificacion_anual as pa JOIN actividad as a ON a.id=pa.id_actividad WHERE pa.id_usuario='{$this->user_id}' AND pa.year='{$this->year}' AND pa.estado=0";
+               $gestion=date('Y');
+               $aux=parent::consultaRetorno("SELECT count(*) as total,id_actividad FROM planificacion WHERE id_usuario='{$this->user_id}' AND YEAR(fecha_de)='{$gestion}' AND ((estado=0)OR(estado=1 AND terminado=1)) GROUP BY id_actividad");
+               $actividad=parent::consultaRetorno("SELECT pa.year,a.nombre,a.id,pa.total,true as estado FROM planificacion_anual as pa JOIN actividad as a ON a.id=pa.id_actividad WHERE pa.id_usuario='{$this->user_id}' AND pa.year='{$gestion}' ");
+               $all2 = array();while ($rows =  mysql_fetch_assoc($aux)) {$all2[] = $rows;}
+               $all = array();while ($row =  mysql_fetch_assoc($actividad)) {$all[] = $row;}
+               for ($i=0; $i < count($all2); $i++) {
+                    for ($j=0; $j < count($all); $j++) {
+                         if ($all2[$i]['total']>=$all[$j]['total']) {
+                              $all[$j]['estado']=false;
+                         }
+                    }
+               }
                $planificacion="SELECT p.*,a.nombre as actividad FROM planificacion as p
                JOIN actividad as a ON a.id=p.id_actividad where p.id_usuario='{$this->user_id}' AND YEAR(p.fecha_de) = '{$this->year}' AND MONTH(p.fecha_de) = '{$this->month}'";
                $result=[
-                    "actividades"=> parent::consultaRetorno($actividad),
+                    "actividades"=> $all,
                     "planificacion"=>parent::consultaRetorno($planificacion),
                     "month"=>$this->month,"year"=>$this->year
                ];
@@ -199,7 +210,7 @@
           public function notificacion_planificador(){
                $planificacion=mysql_fetch_assoc(parent::consultaRetorno("SELECT COUNT(*) as total FROM planificacion
                     WHERE estado=1 AND vista_planificador=0"));
-               $result=["actividad"=> $planificacion,"otro"=>$otro];
+               $result=["actividad"=> $planificacion];
                return $result;
           }
           public function notificacion_listaplanificador(){

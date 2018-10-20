@@ -105,6 +105,7 @@
 				$("#tablejefatura").empty();$("#alert_empty_unidad").hide();
 				$('#inputnombre_u').val(data.jefatura.nombre.toLowerCase());
 				$('#inputnombre_u').attr('placeholder',data.jefatura.nombre.toLowerCase());
+				$('.ujefe').text(data.encargado.nombre==null?('Sin Encargado'):(data.encargado.nombre));
 				id_jefatura_u=data.jefatura.id;
 
 				if (data.unidades.length>0) {

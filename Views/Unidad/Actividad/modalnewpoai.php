@@ -3,7 +3,7 @@
 		<div class="modal-content">
                <div class="modal-body" style="padding:20px">
                    	<button type="button" class="close" data-dismiss="modal" aria-label="Close" style="right: 9px;top:5px;position:absolute"><span aria-hidden="true">&times;</span></button>
-                  	<center><h3 style="margin-top:5px;color: #1cd2dc;font-weight: 700;">NUEVA ACTIVIDAD <small> (Gestión <?php echo intval(date('Y'))+1?>)</small> </h3></center>
+                  	<center><h3 style="margin-top:5px;color: #1cd2dc;font-weight: 700;">NUEVA ACTIVIDAD <small> (Gestión <?php echo date('Y')?>)</small> </h3></center>
 				<div class="form-group inputrow1_u" style="margin-bottom:20px">
 					<label style="color:#3fd2e0;font-weight:400;font-family:arial;font-size:.8em;margin-bottom:2px">SELECCIONE ACTIVIDAD</label>
 					<select id="selectactividad" class="form-control selectpicker show-tick" data-live-search="true">

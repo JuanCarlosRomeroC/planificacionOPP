@@ -15,13 +15,15 @@
           }
           public function ver(){
                $jefatura="SELECT * FROM jefatura WHERE id = '{$this->id}' LIMIT 1";
+               $encargado=parent::consultaRetorno("SELECT CONCAT(nombre,' ',apellido) as nombre FROM usuario WHERE id_lugar = '{$this->id}' AND tipo=3 LIMIT 1");
                $unidades="SELECT * FROM unidad WHERE id_jefatura = '{$this->id}'";
                $query=parent::consultaRetorno($unidades);$all = array();
                while($row = mysql_fetch_assoc($query)){
                   $all[] = $row;
                }
                $result=["unidades"=> $all,
-                         "jefatura"=> mysql_fetch_assoc(parent::consultaRetorno($jefatura))
+                         "jefatura"=> mysql_fetch_assoc(parent::consultaRetorno($jefatura)),
+                         "encargado"=>mysql_fetch_assoc($encargado)
                ];
                return $result;
 

@@ -122,7 +122,7 @@
 				$('#inputnombre_u').attr('placeholder',data.unidad.nombre.toLowerCase());
 				$('.uusuarios').text(data.usuarios.length);
 				$('.uestado').text(data.unidad.estado=="1" ? ("Activo") : ("Inactivo"));
-
+				$('.ujefe').text(data.encargado.nombre==null?('Sin Encargado'):(data.encargado.nombre));
 				$('#selectjefatura_u option[value='+data.unidad.id_jefatura+']').attr('selected','selected');
 				$("#selectjefatura_u").selectpicker('refresh');
 				id_jefatura_u=data.unidad.id_jefatura;id_unidad_u=data.unidad.id;

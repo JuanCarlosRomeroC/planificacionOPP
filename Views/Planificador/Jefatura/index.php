@@ -50,6 +50,7 @@
 				$('.uunidad').text(data.unidades.length);
 				$('.uestado').text(data.jefatura.estado=="1" ? ("Activo") : ("Inactivo"));
 				$("#tablejefatura").empty();$("#alert_empty_unidad").hide();
+				$('.ujefe').text(data.encargado.nombre==null?('Sin Encargado'):(data.encargado.nombre));
 				if (data.unidades.length>0) {
 					for (var i = 0; i < data.unidades.length; i++) {
 						$('#tablejefatura').append('<tr><td style="text-align:left;padding-left:10px">'+parseInt(i+1)+'. '+data.unidades[i].nombre+'</td></tr>');

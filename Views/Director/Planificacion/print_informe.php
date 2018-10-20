@@ -25,6 +25,9 @@ for ($i=0; $i < count($resultado['actividades']); $i++) {
           table td{
                border: 1px solid #8b8b8b;
           }
+          table{
+               border: 1px solid #8b8b8b;
+          }
           p {
                font-family: Arial, Helvetica, sans-serif;
                text-align: justify;
@@ -82,7 +85,7 @@ for ($i=0; $i < count($resultado['actividades']); $i++) {
           <h5>FECHA DE ELABORACIÓN: <small><?php  echo $resultado['todos'][0]['fecha_elaboracion']?></small> </h5>
           <h5>FECHA DE PRESETACIÓN: <small><?php echo $resultado['todos'][0]['fecha_presentacion']?></small> </h5>
 
-          <div class="row" style="display:block;position:absolute;;background:#c5e2cb; width:20%;height:22px;right:0;top:100px">
+          <div class="row" style="display:block;position:absolute;background:#c5e2cb; width:20%;height:22px;right:0;top:100px">
                <?php if ($porcentaje>10) {?>
                     <p style="border:1px solid #47c461;width:<?php echo round($porcentaje)?>%;display:block;height:20px;background:#47c461;color:#fff;padding:0;font-size:.8em"><?php echo round($porcentaje)?>%</p>
                     <p style="position: absolute;color:#5b5b5b;width:100%;font-size:.7em;top:22px;">Porcentaje de Avance POAI</p>
@@ -93,8 +96,7 @@ for ($i=0; $i < count($resultado['actividades']); $i++) {
                <?php }?>
 
           </div>
-
-          <table width="100%" style="margin:10px 0 20px 0"  cellspacing="0" cellpadding="0">
+          <table width="100%" style="margin:10px 0 20px 0;display: table;"  cellspacing="0" cellpadding="0">
                <thead style="background:#bdbdbd;text-align:center">
                     <tr>
                          <td width="30%" rowspan="2">PROGRAMACION OPERATIVA ANUAL (POAI GESTIÓN)</td>
@@ -111,13 +113,25 @@ for ($i=0; $i < count($resultado['actividades']); $i++) {
                <tbody>
                     <?php for($i=0;$i< count($resultado['todos']);$i++){?>
                          <tr>
-                              <?php if ($i==0): ?>
-                                   <td rowspan="<?php echo count($resultado['todos'])?>">
+                              <?php if (count($resultado['actividades']) >= count($resultado['todos'])){?>
+                                   <?php if ($i==0): ?>
+                                        <td rowspan="<?php echo count($resultado['todos'])?>">
                                         <?php $coun=1;for($j=0;$j<count($resultado['actividades']);$j++): ?>
                                              <h6 style="margin:0 5px 3px 5px;line-height: 1.1em;text-transform: lowercase;text-align:left"><strong><?php echo $coun?>. </strong><?php echo $resultado['actividades'][$j]["nombre"]; ?></h6>
                                         <?php $coun++;endfor; ?>
+                                        </td>
+                                   <?php endif; ?>
+                              <?php }else{ ?>
+                                   <?php if ($i==count($resultado['todos'])-1){?>
+                                        <td style="border-top: 1px solid #fff;border-bottom: 1px solid #8b8b8b">
+                                   <?php }else{ ?>
+                                        <td style="border-top: 1px solid #fff;border-bottom: 1px solid #fff">
+                                   <?php }?>
+                                        <?php if($i<count($resultado['actividades'])){?>
+                                        <h6 style="margin:0 5px 3px 5px;line-height: 1.1em;text-transform: lowercase;text-align:left"><strong><?php echo ($i)+1?>. </strong><?php echo $resultado['actividades'][$i]["nombre"]; ?></h6>
+                                        <?php }?>
                                    </td>
-                              <?php endif; ?>
+                              <?php }?>
                               <td  style="text-align:left;padding-left:4px;text-transform: lowercase"><h5 style="line-height: 1.1em;"><?php echo $resultado['todos'][$i]['actividad']; ?></h5></td>
                               <td style="text-align:left;padding-left:4px">
                                    <?php $porciones = explode("|", $resultado['todos'][$i]['esperado']);
@@ -133,7 +147,6 @@ for ($i=0; $i < count($resultado['actividades']); $i++) {
                          </tr>
                     <?php } ?>
                </tbody>
-
           </table>
           <?php  if (count($resultado['viajes'])>0) {?>
                <h3 style="margin: 0">- DETALLE DE ACTIVIDADES</h3>

@@ -66,7 +66,8 @@ $mes=$months[intval($resultado['month']) - 1];
           <h5>UNIDAD: <small><?php echo strtolower($resultado['usuario']['unidad']);?></small> </h5>
           <h5>FECHA DE ELABORACIÓN: <small><?php  echo $resultado['todos'][0]['fecha_elaboracion']?></small> </h5>
           <h5>FECHA DE PRESENTACIÓN: <small><?php echo $resultado['todos'][0]['fecha_presentacion']?></small> </h5>
-          <table width="100%" style="margin:10px 0 20px 0; width:100%;"  width="100%" cellspacing="0" cellpadding="0">
+          <table width="100%" style="margin:10px 0 20px 0; width:100%;display: table;"  width="100%" cellspacing="0" cellpadding="0">
+               <thead style="background:#bdbdbd;text-align:center">
                     <tr>
                          <td width="30%" rowspan="2">PROGRAMACION OPERATIVA ANUAL (POAI GESTIÓN)</td>
                          <td width="10%" rowspan="2">ESTRATEGIAS PROGRAMADAS</td>
@@ -78,15 +79,29 @@ $mes=$months[intval($resultado['month']) - 1];
                          <td width="6%">INICIO</td>
                          <td width="12%">FIN</td>
                     </tr>
+               </thead>
+               <tbody>
                     <?php for($i=0;$i< count($resultado['todos']);$i++){?>
                          <tr>
-                              <?php if ($i==0): ?>
-                                   <td rowspan="<?php echo count($resultado['todos'])?>" style="max-height:100px">
+                              <?php if (count($resultado['actividades']) >= count($resultado['todos'])){?>
+                                   <?php if ($i==0): ?>
+                                        <td rowspan="<?php echo count($resultado['todos'])?>">
                                         <?php $coun=1;for($j=0;$j<count($resultado['actividades']);$j++): ?>
-                                             <h6 style="margin:0 5px 3px 5px;line-height: 1.2em;text-transform: lowercase;text-align:left"><strong><?php echo $coun?>. </strong><?php echo $resultado['actividades'][$j]["nombre"]; ?></h6>
+                                             <h6 style="margin:0 5px 3px 5px;line-height: 1.1em;text-transform: lowercase;text-align:left"><strong><?php echo $coun?>. </strong><?php echo $resultado['actividades'][$j]["nombre"]; ?></h6>
                                         <?php $coun++;endfor; ?>
+                                        </td>
+                                   <?php endif; ?>
+                              <?php }else{ ?>
+                                   <?php if ($i==count($resultado['todos'])-1){?>
+                                        <td style="border-top: 1px solid #fff;border-bottom: 1px solid #8b8b8b">
+                                   <?php }else{ ?>
+                                        <td style="border-top: 1px solid #fff;border-bottom: 1px solid #fff">
+                                   <?php }?>
+                                        <?php if($i<count($resultado['actividades'])){?>
+                                        <h6 style="margin:0 5px 3px 5px;line-height: 1.1em;text-transform: lowercase;text-align:left"><strong><?php echo ($i)+1?>. </strong><?php echo $resultado['actividades'][$i]["nombre"]; ?></h6>
+                                        <?php }?>
                                    </td>
-                              <?php endif; ?>
+                              <?php }?>
                               <td  style="text-align:left;padding-left:4px;text-transform: lowercase"><h5 style="line-height: 1.2em;"><?php echo $resultado['todos'][$i]['actividad']; ?></h5></td>
                               <td style="text-align:left">
                                    <?php $objetivo = explode("|", $resultado['todos'][$i]['objetivo'])==null ? [1]:explode("|", $resultado['todos'][$i]['objetivo']);
@@ -108,7 +123,7 @@ $mes=$months[intval($resultado['month']) - 1];
                               <td><h5><?php echo $resultado['todos'][$i]['fecha_hasta']; ?></h5></td>
                          </tr>
                     <?php } ?>
-
+               </tbody>
           </table>
           <?php  if (count($resultado['viajes'])>0) {?>
                <h3 style="margin: 0">- DETALLE DE ACTIVIDADES</h3>

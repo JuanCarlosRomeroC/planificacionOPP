@@ -10,38 +10,66 @@
 					<div class="form-group">
 						<label class="col-sm-2 control-label">Actividades</label>
 						<div class="col-sm-10">
-							<?php mysql_data_seek($resultado['actividades'],0)?>
 							<select id="selectactividad" class="form-control selectpicker show-tick" data-live-search="true">
-								<?php while($row=mysql_fetch_array($resultado['actividades'])): ?>
-									<option value="<?php echo $row['id'];?>"><?php echo ucwords(strtolower($row['nombre']));?></option>
-								<?php endwhile;?>
+								<?php for ($i=0; $i < count($resultado['actividades']) ; $i++) {
+									if ($resultado['actividades'][$i]['estado']) {
+										echo '<option value="'.$resultado['actividades'][$i]['id'].'">'.$resultado['actividades'][$i]['nombre'].'</option>';
+									}
+								} ?>
 							</select>
 						</div>
 					</div>
-					<div class="form-group has-feedback has-success fila1">
-						<label class="col-sm-2 control-label">Fecha de</label>
-						<div class="col-sm-10" >
-				            	<div class='input-group date' id='datetimepicker1'>
-				                	<input readonly type='text' class="form-control" value="<?php $month=intval(date('m'))+1;echo date('Y-'.$month.'-1'); ?>"  validate="true"/>
-				                	<span class="input-group-addon">
-				                    	<span class="glyphicon glyphicon-calendar"></span>
-				                	</span>
-				            	</div>
-							<em style="color:#cf6666;display:none" id="error_fechade">Se debe programar para el mes siguiente</em>
-						</div>
-			        	</div>
-					<div class="form-group has-feedback has-success fila2">
-						<label class="col-sm-2 control-label">Hasta</label>
-						<div class="col-sm-10">
-				            	<div class='input-group date' id='datetimepicker2'>
-				                	<input readonly type='text' class="form-control" value="<?php $month=intval(date('m'))+1;echo date('Y-'.$month.'-d'); ?>" validate="true"/>
-				                	<span class="input-group-addon">
-				                    	<span class="glyphicon glyphicon-calendar"></span>
-				                	</span>
-				            	</div>
-							<em style="color:#cf6666;display:none" id="error_fechahasta">Se debe programar para el mes siguiente -> FECHA DE (dia igual o posterior)</em>
-						</div>
-			        	</div><hr>
+					<?php if ($get_presentado=="" && $resultado['year']==date('Y') && ($resultado['month']==date('m') || $resultado['month'] == intval(date('m'))+1)) {?>
+						<div class="form-group has-feedback has-success fila1">
+							<label class="col-sm-2 control-label">Fecha de</label>
+							<div class="col-sm-10" >
+					            	<div class='input-group date' id='datetimepicker1'>
+					                	<input readonly type='text' class="form-control" value="<?php echo $resultado['year'].'-'.$resultado['month'].'-'.'01'?>"  validate="true"/>
+					                	<span class="input-group-addon">
+					                    	<span class="glyphicon glyphicon-calendar"></span>
+					                	</span>
+					            	</div>
+								<em style="color:#cf6666;display:none" id="error_fechade">Programe para este mes o mes siguiente o ya valido su planificacion</em>
+							</div>
+				        	</div>
+						<div class="form-group has-feedback has-success fila2">
+							<label class="col-sm-2 control-label">Hasta</label>
+							<div class="col-sm-10">
+					            	<div class='input-group date' id='datetimepicker2'>
+					                	<input readonly type='text' class="form-control" value="<?php echo $resultado['year'].'-'.$resultado['month'].'-'.'01'?>" validate="true"/>
+					                	<span class="input-group-addon">
+					                    	<span class="glyphicon glyphicon-calendar"></span>
+					                	</span>
+					            	</div>
+								<em style="color:#cf6666;display:none" id="error_fechahasta">Se debe programar para el mes siguiente -> FECHA DE (dia igual o posterior)</em>
+							</div>
+				        	</div><hr>
+					<?php }else{?>
+						<div class="form-group has-feedback has-error fila1">
+							<label class="col-sm-2 control-label">Fecha de</label>
+							<div class="col-sm-10" >
+					            	<div class='input-group date'>
+					                	<input readonly type='text' class="form-control" value="<?php echo $resultado['year'].'-'.$resultado['month'].'-'.'01'?>"  validate="true"/>
+					                	<span class="input-group-addon">
+					                    	<span class="glyphicon glyphicon-calendar"></span>
+					                	</span>
+					            	</div>
+								<em style="color:#cf6666" id="error_fechade">Programe para este mes o mes siguiente  o ya valido su planificacion</em>
+							</div>
+				        	</div>
+						<div class="form-group has-feedback has-error fila2">
+							<label class="col-sm-2 control-label">Hasta</label>
+							<div class="col-sm-10">
+					            	<div class='input-group date'>
+					                	<input readonly type='text' class="form-control" value="<?php echo $resultado['year'].'-'.$resultado['month'].'-'.'01'?>" validate="true"/>
+					                	<span class="input-group-addon">
+					                    	<span class="glyphicon glyphicon-calendar"></span>
+					                	</span>
+					            	</div>
+								<em style="color:#cf6666;" id="error_fechahasta">Se debe programar para el mes siguiente -> FECHA DE (dia igual o posterior)</em>
+							</div>
+				        	</div><hr>
+					<?php } ?>
 					<h3 style="color:#3dbed5"><strong>OBJETIVOS</strong></h3>
 					<div class="form-group">
 						<div class="col-sm-2 col-xs-12">
