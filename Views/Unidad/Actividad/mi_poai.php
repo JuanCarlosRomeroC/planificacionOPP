@@ -19,22 +19,29 @@
 		<div class="table-responsive">
 			<table id="tableactividades" class="table table-striped table-condensed table-hover">
 				<thead>
-					<th width="5%" style="font-size:1.1em">n°</th>
-					<th width="48%" style="font-size:1.1em">nombre de la actividad</th>
-					<th width="9%" style="font-size:1.1em">total</th>
-					<th width="9%" style="font-size:1.1em">ejecutado</th>
-					<th width="9%" style="font-size:1.1em">culminado</th>
-					<th width="12%" style="font-size:1.1em">estado</th>
-					<th width="8%" style="font-size:1.1em">opcion</th>
+					<th width="4%" style="font-size:1.1em">n°</th>
+					<th width="45%" style="font-size:1.1em">nombre de la actividad</th>
+					<th width="8%" style="font-size:1.1em">ejecutado</th>
+					<th width="8%" style="font-size:1.1em">culminado</th>
+					<th width="8%" style="font-size:1.1em">faltante</th>
+					<th width="8%" style="font-size:1.1em">total</th>
+					<th width="12%" style="font-size:1.1em">avance</th>
+					<th width="7%" style="font-size:1.1em">opcion</th>
 				</thead>
 				<tbody>
 					<?php for($i=0; $i<count($resultado["actividades"]);$i++): ?>
 						<tr>
 							<td><h5><?php $auxi=$i;$auxi++;echo $auxi?></h5></td>
 							<td style="text-align:left;padding-left:9px;vertical-align:inherit"><h5 style="text-align:left"><?php echo ucwords(strtolower($resultado['actividades'][$i]['actividad'])); ?></h5></td>
-							<td><?php echo $resultado['actividades'][$i]['total']?></td>
 							<td><?php echo $resultado['actividades'][$i]['ejecutado']?></td>
 							<td><?php echo $resultado['actividades'][$i]['porcentaje']?></td>
+							<?php if (($resultado['actividades'][$i]['total'] - $resultado['actividades'][$i]['porcentaje']) == 0){?>
+								<td style="color:#02b038">TERMINADO</td>
+							<?php }else{ ?>
+								<td><h5 style="color:#f11b1b"> <?php echo $resultado['actividades'][$i]['total'] - $resultado['actividades'][$i]['porcentaje']?><small style="color:#858181"> TAREAS</small></h5></td>
+							<?php } ?>
+
+							<td><?php echo $resultado['actividades'][$i]['total']?></td>
 							<?php if ($resultado['actividades'][$i]['porcentaje']!=0) {
 								$media=100/($resultado['actividades'][$i]['total']);
 								$porcentaje=round($resultado['actividades'][$i]['porcentaje']*$media);
